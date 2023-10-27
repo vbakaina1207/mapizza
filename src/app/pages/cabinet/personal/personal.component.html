@@ -1,0 +1,83 @@
+<div class="row justify-content-center" data-id="3156">
+    <div class="col-lg-10 col-xl-8 col-xxl-6">        
+        <form class="form-cabinet" id="user-edit-form" [formGroup]="authFormData" (ngSubmit)="updateUser()">
+            <div class="form-group">
+                <div class="form-title title h4">Особисті дані</div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <input formControlName="firstName"  type="text" class="input" name="firstName" value="" placeholder="*Ваше ім'я" value="" required="">
+                    </div>
+                    <div class="col-md-6">
+                        <input formControlName="lastName"  type="text" class="input" name="lastName" value="" placeholder="*Ваше прізвище" value="" required="">
+                    </div>
+                </div>
+
+                <div>
+                    <div class="input-popup-wrapper">
+                        <input formControlName="birthday"  type="date" name="birthday" class="input birthday" placeholder="Дата народження" id="birthday" >                        
+                    </div>
+                    <p>Якщо це поле не буде заповнено, то ви не зможете отримувати додаткові бонуси до Дня Вашого народження</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <input formControlName="email" type="email" name="email" class="input" placeholder="*Ваш емейл" required="">
+                    </div>
+                    <div class="col-md-6">
+                        <input formControlName="phoneNumber"  class="input inputmask" name="phoneNumber" type="text" inputmode="numeric" data-inputmask="'mask': '+38 (999) 999 99 99'" data-inputmask-placeholder="x" placeholder="*Ваш номер телефону" value="" required="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-title title h4">Адреса доставки</div>
+                <ng-container *ngIf="dataUser.length > 0">                
+                <div class="cabinet_address-wrap">
+                    <table class="cabinet_address">
+                        <tbody>
+                            <tr class="js-address-item" data-i="0" *ngFor="let addressDetail of dataUser; let id=index" >    
+                                <td>        
+                                    <div class="js-address-name">{{addressDetail.typeAddress}}</div>    
+                                </td>    
+                                <td>        
+                                    <div class="cabinet_address-detail">  
+                                        <span class="js-street">місто {{ addressDetail.city }}</span>,          
+                                        <span class="js-street">вулиця {{ addressDetail.street }}</span>,            
+                                        <span class="js-house">{{ addressDetail.house }}</span> кв.            
+                                        <span class="js-apartment">{{ addressDetail.flat }}</span>        
+                                    </div>    
+                                </td>    
+                                <td>        
+                                    <button class="link-icon js-edit-address open-popup btn" data-rel="address" type="button" (click)="editAddress(id)">
+                                        редагувати
+                                    </button>    
+                                </td>    
+                                    <td>        
+                                        <button class="btn" type="button" (click)="deleteAddress(id)">видалити</button>    
+                                </td>
+                            </tr>                            
+                        </tbody>
+                    </table>
+                </div>
+                </ng-container>
+            </div>
+
+            <div class="cabinet_address-buttons">
+                <button class="btn btn-secondary open-popup js-clear-address-fields" data-rel="address" type="button" (click)="openAddressDialog()">
+                    <span>Додати ще одну адресу</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.0003 18.3333C14.5837 18.3333 18.3337 14.5833 18.3337 9.99996C18.3337 5.41663 14.5837 1.66663 10.0003 1.66663C5.41699 1.66663 1.66699 5.41663 1.66699 9.99996C1.66699 14.5833 5.41699 18.3333 10.0003 18.3333Z" stroke="#D22730" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M6.66699 10H13.3337" stroke="#D22730" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M10 13.3333V6.66663" stroke="#D22730" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+                <div class="spacer-xs"></div>
+                <button  type="submit" class="btn btn-primary btn-block" type="submit">
+                    <span>Зберегти зміни</span>
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>

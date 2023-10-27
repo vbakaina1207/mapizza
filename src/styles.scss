@@ -1,1 +1,214 @@
 /* You can add global styles to this file, and also import other style files */
+// @import 'ngx-toastr/toastr';
+@import './app/shared/styles/fonts';
+@import './app/shared/styles/theme-material';
+@import './app/shared/styles/variables';
+@import './app/shared/styles/mixins';
+
+
+
+body{
+    font-family: 'MontBlanc' , sans-serif !important;
+    font-size: 16px; 
+    line-height: 1.5em;
+}
+
+.spacer-xs { 
+    height: 35px; 
+}
+
+.spacer-lg { 
+    height: 90px; 
+}
+
+.spacer-sm {
+    height: 50px; 
+}
+
+h1, .h1 { 
+    font-size: 48px; 
+    line-height: 1.2em; 
+}
+
+h2, .h2 { 
+    font-size: 40px; 
+    line-height: 1.2em; 
+}
+
+h3, .h3 { 
+    font-size: 30px; 
+    line-height: 1.33em; 
+}
+
+h4, .h4 { 
+    font-size: 25px; 
+    line-height: 1.33em; 
+}
+
+h5, .h5 { 
+    font-size: 20px; 
+    line-height: 1.5em; 
+}
+
+h6, .h6 { 
+    font-size: 18px; 
+    line-height: 1.5em; 
+}
+
+.title-decor::before { 
+    content: ''; 
+    position: absolute; 
+    top: -30px; 
+    left: -50px; 
+    width: 64px; 
+    height: 54px; 
+    background: url(./assets/decor/title-decor.svg);
+    background-repeat: no-repeat; 
+    background-position: center; 
+    background-size: contain; 
+}
+
+.title-decor {
+    display: inline-block;
+    position: relative;
+}   
+
+.title {
+    font-weight: 600;
+    color: $clr-black;
+}
+
+a:hover { 
+    text-decoration: none; 
+}
+
+ul, ol { 
+    list-style: none; 
+}
+.text-truncate { 
+    white-space: nowrap; 
+    text-overflow: ellipsis; 
+    overflow: hidden; 
+}
+
+@media (max-width: 1730px) { 
+    h1, .h1 { 
+        font-size: 40px; 
+    }
+    h2, .h2 { 
+        font-size: 34px; 
+    }
+    h3, .h3 { 
+        font-size: 26px; 
+    }
+    h4, .h4 { 
+        font-size: 22px; 
+    }
+    h5, .h5 { 
+        font-size: 18px; 
+    }
+    h6, .h6 { 
+        font-size: 16px; 
+    } 
+}
+
+
+@media (max-width: 1400px) { 
+    .spacer-lg { 
+        height: 90px; 
+    }
+    .spacer-sm { 
+        height: 40px; 
+    }
+    .spacer-xs { 
+        height: 25px; 
+    } 
+    h1, .h1 { 
+        font-size: 34px; 
+    }
+    h2, .h2 { 
+        font-size: 28px; 
+    }
+    .title-decor::before { 
+        top: -15px; 
+        left: -35px; 
+        width: 50px; 
+        height: 40px; 
+    } 
+}
+
+@media (max-width: 1199px) { 
+    main {
+        padding-top: 40px;
+    } 
+    .spacer-lg { 
+        height: 75px; 
+    } 
+    h1, .h1 { 
+        font-size: 30px; 
+    }
+    h2, .h2 { 
+        font-size: 26px; 
+    }
+    h3, .h3 { 
+        font-size: 24px; 
+    }
+    h4, .h4 { 
+        font-size: 20px; 
+    }
+    .title-decor::before { 
+        display: none; 
+    }
+}
+
+a{
+    text-decoration: none !important;
+    transition: $transition;
+    //color: inherit;
+
+    &:hover{
+        color: $clr-primary;
+    }
+}
+
+@media (max-width: 991px) { 
+    .spacer-mobile-off { 
+        display: none; 
+    }
+
+    .spacer-desktop-off { 
+        display: block; 
+    } 
+}
+
+@media (max-width: 767px) { 
+    .hide-on-desktop { 
+        display: block; 
+    }
+
+    .hide-on-mobile {
+        display: none; 
+    }
+
+    .spacer-lg { 
+        height: 40px; 
+    }
+
+    .spacer-sm { 
+        height: 20px; 
+    }
+
+    .spacer-xs { 
+        height: 15px; 
+    } 
+    h1, .h1 { 
+        font-size: 24px; 
+    }
+    h2, .h2 { 
+        font-size: 22px; 
+    }
+    h3, .h3 { 
+        font-size: 20px; 
+    } 
+}
+

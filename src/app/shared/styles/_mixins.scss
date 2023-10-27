@@ -1,0 +1,120 @@
+
+@mixin a{
+    text-decoration: none;
+    transition: $transition;
+    color: inherit;
+
+    &:hover{
+        color: $clr-primary;
+    }
+}
+
+@mixin btn-exit {
+    margin: 20px auto;
+    background-color: $clr-secondary;
+    color: $clr-white;
+    font-weight: bold;
+    border: 2px solid transparent;
+    font-family: 'MontBlanc' , sans-serif ;
+    font-size: 16px;
+    border-radius: 7px;
+    width: 70px;
+    height: 50px;
+}
+
+@mixin btn-detail {
+    margin-bottom: 50px;
+    color:$clr-white;
+    width: 250px;
+    // height: 50px;
+    border-radius: 10px;
+    background-color: $clr-secondary;
+    font-weight: bold;
+    font-size: 14px;
+    border: 2px solid transparent;
+    font-family: 'MontBlanc' , sans-serif ;
+    text-transform: uppercase;
+    line-height: 34px;
+
+    &:hover{
+        border: 2px solid $clr-primary;
+        background-color: $clr-primary;
+    }
+}
+
+@mixin btn-save{
+    color: $clr-black;
+    border: none;
+    // font-weight: bold;
+    text-decoration: none;
+    background: linear-gradient(to bottom, transparent 0%, transparent 90%, $clr-primary 100%);
+    background-size: 200% 100%;
+    background-position: 200% 0;
+    background-repeat: no-repeat;
+    transition: all 0.5s linear;
+
+    &:hover{
+        background-position: 100% 0;
+        color:$clr-primary;
+    }
+}
+
+
+@mixin body($color, $font, $fontWeight) {
+    font-family: $font , sans-serif ;
+    color: $color;
+    font-weight: $fontWeight;
+}
+
+// @mixin spacer-sm {
+//         height: 50px;
+// }
+
+// @mixin spacer-sm-1400 {
+//         height: 40px;
+// }
+
+// @mixin spacer-sm-767 {
+//         height: 20px;
+// }
+
+// @mixin spacer-xs { 
+//     height: 35px; 
+// }
+
+
+// @mixin spacer-xs-1400 { 
+//     height: 25px; 
+// }
+
+// @mixin spacer-lg { 
+//     height: 90px; 
+// }
+
+
+// @mixin spacer-lg { 
+//     height: 75px; 
+// }
+
+// @mixin h2 {
+//     font-size: 40px;
+//     line-height: 1.2em;
+// }
+
+// @mixin h2-1400 {
+//     font-size: 28px;
+// }
+
+
+// @mixin h2-1199 {
+//     font-size: 26px;
+// }
+
+// @mixin h2-767 {
+//     font-size: 22px;
+// }
+
+// @mixin h2-1730 {
+//     font-size: 34px;
+// }
+

@@ -1,0 +1,24 @@
+@import './shared/styles/fonts';
+@import './shared/styles/variables';
+@import './shared/styles/mixins';
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#content-block {
+    overflow: hidden;
+    /* position: relative; */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;    
+    font-family: 'MontBlanc' , sans-serif !important;
+}
+
+
+body{
+    font-family: 'MontBlanc' , sans-serif !important;
+}
+

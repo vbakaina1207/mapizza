@@ -1,0 +1,190 @@
+@import './../../../shared/styles/fonts';
+@import './../../../shared/styles/variables';
+@import './../../../shared/styles/mixins';
+
+body {
+    @include body($clr-black, 'MontBlanc', 400);
+}
+
+.form-cabinet .form-group {
+    margin-bottom: 20px;
+
+
+    & .form-title {
+        margin-bottom: 15px;
+        font-weight: 600;        
+    }   
+}
+
+.form-cabinet .form-group > * + * {
+    margin-top: 15px;
+}
+
+.form-cabinet .row {
+    --bs-gutter-x: 15px;
+}
+
+.input {
+    position: relative;
+    font-size: 16px;
+    height: 54px;
+    line-height: 54px;
+    background: $clr-white;
+    border: 1px solid $clr-border;
+    border-radius: 12px;
+    padding: 0 15px;
+    text-overflow: ellipsis;    
+    transition: $transition;
+    margin: 0;
+    width: 100%;
+
+    
+    &:not(.calendar):focus {
+        border-color: $clr-primary;
+        outline: none;
+    }
+
+    &:focus {
+        z-index: 21;
+    }
+}
+
+
+
+.input-popup-wrapper {
+    position: relative;
+    background-image: url(../../../../assets/icons/icon-calendar.svg);
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+}
+
+.input-popup-wrapper>input {
+    background: transparent;
+}
+
+.form-cabinet .form-group .input-popup-wrapper + p{
+    color: $clr-grey;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 1.5em;
+}
+
+
+.cabinet_address-wrap {
+    margin-bottom: 25px;
+}
+
+.cabinet_address {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.btn {
+    display: inline-block;
+    vertical-align: bottom;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    background: none;
+    font-size: 14px;
+    line-height: 1.45em;
+    font-weight: 600;
+    padding: 14px 30px;
+    text-transform: uppercase;
+    transition: $transition;
+}
+
+
+.btn-secondary {
+    color: $clr-secondary;
+    background: $clr-white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 2px solid $clr-secondary;
+    font-size: 12px;
+    padding: 8px 30px;
+}
+
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-primary {
+    color: $clr-white;
+    background: $clr-secondary;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+td button{
+    @include btn-save;
+}
+
+@media screen and  (max-width: 1400px){
+    .btn-secondary {
+        font-size: 12px;
+        padding: 8px 20px;
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 12px 25px;
+    }
+
+    
+}
+
+@media screen and (min-width: 1200px){
+
+    .btn-secondary:not(.disabled):hover {
+        background: $clr-secondary;
+        color: $clr-white;
+    }
+
+    .btn-primary:not(.disabled):hover {
+        background: $clr-primary;
+    }
+
+    
+}
+
+@media screen and (max-width: 767px){
+    .form-cabinet .form-title {
+        margin-bottom: 10px;
+    }
+
+    .form-cabinet .form-group > * + * {
+        margin-top: 10px;
+    }
+
+    .form-cabinet .row {
+        margin-bottom: -10px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+    }
+}
+
+@media  screen and (max-width: 575px){
+    .cabinet_address {
+        min-width: calc(575px - 24px);
+    }
+
+    .cabinet_address-buttons .btn {
+        width: 100%;
+    }
+}
