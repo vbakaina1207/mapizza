@@ -6,11 +6,12 @@ import { ITypeAdditionRequest } from '../../interfaces/type-addition/type-additi
 import {
   addDoc,
   collectionData,
-  CollectionReference, deleteDoc,
+  CollectionReference,
+  deleteDoc,
   doc,
   docData,
-  Firestore,
-  updateDoc
+  Firestore, query,
+  updateDoc, where
 } from '@angular/fire/firestore';
 
 import { collection, DocumentData } from '@firebase/firestore';
@@ -39,6 +40,12 @@ private url = environment.BACKEND_URL;
   getOneFirebase(id: string) {
     const additionProductDocumentReference = doc(this.afs, `additionProduct/${id}`);
     return docData(additionProductDocumentReference, { idField: 'id' });
+  }
+
+  getAllBySauceFirebase(isSauce: boolean) {
+    // let additionProductBySauce = query(this.additionProductCollection, where('isSauce', '==', `${isSauce}`));    
+    let additionProductBySauce = query(this.additionProductCollection, where('isSauce', '==', isSauce)); 
+      return collectionData(additionProductBySauce,  { idField: 'id' });
   }
 
   createFirebase(additionProduct: ITypeAdditionRequest) {

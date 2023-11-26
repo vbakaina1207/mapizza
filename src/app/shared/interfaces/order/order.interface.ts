@@ -11,28 +11,37 @@ export interface IOrderRequest {
   total: number;
   status: boolean;
   product: IProductResponse;
-  addition: IAdditionResponse;
+  //addition: IAdditionResponse;
   name: string;
   phone: string;
+  email: string;
   delivery_method: string;
   payment_method: string;
-  at_time: string;
-  self_delivery_date: string;
-  self_delivery_time: string;
-  select_point: number;
+  cash: number;
+  isWithoutRest: boolean;
+  at_time: boolean;
+  delivery_date: string;
+  delivery_time: string;
+  self_delivery_address: string;
+  city: string;
   street: string;
   house: string;
   entrance: string;
+  flor: number;
   flat: string;
-  no_call: boolean;
+  use_bonus: boolean;
+  summa_bonus: number;
+  promocode: string;
+  action: string;
+  isCall: boolean;
   isComment: boolean;
   comment: string;
-  isKitchen_comment: boolean;
-  comment_kitchen: string;
-  count_thing: number;
-  count_thing_study: number;
-
+  discount: number;
+  summa: number;
+  address: []
 }
+
+
 
 export interface IOrderResponse extends IOrderRequest {
   id: string;

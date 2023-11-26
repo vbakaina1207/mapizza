@@ -20,6 +20,7 @@ export class AuthAddressComponent implements OnInit {
   public i!: number;
   public dataUser!: any;
   public isEdit!: boolean;
+  
 
 
 constructor(
@@ -121,4 +122,5 @@ constructor(
   }
 
 
+  
 }

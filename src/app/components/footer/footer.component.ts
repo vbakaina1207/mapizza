@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ICategoryResponse } from 'src/app/shared/interfaces/category/category.interface';
+import { CategoryService } from 'src/app/shared/services/category/category.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  public userCategories: Array<ICategoryResponse> = [];
+
+  constructor(
+    private categoryService: CategoryService,
+  ) { }
 
   ngOnInit() {
+    this.getCategories();
+  }
+
+
+  getCategories(): void {
+    this.categoryService.getAllFirebase().subscribe(data => {
+      this.userCategories = data as ICategoryResponse[];
+    })
   }
 
 }

@@ -1,3 +1,28 @@
-<p>
-  favorite works!
-</p>
+<div class="col-12 d-flex justify-center table-width">
+  <table class="table table-responsive table-responsive-md table-responsive-sm table-responsive-lg table-responsive-xl">
+    <thead class="table-category">
+    <tr>
+      <th scope="col" class="th-title">№</th>
+      <th scope="col">Назва</th>
+      <th scope="col">Категорія</th>
+      <th scope="col">Інградієнти</th>
+      <th scope="col">Ціна</th>
+    </tr>
+    </thead>
+
+    <tbody>
+      
+    <tr *ngFor="let product of favoriteProducts; let i = index">
+      <td><b>{{ i+1 }}</b></td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.category.name }}</td>
+      <td (click)="ingredientClick()" *ngIf="!isFullText">{{ product.ingredients| slice:0:75 }} <span *ngIf="product.ingredients">...</span></td>
+      <td (click)="ingredientClick()" *ngIf="isFullText">{{ product.ingredients }}</td>
+      <td class="status"> <b>{{ product.price }} </b> грн</td>
+    </tr>
+
+    </tbody>
+  </table>
+</div>
+
+

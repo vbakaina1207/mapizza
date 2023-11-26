@@ -4,6 +4,7 @@ import { ILogin } from '../../account/account.interface';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+import { IProductResponse } from '../../interfaces/product/product.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,8 @@ export class AccountService {
     public isEdit!: boolean;
     public userAddress = [];
     public datauser = {};
+    public PRODUCT_ID: string = '';
+    public favoriteProducts: Array<IProductResponse> = [];
     private url = environment.BACKEND_URL;
     private api = { auth: `${this.url}/auth` };
 

@@ -5,7 +5,7 @@ export interface ITypeAdditionRequest {
     weight: string;
     price: number;
     imagePath: string;
-    
+    isSauce: boolean;
 }
 
 export interface ITypeAdditionResponse extends ITypeAdditionRequest {

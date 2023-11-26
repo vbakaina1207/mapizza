@@ -47,6 +47,11 @@ textarea {
     height: 150px;
 }
 
+.owerwlow{
+    overflow: auto;
+}
+
+
 @media screen and (max-width: 598px) {
     td button{
         font-size: 12px;

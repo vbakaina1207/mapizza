@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,7 +9,12 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
 import { AuthAddressComponent } from './components/auth-address/auth-address.component';
+import { AuthAdditionComponent } from './components/aus-addition/auth-addition.component';
+import { BasketComponent } from './pages/basket/basket.component';
+import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
 import { SharedModule } from './shared/sahared.module';
+// import { CarouselComponent } from './pages/carousel/carousel.component';
+
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -18,6 +24,8 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -26,7 +34,10 @@ import { HttpClientModule } from '@angular/common/http';
       HeaderComponent,
       FooterComponent,
       AuthDialogComponent,
-      AuthAddressComponent
+      AuthAddressComponent,
+      AuthAdditionComponent,
+      BasketComponent,
+      AlertDialogComponent
     ],
   imports: [
     BrowserModule,
@@ -38,7 +49,9 @@ import { HttpClientModule } from '@angular/common/http';
     provideAuth(() => getAuth()),
     ToastrModule.forRoot(),
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule,
+    NgbCarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]

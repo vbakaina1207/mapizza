@@ -7,9 +7,9 @@ body{
     font-family: 'MontBlanc', sans-serif ;
 }
 
-.section {
-    position: relative;
-}
+// .section {
+//     position: relative;
+// }
 
 .cabinet-section {
     position: relative;
@@ -41,12 +41,28 @@ body{
     border-radius: 12px;
     margin: -1px;
     padding: 0;
+
     
 }
 
-.categories-list-item .route-active  {
-    background-color: $clr-secondary;
-    color: $clr-white;
+.categories-list-item {
+    &:not(.route-active) button:hover {
+        color: $clr-primary;
+    }
+
+    & .route-active button:hover {
+        color: white;
+    }
+    
+
+    & .route-active  {
+        background-color: $clr-secondary;
+        color: $clr-white;
+
+    &:hover {
+        opacity: .8;
+    }
+ }
 }
 
 .categories-list-item a{
@@ -94,6 +110,7 @@ button{
     transition: $transition;
 
 }
+
 
 @media screen and (max-width: 1730px) {
     .categories-menu {

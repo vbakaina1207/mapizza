@@ -66,55 +66,237 @@
     font-weight: $fontWeight;
 }
 
-// @mixin spacer-sm {
-//         height: 50px;
+
+@mixin section{
+    position: relative;
+}
+
+
+// @mixin fav-btn {
+//     width: 20px;
+//     height: 20px;
+//     line-height: 30px;
+//     display: inline-flex;
+//     align-items: center;
+//     justify-content: center;
+//     cursor: pointer;
+//     margin: 0;
+//     padding: 0;
+//     border: 0;
+//     background-color: $clr-white;
+//     background: rgba(1, 183, 255, 0);
+
+//     & svg {
+//         display: block;
+//         max-width: 100%;
+//         max-height: 100%;
+//     }
 // }
 
-// @mixin spacer-sm-1400 {
-//         height: 40px;
+// @mixin fill-anime {
+//     fill: transparent;
+//     stroke: $clr-secondary;
+//     transition: $transition;
 // }
 
-// @mixin spacer-sm-767 {
-//         height: 20px;
+// .fill-anime {
+//     transition: $transition;
 // }
 
-// @mixin spacer-xs { 
-//     height: 35px; 
-// }
+@mixin bonus_calculate {
+    font-size: 14px;
+    color: $clr-primary;
+    font-weight: 600;
+}
 
+@mixin title {
+    font-weight: 600;
+    color: $clr-black;
+}
 
-// @mixin spacer-xs-1400 { 
-//     height: 25px; 
-// }
+@mixin btn {
+    display: inline-block;
+    vertical-align: bottom;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    background: none;
+    font-size: 14px;
+    line-height: 1.45em;
+    font-weight: 600;
+    padding: 14px 30px;
+    text-transform: uppercase;
+    transition: $transition;
 
-// @mixin spacer-lg { 
-//     height: 90px; 
-// }
+    & svg {
+        margin-left: 15px;
+        width: 20px;
+        height: 20px;
+        display: block;
+    }
 
+    @media (max-width: 1400px){
+        & {
+            font-size: 12px;
+            padding: 12px 25px;
+        }
+    }   
+    
+    @media (max-width: 767px){
+        & {
+            padding: 10px 20px;
+        }
+    }    
+}
 
-// @mixin spacer-lg { 
-//     height: 75px; 
-// }
+@mixin btn-secondary {
+    color: $clr-secondary;
+    background: $clr-white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 2px solid $clr-secondary;
+    font-size: 12px;
+    padding: 8px 30px;
 
-// @mixin h2 {
-//     font-size: 40px;
-//     line-height: 1.2em;
-// }
+    & svg path {
+        transition: $transition;
+    }
+    @media screen and (max-width: 1400px){
+    & {
+        font-size: 12px;
+        padding: 8px 20px;
 
-// @mixin h2-1400 {
-//     font-size: 28px;
-// }
+        & svg {
+            width: 18px;
+            height: 18px;
+            margin-left: 10px;
+        }
+    }
+    }   
+}
 
+@mixin btn-primary {
+    color: $clr-white;
+    background: $clr-secondary;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
 
-// @mixin h2-1199 {
-//     font-size: 26px;
-// }
+    @media screen and (min-width: 1200px){
+    &:not(.disabled):hover {
+        background: $clr-primary;
+        }
+    }
+}
 
-// @mixin h2-767 {
-//     font-size: 22px;
-// }
+@mixin thumb-input-number {
+    display: inline-flex;
+    align-items: center;
+    overflow: hidden;
+    color: $clr-black;
+    font-size: 16px;
+    line-height: 1;
+    border: 1px solid $clr-border;
+    border-radius: 12px;
 
-// @mixin h2-1730 {
-//     font-size: 34px;
-// }
+    & button {
+        position: relative;
+        width: 46px;
+        height: 46px;
+        cursor: pointer;
+        background: none;
+        font-size: 0;
+        transition: $transition;
+        border: none;
+    }
 
+    & input {
+        width: 46px;
+        height: 28px;
+        font-weight: 400;
+        text-align: center;
+        border-left: 1px solid $clr-border;
+        border-right: 1px solid $clr-border;
+        border-top: none;
+        border-bottom: none;
+    }
+
+    & button.decrement::before,
+    & button.increment::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 2px;
+        background-color: $clr-grey;
+        transition: $transition;
+    }
+
+    & button.increment::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 2px;
+        height: 10px;
+        background: $clr-grey;
+        transition: $transition;
+    }
+
+    // .thumb-input-number {
+    @media screen and (max-width: 1400px) {    
+        & button {
+            width: 42px;
+            height: 40px;
+        }
+
+        & input {
+            width: 42px;
+            height: 26px;
+        }
+    }
+
+    @media screen and (max-width: 767px){ 
+
+        & button {
+        width: 36px;
+        height: 34px;
+        }
+
+        & input {
+            width: 36px;
+        height: 24px;
+        }
+    }
+
+}
+
+@mixin product_price-wrap {    
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    font-size: 20px;
+    line-height: 1em;
+
+    @media (max-width: 1730px){
+        & {
+            font-size: 18px;
+        }
+    }
+}
+
+@mixin product_price {    
+    flex-shrink: 0;
+    color: #212721;
+    font-weight: 600;
+    line-height: 1em;
+}

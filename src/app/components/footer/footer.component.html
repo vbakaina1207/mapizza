@@ -1,3 +1,158 @@
-<p>
-  footer works!
-</p>
+<div class="container">
+  <div class="footer-top">
+                <img class="decor-img left" src="assets/footer/decor1.svg" alt="">
+                <img class="decor-img right" src="assets/footer/decor2.svg" alt="">
+
+                <div class="row">
+                    <div class="col-md-12 col-xl-3">
+                      <div class="footer-info">
+                        <a class="footer-logo" [routerLink]="[ '' ]" routerLinkActive="route-active">
+                            <img src="assets/header/logo-pizza-red.svg" alt="">
+                        </a>                        
+                        <div class="footer-phone">
+                            <a href="tel:+380971830618">+38 097 18 306 18 </a>                            
+                            <p>нд-чт 09:30 − 21:00 <br> пт- сб 09:30 − 22:00 <br></p>                          
+                        </div>                                                    
+                        <ul class="social">                                                                    
+                          <li>
+                            <a href="https://www.facebook.com/pizza.mammaitaliana" rel="nofollow">
+                              <img src="assets/footer/i-facebook.svg" alt="">
+                            </a>
+                          </li>
+                          <li>
+                            <a href="https://www.instagram.com/_mapizza_/?igshid=NmNmNjAwNzg%3D" rel="nofollow">
+                              <img src="assets/footer/i-instagram.svg" alt="">
+                            </a>
+                          </li>
+                          <li>
+                            <a href="https://www.youtube.com/watch?v=EkfysYf80Ak" rel="nofollow">
+                              <img src="assets/footer/i-you-tube.svg" alt="">
+                            </a>
+                          </li>
+                        </ul>
+                        
+
+                        <div class="title_download_app">
+                          Завантажуйте додаток                            
+                        </div>
+                            <ul class="items_download_app">
+                              <li>
+                                <a href="https://apps.apple.com/us/app/ma-pizza/id1596914596" rel="nofollow">
+                                  <img src="assets/footer/app-store-download.svg" alt="">
+                                </a>
+                              </li>
+                              <li>
+                                <a href="https://play.google.com/store/apps/details?id=com.mamaitaliano.app" rel="nofollow">
+                                  <img src="assets/footer/google-play-download.svg" alt="">
+                                </a>
+                              </li>
+                            </ul>
+                        
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xl-3">
+                        <div class="footer-caption">
+                            Меню:
+                        </div>
+                        <ul class="footer-menu-list">
+                          <li *ngFor="let category of userCategories" class="nav-item menu-item">
+                            <a [routerLink]="[ '/product/', category.path, '' ]" routerLinkActive="route-active" class="nav-link" aria-current="page">                        
+                              <span>{{category.name}}</span>
+                            </a>
+                          </li>                          
+                        </ul>                    
+                        </div>
+                    <div class="col-md-4 col-xl-3">
+                        <div class="footer-caption">
+                            Про компанію:
+                        </div>
+                        <ul class="footer-links">
+                          <li id="menu-item-375" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-375">                          
+                            <a [routerLink]="[ '/about' ]" routerLinkActive="route-active">Про нас</a>
+                          </li>
+                          <li id="menu-item-373" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-373">
+                            <a [routerLink]="[ '/delivery' ]" routerLinkActive="route-active">Доставка та оплата</a>
+                          </li>
+                          <li id="menu-item-378" class="show-submenu menu-item menu-item-type-post_type_archive menu-item-object-actions menu-item-378">
+                            <a [routerLink]="[ '/discount' ]" routerLinkActive="route-active">Акції</a>
+                          </li>
+                          <li id="menu-item-374" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-374">
+                            <a [routerLink]="[ '/contact' ]" routerLinkActive="route-active">Контакти</a>
+                          </li>
+                          <li id="menu-item-1128" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-1128">
+                            <a [routerLink]="[ '/vacancy' ]" routerLinkActive="route-active">Вакансії</a>
+                          </li>
+                          <li id="menu-item-3484" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-3484">
+                            <a [routerLink]="[ '/news' ]" routerLinkActive="route-active">Новини</a>
+                          </li>
+                          <li id="menu-item-372" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-372">
+                            <a [routerLink]="[ '/faq' ]" routerLinkActive="route-active">FAQ</a>
+                          </li>
+                        </ul>                    
+                      </div>
+                    <div class="col-md-4 col-xl-3">
+                        <div class="footer-caption">
+                            Львів:
+                        </div>
+                          <ul class="footer-address">
+                            <li>
+                              <p>вул. Пасічна, 181 </p>
+                            </li>
+                            <li>
+                              <p>просп. Червоної Калини, 60 (ТЦ Арсен)</p>
+                            </li>
+                            <li>
+                              <p>вул. Івана Пулюя, 12</p>
+                            </li>
+                            <li>
+                              <p>вул. Малоголосківська, 16</p>
+                            </li>
+                            <li>
+                              <p>вул. Китайська, 10</p>
+                            </li>
+                            <li>
+                              <p>вул. Івана Франка, 71</p>
+                            </li>
+                            <li>
+                              <p>вул. Залізнична, 19</p>
+                            </li>
+                          </ul>
+                      </div>
+                </div>
+  </div>
+  <div class="footer-bottom">
+                <div class="row  align-items-center">
+                    <div class="col-lg-4 col-md-6 text-md-start text-sm-center text-center pe-md-0">
+                      <div class="footer-item copy ">
+                        <p>©2023 MA Pizza Всі права захищено</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 text-lg-center text-md-end text-sm-center text-center">
+                        <div class="footer-item">                            
+                          <a [routerLink]="[ '/privacy-policy' ]" routerLinkActive="route-active"  target="_blank">Політика конфіденційності</a>                                                   
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 text-lg-center text-md-end text-sm-center text-center">
+                        <div class="footer-item">                          
+                          <a [routerLink]="[ '/offerta' ]" routerLinkActive="route-active"  target="_blank">Оферта</a>                          
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 text-sm-center text-center">
+                        <div class="footer-item cards">
+                            <img src="assets/footer/visa-card.svg" alt="">
+                            <img src="assets/footer/master-card.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 text-md-end text-sm-center text-center">
+                        <div class="footer-item develope">
+                            <a href="http://redstone.media/" target="_blank">
+                                <span>Розробка сайтів</span> 
+                                <img src="assets/footer/redstone.svg" alt="REDSTONE">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+</div>
+

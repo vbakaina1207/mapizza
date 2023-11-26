@@ -8,6 +8,7 @@ import { ICategoryResponse } from 'src/app/shared/interfaces/category/category.i
 import { IProductResponse } from 'src/app/shared/interfaces/product/product.interface';
 import { ROLE } from 'src/app/shared/constants/role.constant';
 import { Router } from '@angular/router';
+import { BasketComponent } from 'src/app/pages/basket/basket.component';
 
 @Component({
   selector: 'app-header',
@@ -27,6 +28,7 @@ export class HeaderComponent implements OnInit {
 
   public currentUser!: any;
   public isOpenmenu: boolean = false;
+  public isOpenMobileMenu: boolean = false;
   public userName!: string;
 
 
@@ -81,6 +83,7 @@ export class HeaderComponent implements OnInit {
   updateBasket(): void {
     this.orderService.changeBasket.subscribe(() => {
       this.loadBasket();
+      console.log(this.basket, 'bas');
     })
   }
 
@@ -92,7 +95,7 @@ export class HeaderComponent implements OnInit {
         this.loginPage = 'Admin';
       } else if(this.currentUser && this.currentUser.role === ROLE.USER) {
         this.isLogin = true;
-        this.loginUrl = 'cabinet';
+       // this.loginUrl = 'cabinet';
         this.loginPage = 'Cabinet';
 
       } else {
@@ -124,10 +127,33 @@ export class HeaderComponent implements OnInit {
     this.isOpenmenu = !this.isOpenmenu;
   }
 
+  mobileMenuOpen(): void {
+    this.isOpenMobileMenu = !this.isOpenMobileMenu;
+  }
+
   logout(): void {
     this.router.navigate(['/']);
     localStorage.removeItem('currentUser');
     this.accountService.isUserLogin$.next(true);
   }
+
+  openBasketDialog(): void {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.position = {
+          top:  '15px',
+          right: '15px'
+        };
+        this.dialog.open(BasketComponent, {
+          backdropClass: 'dialog-back',
+          panelClass: 'auth-dialog-basket',
+          autoFocus: false,
+          maxWidth: '100vw',
+          position: dialogConfig.position
+        }).afterClosed().subscribe(result => {
+          console.log(result);
+          this.isCheckout = false;
+        })
+        this.isCheckout = true;
+    }
 
 }

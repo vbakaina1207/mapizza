@@ -10,7 +10,9 @@ import {
   doc,
   docData,
   Firestore,
-  updateDoc
+  query,
+  updateDoc,
+  where
 } from '@angular/fire/firestore';
 
 import { collection, DocumentData } from '@firebase/firestore';
@@ -23,16 +25,25 @@ export class TypeProductService {
   private url = environment.BACKEND_URL;
   private api = { typesProduct: `${this.url}/typesProduct` };
   private typeProductCollection!: CollectionReference<DocumentData>;
+  private productCollection!: CollectionReference<DocumentData>;
+  
   constructor(
     private http: HttpClient,
     private afs: Firestore
   ) {
     this.typeProductCollection = collection(this.afs, 'typesProduct');
+    this.productCollection = collection(this.afs, 'products');
   }
+
 
   getAllFirebase() {
     return collectionData(this.typeProductCollection, { idField: 'id' });
   }
+
+  // getAllByCategoryFirebase(nameCategory: string) {
+  //   let productByCategory  = query(this.typeProductCollection, (where ('category.path','==', `${nameCategory}`)));
+  //   return collectionData(productByCategory,  { idField: 'id' });
+  // }
 
   getOneFirebase(id: string) {
     const typeProductDocumentReference = doc(this.afs, `typesProduct/${id}`);

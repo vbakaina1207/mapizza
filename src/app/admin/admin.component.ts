@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../shared/services/account/account.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthDialogComponent } from 'src/app/components/auth-dialog/auth-dialog.component';
 
 @Component({
   selector: 'app-admin',
@@ -11,10 +13,12 @@ export class AdminComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
+    this.openLoginDialog();
   }
 
   logout(): void {
@@ -22,5 +26,24 @@ export class AdminComponent implements OnInit {
     localStorage.removeItem('currentUser');
     this.accountService.isUserLogin$.next(true);
   }
+
+  openLoginDialog(): void {
+    this.dialog.open(AuthDialogComponent, {
+      backdropClass: 'dialog-back',
+      panelClass: 'auth-dialog',
+      autoFocus: false
+    }).afterClosed().subscribe(result => {
+      console.log(result);
+    })
+  }
+  // loginUser(): void {
+  //   const { email, password } = this.authForm.value;
+  //   console.log(this.authForm.value);
+  //   this.login(email, password).then(() => {
+  //     this.toastr.success('User successfully login');
+  //   }).catch(e => {
+  //     this.toastr.error(e.message);
+  //   })
+  // }
 
 }

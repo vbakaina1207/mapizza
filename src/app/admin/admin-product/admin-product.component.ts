@@ -57,6 +57,7 @@ export class AdminProductComponent implements OnInit {
       category: [null, Validators.required],
       type_product: [null],    
       type_addition: [[null]],
+      selected_addition: [[null]],
       name: [null, Validators.required],
       path: [null, Validators.required],
       ingredients: [null],
@@ -129,20 +130,22 @@ export class AdminProductComponent implements OnInit {
       category: product.category,
       type_product: product.type_product,      
       type_addition: product.type_addition,
+      selected_addition: product.selected_addition,
       name: product.name,
       path: product.path,
       ingredients: product.ingredients,
       weight: product.weight,
       price: product.price,
+      addition_price: product.addition_price,
       bonus: product.bonus,
       imagePath: product.imagePath,
+      count:1
     });
 
 
     this.isUploaded = true;
     this.editStatus = true;
     this.currentProductId = product.id;
-    console.log(this.productForm.value)
   }
 
   deleteProduct(product: IProductResponse): void {

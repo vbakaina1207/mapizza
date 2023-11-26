@@ -6,6 +6,7 @@ import { HistoryComponent } from './history/history.component';
 import { CabinetComponent } from './cabinet.component';
 import { SharedModule } from '../../shared/sahared.module';
 import { PasswordComponent } from './password/password.component';
+import { FavoriteComponent } from './favorite/favorite.component';
 
 
 
@@ -15,7 +16,8 @@ import { PasswordComponent } from './password/password.component';
     CabinetComponent,
     PersonalComponent,
     HistoryComponent,
-    PasswordComponent
+    PasswordComponent,
+    FavoriteComponent
   ],
   imports: [
     CommonModule,

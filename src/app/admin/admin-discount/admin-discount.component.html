@@ -42,8 +42,8 @@
     </ng-container>
 
     <button class="btn-add ms-3" (click)="openForm()" *ngIf="!isAdd">Додати акцію</button>
-    <div class="col-12 d-flex justify-center" *ngIf="!isAdd">
-        <table class="table table-responsive">
+        <div class="table-responsive d-flex justify-center col-12"  *ngIf="!isAdd">
+        <table class="table col">
             <thead class="table-category">
                 <tr>
                     <th scope="col">Дата</th>

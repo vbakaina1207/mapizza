@@ -13,6 +13,10 @@ body{
     line-height: 1.5em;
 }
 
+.section {
+    position: relative;
+}
+
 .spacer-xs { 
     height: 35px; 
 }
@@ -33,6 +37,7 @@ h1, .h1 {
 h2, .h2 { 
     font-size: 40px; 
     line-height: 1.2em; 
+    font-weight: 600;
 }
 
 h3, .h3 { 
@@ -91,6 +96,406 @@ ul, ol {
     overflow: hidden; 
 }
 
+
+.ing_output {
+    line-height: 1em;
+}
+
+.ing_output-inner {
+    display: inline;
+}
+
+.ing_output-clean-all {
+    display: none;
+    align-items: center;
+    cursor: pointer;
+}
+
+.ing_row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 -2.5px -5px;
+}
+
+.ing_output-clean-all {
+    display: none;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    background-color: $clr-white;
+
+    & b {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4em;
+    color: $clr-secondary;
+    transition: $transition;
+    }
+
+    & i {
+    position: relative;
+    margin-left: 5px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    border: 1px solid $clr-secondary;
+    transition: $transition;
+    }
+}
+
+.ing_output.active .ing_output-clean-all,
+.added_ing-wrap.active {
+    display: inline-flex;
+}
+
+
+.ing_output-clean-all i::before, .ing_output-clean-all i::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 8px;
+    height: 1px;
+    background: $clr-secondary;
+    transition: $transition;
+}
+
+.ing_output-clean-all i::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+.ing_output-clean-all i::before, .ing_output-clean-all i::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 8px;
+    height: 1px;
+    background: $clr-secondary;
+    transition: $transition;
+}
+
+.btn-close:after {
+    transform: translate(-50%,-50%) rotate(45deg);
+}
+
+.ing_output-clean-all i:after {
+    transform: translate(-50%,-50%) rotate(-45deg);
+}
+
+
+.btn-close {
+    position: relative;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+}
+
+.ing_control-title {
+    font-size: 14px;
+    font-weight: 400;
+    color: $clr-black;
+}
+
+
+.btn-close::before, .btn-close::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    width: 80%;
+    height: 2px;
+    background: $clr-black;
+    transition: $transition;
+}
+
+.ing_control .btn-close::before, .ing_control .btn-close::after {
+    background: $clr-secondary;
+}
+
+.btn-close:after {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+
+.ing_control::after {
+    content: ',';
+    font-size: 14px;
+}
+
+.added_ing-wrap, .deleted_ing-wrap {
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: 400;
+    color: $clr-grey;
+    line-height: 1.43em;
+}
+
+.added_ing-wrap:before {
+    content: 'Додано: ';
+    color: $clr-primary;
+}
+
+.cart-dropdown-delete {
+    cursor: pointer;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background-color: $clr-white;
+}
+
+.ing_control .cart-dropdown-delete:before, .ing_control .cart-dropdown-delete:after {
+    background: $clr-secondary;    
+}
+
+.cart-dropdown-delete:before, .cart-dropdown-delete:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%) rotate(-45deg);
+    width: 80%;
+    height: 2px;
+    background: #212721;
+    transition: all .3s linear;
+}
+
+.cart-dropdown-delete:after {
+    transform: translate(-50%,-50%) rotate(45deg);
+}
+
+.ingredient {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 0 2.5px 5px;
+    width: calc((100% / 7) - 5px);
+    border: 1px solid $clr-border;
+    border-radius: 12px;
+    padding: 15px 5px;
+    cursor: pointer;
+    transition: $transition;
+}
+
+.ingredient_img {
+    margin: 0 auto 10px;
+    position: relative;
+    width: 48px;
+    height: 48px;
+
+    & img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: block;
+        max-width: 48px;
+        max-height: 48px;
+    }
+}
+
+
+.ingredient_title {
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.2em;
+    margin-bottom: 10px;
+    color: &clr-black;
+}
+
+.ingredient_bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+    color: $clr-grey;
+    font-size: 14px;
+    line-height: 1.2em;
+}
+
+.ingredient_bottom > * + *::before {
+    content: '|';
+    margin: 3px;
+    font-size: 14px;
+}
+
+.ingredient_action {
+    position: absolute;
+    z-index: 1;
+    right: 8px;
+    top: 8px;
+    width: 16px;
+    height: 16px;
+    transition: $transition;
+}
+
+.ingredient_action:before, .ingredient_action:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background-image: url(./assets/icons/icon-ingredient-check.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    transition: 0.25s;
+    opacity: 0;
+}
+
+.ingredient_action:after {
+    background-image: url(./assets/icons/icon-ingredient-check.svg);
+}
+
+
+.ingredient.active {
+    border-color: $clr-primary;
+}
+
+.ing_control {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 10px;
+
+    & .btn-close {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+
+.btn-product {
+    flex-shrink: 0;
+    position: relative;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 0 0 0 10px;
+    border-radius: 12px;
+    padding: 8px 15px;
+    background: $clr-secondary;
+    transition: $transition;
+    border: none;
+    color: $clr-white;
+}
+
+.btn-product i {
+    position: relative;
+    width: 20px;
+    height: 20px;
+
+    & svg {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    }
+}
+
+
+
+.fav-btn {
+    width: 20px;
+    height: 20px;
+    line-height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: $clr-white;
+    background: rgba(1, 183, 255, 0);
+
+    & svg {
+        display: block;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    &.active .fill-anime {
+        fill: $clr-secondary;
+    }
+}
+
+.fill-anime {
+    fill: transparent;
+    stroke: $clr-secondary;
+    transition: $transition;
+}
+
+.fill-anime {
+    transition: $transition;
+}
+
+.img {
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: top;
+}
+
+.butn {
+    display: inline-block;
+    vertical-align: bottom;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    background: 0 0;
+    font-size: 14px;
+    line-height: 1.45em;
+    font-weight: 600;
+    padding: 14px 30px;
+    text-transform: uppercase;
+    transition: $transition;
+}
+
+
+.btn-primar {
+    color: $clr-white;
+    background: $clr-secondary;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.main-order-button, .apply_bonus {
+    position: relative;
+}
+
+.btn-secondary {
+    color: $clr-secondary;
+    background: $clr-white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 2px solid $clr-secondary;
+    font-size: 12px;
+    padding: 8px 30px;
+}
+
+
+
+
+
 @media (max-width: 1730px) { 
     h1, .h1 { 
         font-size: 40px; 
@@ -135,6 +540,45 @@ ul, ol {
         width: 50px; 
         height: 40px; 
     } 
+    
+    .ingredient {
+        padding: 10px 5px;
+    }
+
+    .ingredient_img {
+        margin: 0 auto 5px;
+        width: 40px;
+        height: 40px;
+
+        & img {
+            max-width: 40px;
+            max-height: 40px;
+        }
+    }
+
+    .ingredient_title {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .ingredient_bottom {
+        font-size: 12px;
+    }
+
+    
+    .ing_control {
+        margin-right: 10px;
+
+        & .btn-close {
+            width: 12px;
+            height: 2px;
+        }
+    }
+
+    .butn {
+        font-size: 12px;
+        padding: 12px 25px;
+    }
 }
 
 @media (max-width: 1199px) { 
@@ -159,15 +603,65 @@ ul, ol {
     .title-decor::before { 
         display: none; 
     }
+
+    
 }
 
 a{
-    text-decoration: none !important;
-    transition: $transition;
-    //color: inherit;
+        text-decoration: none !important;
+        transition: $transition;
+    
+        &:hover{
+            color: $clr-primary;
+        }
+    }
 
-    &:hover{
-        color: $clr-primary;
+@media (min-width: 1200px){
+    .btn-product:not(.disabled):hover {
+        background: $clr-primary;
+    }
+
+    
+
+    .btn-secondary:not(.disabled):hover {
+        background: $clr-secondary;
+        color: $clr-white;
+    }
+
+    .ingredient.active:hover {
+        border-color: $clr-secondary;
+    }
+
+    .ingredient:hover {
+        border-color: $clr-primary;
+    }
+
+    .btn-close:hover:before, .btn-close:hover:after {
+        background: $clr-secondary;
+    }
+
+    .ing_control .btn-close:hover::before, .ing_control .btn-close:hover::after {
+        background: $clr-primary;
+    }
+
+    .fav-btn:hover .fill-anime {
+        fill: $clr-primary;
+        stroke: $clr-primary;
+    }
+
+    .btn-primar:not(.disabled):hover {
+        background: $clr-primary;
+        color: $clr-white;
+    }
+
+    .btn-primar:hover {
+        background: $clr-primary;
+        color: $clr-white;
+    }
+
+    .btn-secondary:not(.disabled):hover {
+        background: $clr-secondary;
+        color: $clr-white;
     }
 }
 
@@ -210,5 +704,51 @@ a{
     h3, .h3 { 
         font-size: 20px; 
     } 
+
+    .ingredient {
+        width: calc((100% / 4) - 5px);
+    }
+
+    .added_ing-wrap, .deleted_ing-wrap {
+        font-size: 12px;
+        line-height: 1.1em;
+    }
+
+    .butn {
+        padding: 10px 20px;
+    }
 }
 
+
+@media screen and (max-width: 575px){
+    .ing_body-additional {
+        padding: 10px 12px 15px;
+    }
+
+    .ingredient_img {
+        margin: 0 auto 5px;
+        height: 36px;
+        width: 36px;
+
+        & img {
+            max-height: 36px;
+            max-width: 36px;
+        }
+    }
+
+    .ingredient_title {
+        font-size: 12px;
+    }
+
+    .ingredient_bottom {
+        font-size: 10px;
+    }
+
+    .ingredient {
+        width: calc((100% / 3) - 5px);
+    }
+}
+
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

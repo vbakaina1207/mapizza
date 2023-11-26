@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container">
     <div class="d-flex align-items-start admin-block">
         <div class="nav flex-column list-group list-group-flush me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <button class="list-group-item" [routerLink]="[ 'discount' ]" routerLinkActive="active-route"
@@ -15,7 +15,7 @@
             <button class="btn-exit" type="button" (click)="logout()">ВИХІД</button>
         </div>
     
-        <div class="tab-content w-100" id="v-pills-tabContent">
+        <div class="tab-content col" id="v-pills-tabContent">
             <router-outlet></router-outlet>
         </div>
     </div>

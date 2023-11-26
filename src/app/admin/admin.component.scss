@@ -35,3 +35,9 @@ body{
     background-color: $clr-primary;
 }
 
+
+@media screen and (max-width: 1400px) {
+    .tab-content{
+        width: calc(100% - 450px);
+    }
+}

@@ -43,6 +43,12 @@ td button {
     @include btn-exit;
 }
 
+input[type='checkbox']{
+    width: 18px;
+    margin-top: 12px;    
+    appearance: auto;
+    accent-color: $clr-primary;
+}
 @media screen and (max-width: 598px) {
     td button{
         font-size: 12px;

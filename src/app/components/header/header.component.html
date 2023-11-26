@@ -1,4 +1,4 @@
-<header class="no-poster">
+<header class="no-poster" [ngClass]="{'open-menu': isOpenMobileMenu}">
   <div class="header-wrapper">
     <div class="container">
       <div class="header-top">
@@ -8,26 +8,26 @@
         </div>
         <nav class="header-links">
           <ul>
-                          <li id="menu-item-375" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-375">                          
+                          <li id="menu-item-375" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page">                          
                             <a [routerLink]="[ '/about' ]" routerLinkActive="route-active">Про нас</a>
                           </li>
-                          <li id="menu-item-373" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-373">
+                          <li id="menu-item-373" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page">
                             <a [routerLink]="[ '/delivery' ]" routerLinkActive="route-active">Доставка та оплата</a>
                           </li>
-                          <li id="menu-item-378" class="show-submenu menu-item menu-item-type-post_type_archive menu-item-object-actions menu-item-378">
+                          <li id="menu-item-378" class="show-submenu menu-item menu-item-type-post_type_archive menu-item-object-actions">
                             <a [routerLink]="[ '/discount' ]" routerLinkActive="route-active">Акції</a>
                           </li>
-                          <li id="menu-item-374" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-374">
+                          <li id="menu-item-374" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page">
                             <a [routerLink]="[ '/contact' ]" routerLinkActive="route-active">Контакти</a>
                           </li>
-                          <li id="menu-item-1128" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-1128">
+                          <li id="menu-item-1128" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page">
                             <a [routerLink]="[ '/vacancy' ]" routerLinkActive="route-active">Вакансії</a>
                           </li>
-                          <li id="menu-item-3484" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-3484">
+                          <li id="menu-item-3484" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page">
                             <a [routerLink]="[ '/news' ]" routerLinkActive="route-active">Новини</a>
                           </li>
-                          <li id="menu-item-372" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page menu-item-372">
-                            <a [routerLink]="[ '/faq' ]" routerLinkActive="route-active">FAQ</a>
+                          <li id="menu-item-372" class="show-submenu menu-btn menu-item menu-item-type-post_type menu-item-object-page">
+                            <a [routerLink]="[ '/faq' ]" routerLinkActive="route-active">Відгук</a>
                           </li>
           </ul>
         </nav>
@@ -44,8 +44,6 @@
           <img src="assets/header/logo-pizza-red.svg" alt="">
         </a>
         <div class="menu-list">
-        <!-- <ul> -->
-        
           <ul>
             <li *ngFor="let category of userCategories" class="nav-item menu-item">
               <a [routerLink]="[ '/product/', category.path, '' ]" routerLinkActive="route-active" class="nav-link" aria-current="page">
@@ -137,7 +135,8 @@
           
         </div>
       </div>
-      <div class="header-cart open-cart empty">
+
+      <div class="header-cart open-cart" [ngClass]="{empty: !basket.length}" (click)="openBasketDialog()">
         <div style="position: relative;">
         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M9.375 9.58739V8.37489C9.375 5.56239 11.6375 2.79989 14.45 2.53739C17.8 2.21239 20.625 4.84989 20.625 8.13739V9.86239" stroke="#212721" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -145,10 +144,10 @@
           <path d="M19.3694 15H19.3806" stroke="#212721" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           <path d="M10.6181 15H10.6294" stroke="#212721" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
-        <i>0</i>
+        <i>{{ count }}</i>
       </div>
       <p>
-        <b>0</b>
+        <b>{{ total }}</b>
         грн
       </p>
       <div class="tooltip">
@@ -162,7 +161,14 @@
           </div>
         </div>
       </div>
+      <div class="hamburger hamburger--elastic-r" (click)="mobileMenuOpen()" [ngClass]="{'is-active': isOpenMobileMenu}">
+        <div class="hamburger-box">
+          <div class="hamburger-inner">
+          </div>
+        </div>
       </div>
+      
+    </div>
       
     </div>
   </div>

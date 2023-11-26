@@ -41,7 +41,6 @@ export class PersonalComponent implements OnInit {
     this.loadUser();
     this.getUser();
     this.initAuthFormData();
-    //this.getAddressUser();
     this.updateAddress();   
     this.updateCurrentUser();
   }
@@ -142,37 +141,10 @@ export class PersonalComponent implements OnInit {
     })
   }
 
-  // async updateDocAddress(): Promise<any> {
-  //   this.dataUser = this.accountService.userAddress;
-  //   const userAddress = {
-  //     address: this.dataUser
-  //   }
-  //   //setDoc(doc(this.afs, 'users', this.currentUser.uid), userAddress, { merge: true });
-  //   console.log(userAddress, 'userAddres');
-  //   localStorage.setItem('currentUser', JSON.stringify( userAddress));
-  //   this.accountService.changeCurrentUser.next(true);
-  //   console.log(this.currentUser, 'curUser');
-  //   //console.log(doc(this.afs, 'users', this.currentUser.uid), user, userAddress);
-  // }
+  
 
 
-  // async getAddressUser(): Promise<any> {
-    
-  //   getDoc(doc(this.afs, "users", this.currentUser.uid)).then((user_doc) => {
-  //     this.dataUser = user_doc.get('address');
-  //     });
-  // }
-
-  // getAddress():void {
-  //   this.getAddressUser().then(() => {
-  //     // this.isAddressNew = true;
-  //     this.dataUser = this.accountService.userAddress;
-  //     this.updateAddress();
-  //   }).catch(e=>{
-  //     // this.isAddressNew = false;
-  //     console.log(result);
-  //   })
-  // }
+  
 
   updateAddress(): void {
     this.accountService.changeAddress.subscribe(() => {

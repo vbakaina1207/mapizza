@@ -41,7 +41,8 @@ export class AdminAdditionTypeComponent implements OnInit {
       weight: [null, Validators.required],
       price: [null, Validators.required],
       path: [null, Validators.required],
-      imagePath: [null, Validators.required]
+      imagePath: [null, Validators.required],
+      isSauce: [false]
     });
   }
 
@@ -79,7 +80,8 @@ export class AdminAdditionTypeComponent implements OnInit {
       weight: additionProduct.weight,
       price: additionProduct.price,
       path: additionProduct.path,
-      imagePath: additionProduct.imagePath
+      imagePath: additionProduct.imagePath,
+      isSauce: additionProduct.isSauce
     });
     this.editStatus = true;
     this.currentTypeAdditionId = additionProduct.id;

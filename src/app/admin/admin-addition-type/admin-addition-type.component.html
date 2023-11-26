@@ -7,11 +7,15 @@
                   {{ editStatus ? 'Змінити додатковий продукт' : 'Додати додатковий продукт' }}
               </button>
               <div class="row">
-                  <div class="col mb-3">
+                  <div class="col-5 mb-3">
                       <label for="name" class="form-label">*Назва</label>
                       <input formControlName="name" name="name" type="text" class="form-control" id="name">
                   </div>
-                  <div class="col mb-3">
+                  <div class="col-1 mb-3">
+                      <label for="isSauce" class="form-label">Соус</label>
+                      <input formControlName="isSauce" name="isSauce" type="checkbox" class="form-control" id="isSauce">                      
+                  </div>
+                  <div class="col-6 mb-3">
                       <label for="path" class="form-label">*Шлях</label>
                       <input formControlName="path" name="path" type="text" class="form-control" id="path">
                       <div class="invalid-feedback">Path is required</div>
@@ -58,8 +62,8 @@
   </ng-container>
 
   <button class="btn-add ms-3" (click)="openForm()" *ngIf="!isAdd">Додати складник</button>
-  <div class="col-12 d-flex justify-center" *ngIf="!isAdd">
-      <table class="table table-responsive table-responsive-md table-responsive-sm table-responsive-lg table-responsive-xl">
+  <div class="table-responsive col-12 d-flex justify-center" *ngIf="!isAdd">
+      <table class="table">
           <thead class="table-category">
               <tr>
                   <th scope="col">№</th>
