@@ -23,7 +23,6 @@ export class ProductInfoComponent implements OnInit {
     null || undefined;
   public currentCategoryName!: string;
   public currentProductCategory = <ICategoryResponse>{} || null || undefined;
-  // public currentAddition = Array<ITypeAdditionResponse>;
   private eventSubscription!: Subscription;
   public isAddition: boolean = false;
   public activeAddition: string = '';

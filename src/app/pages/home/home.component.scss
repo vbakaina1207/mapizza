@@ -1,5 +1,34 @@
+@import '../../shared/styles/fonts';
+@import '../../shared/styles/variables';
+@import '../../shared/styles/mixins';
+
+
 *{
-    margin: 0;
+    margin: 0 auto;;
     padding: 0;
     box-sizing: border-box;
+}
+
+
+.banner-slider {
+    
+    & .swiper-entry{
+        position: relative;
+    }    
+
+    & .swiper-entry:before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/banners/bg-slide.svg');
+    // background: url(/wp-content/themes/mamma-italiana/img/bg-slide.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center top;
+    display: block;
+    }
 }

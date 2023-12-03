@@ -94,9 +94,9 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
         this.isProductType = true;        
       });
     }
-  if (this.categoryName === 'pizza'  ||  this.categoryName === 'salads' || this.router.url == '/'  ) {
+  if (this.categoryName === 'pizza'  ||  this.categoryName === 'salads' || this.router.url == '/' || this.router.url == '/#pizza' ) {
       this.isCategoryPizza = true;
-      if(this.router.url == '/') {
+      if(this.router.url == '/#pizza' || this.router.url == '/') {
         this.categoryName = 'pizza';
         this.currentCategoryName = '';
         this.productService.getAllByCategoryFirebase(this.categoryName).subscribe((data) => {
@@ -115,7 +115,7 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
         this.isProductType = true;
       }
     }
-    if( this.router.url == '/') this.isCategoryPizza = true;
+    if( this.router.url == '/' || this.router.url == '/#pizza') this.isCategoryPizza = true;
     if (this.isCategoryPizza) this.currentCategoryName = 'Піцца';
   }
 

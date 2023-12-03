@@ -1,83 +1,125 @@
-<!-- <ngb-carousel
-	#carousel
-	[interval]="1000"
-	[pauseOnHover]="pauseOnHover"
-	[pauseOnFocus]="pauseOnFocus"
-	(slide)="onSlide($event)"
->
-	@for (img of images; track img; let i = $index) {
-		<ng-template ngbSlide>
-			<div class="carousel-caption">
-				<h3>My slide {{ i + 1 }} title</h3>
-			</div>
-			<a href="https://www.google.fr/?q=Number+{{ i + 1 }}" target="_blank" rel="nofollow noopener noreferrer">
-				<div class="picsum-img-wrapper">
-					<img [src]="img" alt="My image {{ i + 1 }} description" />
+
+<ngb-carousel>	
+	<ng-template ngbSlide>		
+	<div class="banner-slide">		
+		<div class="row">
+			<div class="col-lg-5 order-1 order-lg-0 align-self-xl-center">
+				<div class="banner-content">
+					<div class="banner-decor">
+						<img src="assets/banners/banner-decor.svg" alt="">
+					</div>
+					<div class="title h1 text-cut-3">Акція 3+1!</div>
+					<div class="text text-cut-5">
+						<p>Замовляйте чотири піци та отримуйте одну з них безкоштовно!
+							<br>							
+							*акція діє з п’ятниці по неділю
+						</p>
+					</div>                                                
+					<a class="butn btn-primar btn-slide" href="#pizza">
+						<!-- [href]="[ 'product/pizza/' ]" -->
+						<span>Замовити</span>
+						<i></i>
+					</a>
 				</div>
-			</a>
-		</ng-template>
-	}
+			</div>
+			<div class="col-lg-7 align-self-xl-end">
+				<div class="banner-imgs picsum-img-wrapper">
+					<img [src]="images[2]" alt="Random first slide" class="mx-auto imgLoaded">
+				</div>
+			</div>
+		</div>
+		</div>
+		<button type="button" class="carousel-control-prev">
+			<span aria-hidden="true" class="carousel-control-prev-icon">
+
+			</span>
+			
+			<span class="visually-hidden">Previous</span>
+		</button>
+	</ng-template>
+	<ng-template ngbSlide>
+		<div class="banner-slide">
+		<div class="row">
+			<div class="col-lg-5 order-1 order-lg-0 align-self-xl-center">
+				<div class="banner-content">
+					<div class="banner-decor">
+						<img src="assets/banners/banner-decor.svg" alt="">
+					</div>
+					<div class="title h1 text-cut-3">Акція 2+1!</div>
+					<div class="text text-cut-5">
+						<p>Замовляй 3 піци та отримуй одну з них безкоштовно!
+							<br>
+							*акція діє з понеділка по четвер
+						</p>
+					</div>                                                
+					<a class="butn btn-primar btn-slide" href="#pizza">
+						<span>Замовити</span>
+						<i></i>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-7 align-self-xl-end">
+				<div class="banner-imgs picsum-img-wrapper">
+					<img [src]="images[1]" alt="Random first slide" class="mx-auto imgLoaded">
+				</div>
+			</div>
+		</div>
+		</div>
+	</ng-template>		
+	<ng-template ngbSlide>
+		<div class="banner-slide">
+		<div class="row">
+			<div class="col-lg-5 order-1 order-lg-0 align-self-xl-center">
+				<div class="banner-content">
+					<div class="banner-decor">
+						<img src="assets/banners/banner-decor.svg" alt="">
+					</div>
+					<div class="title h1 text-cut-3">-15% на самовивіз!</div>
+					<div class="text text-cut-5">
+						<p>Забирай замовлення самостійно з наших піцерій та отримуй знижку 15%!
+							
+						</p>
+					</div>                                                
+					<a class="butn btn-primar btn-slide" href="#pizza">
+						<span>Замовити</span>
+						<i></i>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-7 align-self-xl-end">
+				<div class="banner-imgs picsum-img-wrapper">
+					<img [src]="images[0]" alt="Random first slide" class="mx-auto imgLoaded">
+				</div>
+			</div>
+		</div>
+		</div>
+	</ng-template>		
+	<ng-template ngbSlide>
+		<div class="banner-slide">
+		<div class="row">
+			<div class="col-lg-5 order-1 order-lg-0 align-self-xl-center">
+				<div class="banner-content">
+					<div class="banner-decor">
+						<img src="assets/banners/banner-decor.svg" alt="">
+					</div>
+					<div class="title h1 text-cut-3">Середній час доставки 29 хв!</div>
+					<div class="text text-cut-5">
+						<p>*у жовту зону до 59 хв
+						</p>
+					</div>                                                
+					<a class="butn btn-primar btn-slide" href="#pizza">
+						<span>Замовити</span>
+						<i></i>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-7 align-self-xl-end">
+				<div class="banner-imgs picsum-img-wrapper">
+					<img [src]="images[3]" alt="Random first slide" class="mx-auto imgLoaded">
+				</div>
+			</div>
+		</div>
+		</div>
+	</ng-template>		
+		
 </ngb-carousel>
-
-<hr />
-
-<div class="form-check">
-	<input type="checkbox" class="form-check-input" id="pauseOnHover" [(ngModel)]="pauseOnHover" />
-	<label class="form-check-label" for="pauseOnHover">Pause on hover</label>
-</div>
-<div class="form-check">
-	<input type="checkbox" class="form-check-input" id="pauseOnFocus" [(ngModel)]="pauseOnFocus" />
-	<label class="form-check-label" for="pauseOnFocus">Pause on focus</label>
-</div>
-<div class="form-check">
-	<input type="checkbox" class="form-check-input" id="unpauseOnArrow" [(ngModel)]="unpauseOnArrow" />
-	<label class="form-check-label" for="unpauseOnArrow">Unpause when clicking on arrows</label>
-</div>
-<div class="form-check">
-	<input type="checkbox" class="form-check-input" id="pauseOnIndicator" [(ngModel)]="pauseOnIndicator" />
-	<label class="form-check-label" for="pauseOnIndicator">Pause when clicking on navigation indicator</label>
-</div>
-<button type="button" (click)="togglePaused()" class="btn btn-outline-dark btn-sm">
-	{{ paused ? 'Cycle' : 'Pause' }}
-</button> -->
-
-
-
-<ngb-carousel>
-		<ng-template ngbSlide>
-			<div class="picsum-img-wrapper">
-				<img [src]="images[0]" alt="Random first slide" class="mx-auto" />
-			</div>
-			<div class="carousel-caption">
-				<h3>First slide label</h3>
-				<p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-			</div>
-		</ng-template>
-		<ng-template ngbSlide>
-			<div class="picsum-img-wrapper">
-				<img [src]="images[1]" alt="Random second slide" class="mx-auto"/>
-			</div>
-			<div class="carousel-caption">
-				<h3>Second slide label</h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-			</div>
-		</ng-template>
-		<ng-template ngbSlide>
-			<div class="picsum-img-wrapper">
-				<img [src]="images[2]" alt="Random third slide" class="mx-auto"/>
-			</div>
-			<div class="carousel-caption">
-				<h3>Third slide label</h3>
-				<p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-			</div>
-      <ng-template ngbSlide>
-			<div class="picsum-img-wrapper">
-				<img [src]="images[3]" alt="Random first slide" class="mx-auto"/>
-			</div>
-			<div class="carousel-caption">
-				<h3>First slide label</h3>
-				<p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-			</div>
-		</ng-template>
-		</ng-template>
-	</ngb-carousel>
