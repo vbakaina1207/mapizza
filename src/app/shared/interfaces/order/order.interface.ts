@@ -1,4 +1,3 @@
-import { IAdditionResponse } from "../addition/addition.interfaces";
 import {IProductResponse} from "../product/product.interface";
 import {Timestamp} from "@angular/fire/firestore";
 
@@ -11,7 +10,6 @@ export interface IOrderRequest {
   total: number;
   status: boolean;
   product: IProductResponse;
-  //addition: IAdditionResponse;
   name: string;
   phone: string;
   email: string;

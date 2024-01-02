@@ -79,12 +79,12 @@ h6, .h6 {
 }   
 
 .title {
-    font-weight: 600;
+    font-weight: 600 !important;
     color: $clr-black;
 }
 
 a:hover { 
-    text-decoration: none; 
+    text-decoration: none;     
 }
 
 ul, ol { 
@@ -468,7 +468,7 @@ ul, ol {
 
 
 .btn-primar {
-    color: $clr-white;
+    color: $clr-white !important;
     background: $clr-secondary;
     display: inline-flex;
     align-items: center;
@@ -521,6 +521,11 @@ ul, ol {
     margin-left: -1px;
     border-right: 2px solid $clr-white;
     border-bottom: 2px solid $clr-white;
+}
+
+
+.btn-slide:hover span {
+    color: $clr-white !important;
 }
 
 
@@ -605,6 +610,48 @@ a {
     border-radius: 100%;
     border: 2px solid $clr-secondary;
     transition: $transition;
+}
+
+
+.breadcrumbs {
+    margin: 20px 0;
+
+    & li {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 1.6em;
+    }
+
+    & span {
+    color: $clr-black;
+    transition: $transition;
+    }
+
+    & li:after {
+        content: '';
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: $clr-primary;
+        margin: 2px 15px;
+        transition: $transition;
+    }
+    & li:last-child::after {
+        display: none;
+    }
+}
+
+
+.breadcrumbs li:last-child span {
+    color: $clr-grey;
+}
+
+.prom-detail-section .decor-img, .promotions .decor-img {
+    position: absolute;
+    max-width: 230px;
+    max-height: 230px;
 }
 
 @media (max-width: 1730px) { 
@@ -714,6 +761,8 @@ a {
         height: 14px;
         margin-left: 5px;
     }
+
+    
 }
 
 @media (max-width: 1199px) { 
@@ -739,6 +788,13 @@ a {
         display: none; 
     }
 
+    .breadcrumbs {
+        margin: 10px 0;
+
+        & li:after {
+            margin: 2px 10px;
+        }
+    }
     
 }
 
@@ -747,7 +803,10 @@ a{
         transition: $transition;
     
         &:hover{
-            color: $clr-primary;
+            color: $clr-primary !important;
+        }
+        &:hover span{
+            color: $clr-primary !important;
         }
     }
 
@@ -818,6 +877,10 @@ a{
     .spacer-desktop-off { 
         display: block; 
     } 
+
+     .breadcrumbs {
+        display: none;
+    }
 }
 
 @media (max-width: 767px) { 

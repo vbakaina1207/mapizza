@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AboutComponent } from './about.component';
 import { SharedModule } from '../../shared/sahared.module';
 import { AboutRoutingModule } from './about-routing.module';
-
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -13,7 +13,8 @@ import { AboutRoutingModule } from './about-routing.module';
   imports: [
     CommonModule,
     AboutRoutingModule,
-    SharedModule
+    SharedModule,
+    NgbCarouselModule
   ]
 })
 export class AboutModule { }

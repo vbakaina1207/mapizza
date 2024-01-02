@@ -8,25 +8,25 @@
         </div>
         <nav class="header-links">
           <ul>
-                          <li id="menu-item-375" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page">                          
+                          <li class="show-submenu menu-item menu-item-type-post_type menu-item-object-page">                          
                             <a [routerLink]="[ '/about' ]" routerLinkActive="route-active">Про нас</a>
                           </li>
-                          <li id="menu-item-373" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page">
+                          <li class="show-submenu menu-item menu-item-type-post_type menu-item-object-page">
                             <a [routerLink]="[ '/delivery' ]" routerLinkActive="route-active">Доставка та оплата</a>
                           </li>
-                          <li id="menu-item-378" class="show-submenu menu-item menu-item-type-post_type_archive menu-item-object-actions">
+                          <li class="show-submenu menu-item menu-item-type-post_type_archive menu-item-object-actions">
                             <a [routerLink]="[ '/discount' ]" routerLinkActive="route-active">Акції</a>
                           </li>
-                          <li id="menu-item-374" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page">
+                          <li class="show-submenu menu-item">
                             <a [routerLink]="[ '/contact' ]" routerLinkActive="route-active">Контакти</a>
                           </li>
-                          <li id="menu-item-1128" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page">
+                          <li class="show-submenu menu-item">
                             <a [routerLink]="[ '/vacancy' ]" routerLinkActive="route-active">Вакансії</a>
                           </li>
-                          <li id="menu-item-3484" class="show-submenu menu-item menu-item-type-post_type menu-item-object-page">
+                          <li class="show-submenu menu-item">
                             <a [routerLink]="[ '/news' ]" routerLinkActive="route-active">Новини</a>
                           </li>
-                          <li id="menu-item-372" class="show-submenu menu-btn menu-item menu-item-type-post_type menu-item-object-page">
+                          <li class="menu-item menu-btn">
                             <a [routerLink]="[ '/faq' ]" routerLinkActive="route-active">Відгук</a>
                           </li>
           </ul>
@@ -81,8 +81,7 @@
                     <path d="M17.1583 18.8333C17.1583 15.6083 13.95 13 10 13C6.05001 13 2.84167 15.6083 2.84167 18.8333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                   </svg>
                   {{ loginPage }}                            
-                </button>
-                <!-- <span>{{ loginPage }} </span> -->
+                </button>                
             </a>
 
             <div class="user-menu" *ngIf="isOpenmenu">

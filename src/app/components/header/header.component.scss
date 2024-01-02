@@ -72,7 +72,7 @@ a {
     font-weight: 600;
     line-height: 1.5em;
     @include a;
-    color: $clr-secondary;
+    color: $clr-secondary !important;
     }
 
     & p{
@@ -764,7 +764,7 @@ header ul .menu-btn a {
     }
 
     .user-c-wrapper {
-        top: -3px;
+        top: -13px;
     }
 
     .user-menu {
@@ -787,6 +787,29 @@ header ul .menu-btn a {
 
     .user-menu-list li + li {
         margin-top: 10px;
+    }
+
+    .header-links a {
+        font-size: 14px;
+        line-height: 1.4em;
+        font-weight: 400;
+        color: $clr-black;
+    }
+
+    header ul .menu-btn a {
+        cursor: pointer;            
+        display: flex;    
+        align-items: center;
+        padding: 3px 12px;
+        border-radius: 12px;
+        background: $clr-primary;
+        transition: $transition;
+        color: $clr-white !important;
+    }
+
+    header ul .menu-btn a:hover {
+        background: $clr-secondary;
+        color: $clr-white;
     }
 
     .exit a {
@@ -822,6 +845,10 @@ header ul .menu-btn a {
 
     .user-c-btn:hover {
         background:$clr-primary;
+
+        & a {
+            color:  $clr-white !important;
+        }
     }
 }
 
@@ -976,8 +1003,11 @@ header ul .menu-btn a {
         margin: 15px 0;
 
         & a {
+            display: block;
             font-size: 18px;
+            font-weight: 600;
             line-height: 1.5em;
+            color: $clr-secondary;
         }
 
         & p {
@@ -1139,6 +1169,7 @@ header ul .menu-btn a {
 
     
 }
+
 
 @media (min-width: 1200px) and (max-width: 1730px) {
     body .header-top {
