@@ -14,10 +14,7 @@ export class AccountService {
     
     public isUserLogin$ = new Subject<boolean>();
     public changeAddress = new Subject<boolean>();
-    public changeCurrentUser = new Subject<boolean>();
-    // public changeIndexAddress = new Subject<boolean>();
-    // public currentUser: any;
-    // public dataUser!: any;
+    public changeCurrentUser = new Subject<boolean>();   
     public index!: number;
     public isEdit!: boolean;
     public userAddress = [];

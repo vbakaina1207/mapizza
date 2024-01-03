@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbCarousel, NgbCarouselModule, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
-// import { CarouselComponent } from '../carousel/carousel.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   
 @Component({

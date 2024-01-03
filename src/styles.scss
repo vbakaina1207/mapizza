@@ -569,6 +569,11 @@ a {
     margin-bottom: 25px;
 }
 
+.text strong {
+    color: $clr-black;
+    font-weight: 600;
+}
+
 .btn-link i {
     position: relative;
     display: inline-block;
@@ -576,10 +581,8 @@ a {
     width: 16px;
     height: 16px;
     border-radius: 100%;
-    border: 2px solid var(--clr-secondary);
-    -webkit-transition: var(--transition);
-    -o-transition: var(--transition);
-    transition: var(--transition);
+    border: 2px solid $clr-secondary;    
+    transition: $transition;
 }
 
 .btn-link i:before {
@@ -652,6 +655,14 @@ a {
     position: absolute;
     max-width: 230px;
     max-height: 230px;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text.text-lg {
+    font-size: 20px;
 }
 
 @media (max-width: 1730px) { 
@@ -762,7 +773,9 @@ a {
         margin-left: 5px;
     }
 
-    
+    .text.text-lg {
+        font-size: 18px;
+    }
 }
 
 @media (max-width: 1199px) { 

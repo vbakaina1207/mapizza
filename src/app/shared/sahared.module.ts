@@ -14,6 +14,7 @@ import { FormatDatePipe } from './pipes/format-date.pipe';
 
 
 
+
 const MATERIAL = [
     MatDialogModule,
     MatFormFieldModule,
@@ -26,20 +27,21 @@ const MATERIAL = [
 
 @NgModule({
     declarations: [
-    FormatDatePipe
+    FormatDatePipe,
     ],
     imports: [
         ...MATERIAL,
       FormsModule,
       ReactiveFormsModule,
-      HttpClientModule
+      HttpClientModule,
+      
     ],
   exports: [
     ...MATERIAL,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormatDatePipe
+    FormatDatePipe,
   ]
 })
 export class SharedModule { }

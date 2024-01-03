@@ -3,18 +3,24 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/sahared.module';
 import { VacancyComponent } from './vacancy.component';
 import { VacancyRoutingModule } from './vacancy-routing.module';
+import { ContactModule } from '../contact/contact.module';
 
 
 
 
 @NgModule({
   declarations: [
-    VacancyComponent
+    VacancyComponent,
+  ],
+  exports: [
+    VacancyComponent,
+    ContactModule,
   ],
   imports: [
     CommonModule,
     VacancyRoutingModule,
-    SharedModule
+    SharedModule,
+    ContactModule
   ]
 })
 export class VacancyModule { }

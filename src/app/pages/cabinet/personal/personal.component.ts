@@ -19,7 +19,6 @@ export class PersonalComponent implements OnInit {
 
   public authFormData!: FormGroup;
   public currentUser: any;
-  // public isAddressNew: boolean = false;
   public dataUser!: any;
   public index!: number;
   public isEdit!: boolean;

@@ -4,17 +4,25 @@ import { AboutComponent } from './about.component';
 import { SharedModule } from '../../shared/sahared.module';
 import { AboutRoutingModule } from './about-routing.module';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { ContactModule } from '../contact/contact.module';
+
+
 
 
 @NgModule({
   declarations: [
-    AboutComponent
+    AboutComponent,
+  ],
+  exports: [
+    AboutComponent,
+    ContactModule
   ],
   imports: [
     CommonModule,
     AboutRoutingModule,
     SharedModule,
-    NgbCarouselModule
+    NgbCarouselModule,
+    ContactModule
   ]
 })
 export class AboutModule { }

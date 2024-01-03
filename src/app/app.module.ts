@@ -13,7 +13,7 @@ import { AuthAdditionComponent } from './components/aus-addition/auth-addition.c
 import { BasketComponent } from './pages/basket/basket.component';
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
 import { SharedModule } from './shared/sahared.module';
-// import { CarouselComponent } from './pages/carousel/carousel.component';
+// import { ContactFormComponent } from './components/contact-form/contact-form.component';
 
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -37,7 +37,8 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
       AuthAddressComponent,
       AuthAdditionComponent,
       BasketComponent,
-      AlertDialogComponent
+      AlertDialogComponent,
+      // ContactFormComponent
     ],
   imports: [
     BrowserModule,
