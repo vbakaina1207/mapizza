@@ -121,8 +121,8 @@
                       <div class="upload-wrapper" data-placeholder="Файл не вибрано">
                         
 
-                        <div class="">
-                          <div class="file-name">
+                        <div class="upload">
+                          <div class="file-name" *ngIf="isUploaded">
                           <p>
                             <span> {{isUploaded ? file?.name : ''}}</span>
                           </p>

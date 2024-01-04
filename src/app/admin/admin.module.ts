@@ -9,6 +9,7 @@ import { AdminDiscountComponent } from './admin-discount/admin-discount.componen
 import { AdminProductComponent } from './admin-product/admin-product.component';
 import { AdminCategoryComponent } from './admin-category/admin-category.component';
 import { AdminAdditionTypeComponent } from './admin-addition-type/admin-addition-type.component';
+import { AdminVacancyComponent } from './admin-vacancy/admin-vacancy.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AdminAdditionTypeComponent } from './admin-addition-type/admin-addition
     AdminDiscountComponent,
     AdminOrdersComponent,
     AdminProductTypeComponent,
-    AdminAdditionTypeComponent
+    AdminAdditionTypeComponent,
+    AdminVacancyComponent
   ],
   imports: [
     CommonModule,

@@ -7,6 +7,7 @@ import { AdminProductComponent } from './admin-product/admin-product.component';
 import { AdminDiscountComponent } from './admin-discount/admin-discount.component';
 import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
 import { AdminAdditionTypeComponent } from './admin-addition-type/admin-addition-type.component';
+import { AdminVacancyComponent } from './admin-vacancy/admin-vacancy.component';
 
 
 
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'product', component: AdminProductComponent },
       { path: 'discount', component: AdminDiscountComponent },
       { path: 'order', component: AdminOrdersComponent },
+      { path: 'vacancy', component: AdminVacancyComponent },
       { path: '', pathMatch: 'full', redirectTo: 'discount' }
     ]
   }

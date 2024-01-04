@@ -4,13 +4,15 @@ import { SharedModule } from '../../shared/sahared.module';
 import { VacancyComponent } from './vacancy.component';
 import { VacancyRoutingModule } from './vacancy-routing.module';
 import { ContactModule } from '../contact/contact.module';
-
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { VacancyInfoComponent } from './vacancy-info/vacancy-info.component';
 
 
 
 @NgModule({
   declarations: [
     VacancyComponent,
+    VacancyInfoComponent,
   ],
   exports: [
     VacancyComponent,
@@ -20,7 +22,8 @@ import { ContactModule } from '../contact/contact.module';
     CommonModule,
     VacancyRoutingModule,
     SharedModule,
-    ContactModule
+    ContactModule,
+    NgbCarouselModule
   ]
 })
 export class VacancyModule { }
