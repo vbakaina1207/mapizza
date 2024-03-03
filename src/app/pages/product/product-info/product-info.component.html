@@ -14,12 +14,8 @@
         <span>{{ (currentProduct ? (currentProduct.category ? currentProduct.category.name : undefined) : undefined) | titlecase }}</span>
       </a>
     </li>
-    <!-- <li  *ngIf=" currentProduct ? ( currentProduct.type_product ? currentProduct.type_product.name : undefined) : undefined">
-      <a [routerLink]="[  '/product/', currentProduct ? ( currentProduct.category ? currentProduct.category.path : undefined) : undefined, currentProduct ? ( currentProduct.type_product ? currentProduct.type_product.path : undefined) : undefined ]">
-        <span itemprop="name">{{  currentProduct ? ( currentProduct.type_product ? currentProduct.type_product.name : undefined) : undefined | titlecase }}</span>
-      </a>
-    </li> -->
-    <li class="active">
+    
+    <li>
       <span itemprop="name">{{ currentProduct ? currentProduct.name : undefined | titlecase }}</span>
     </li>
     </ul>
@@ -79,7 +75,8 @@
           <div class="description">
             {{ currentProduct ? currentProduct.ingredients : undefined }}                    
           </div>
-          <div class="btn btn-secondary product_plus_modificator" *ngIf="additionProduct.length" (click)="openAdditionDialog()">
+          <!-- <div class="btn btn-secondary product_plus_modificator" *ngIf="additionProduct.length" (click)="openAdditionDialog()"> -->
+            <div class="btn btn-secondary product_plus_modificator" *ngIf="currentProduct?.type_addition?.length" (click)="openAdditionDialog()">
             <span>Додати / змінити складники</span>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10.0003 18.3333C14.5837 18.3333 18.3337 14.5833 18.3337 9.99996C18.3337 5.41663 14.5837 1.66663 10.0003 1.66663C5.41699 1.66663 1.66699 5.41663 1.66699 9.99996C1.66699 14.5833 5.41699 18.3333 10.0003 18.3333Z" stroke="#D22730" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -88,7 +85,7 @@
               </svg>
           </div>
           <div class="spacer-xs"></div>
-          <div class="free-ing ing_body-additional rec-ing" *ngIf="additionProduct.length">
+          <div class="free-ing ing_body-additional rec-ing" *ngIf="currentProduct?.type_addition?.length">
             <div class="ing_group inc_calc-group">
               <div class="d-sm-flex justify-content-sm-between">
                 <div class="title h6">Рекомендуємо додати</div>
@@ -142,9 +139,9 @@
               </div>
             </div>
           </div>
-          <button class="btn btn-primary btn-block add-to-cart-btn order-btn " (click)="addToBasket(currentProduct)">
-            <span>замовити</span>
-            <i>
+          <button class="btn btn-primary btn-block add-to-cart-btn order-btn " [ngClass]="{'primary': isOrder}" (click)="addToBasket(currentProduct)">
+            <span>{{btnName}}</span>
+            <i [ngClass]="{'hide': isOrder}">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6.25 6.39167V5.58334C6.25 3.70834 7.75833 1.86667 9.63333 1.69167C11.8667 1.47501 13.75 3.23334 13.75 5.42501V6.57501" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                 <path d="M7.5001 18.3333H12.5001C15.8501 18.3333 16.4501 16.9917 16.6251 15.3583L17.2501 10.3583C17.4751 8.32499 16.8918 6.66666 13.3334 6.66666H6.66677C3.10843 6.66666 2.5251 8.32499 2.7501 10.3583L3.3751 15.3583C3.5501 16.9917 4.1501 18.3333 7.5001 18.3333Z" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -159,4 +156,6 @@
   </div>
 
 </div>
+
+<app-slide-product></app-slide-product>
 

@@ -13,7 +13,7 @@ import { AuthAdditionComponent } from './components/aus-addition/auth-addition.c
 import { BasketComponent } from './pages/basket/basket.component';
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
 import { SharedModule } from './shared/sahared.module';
-// import { ContactFormComponent } from './components/contact-form/contact-form.component';
+
 
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -26,6 +26,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { left } from '@popperjs/core';
 
 
 @NgModule({
@@ -38,7 +39,6 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
       AuthAdditionComponent,
       BasketComponent,
       AlertDialogComponent,
-      // ContactFormComponent
     ],
   imports: [
     BrowserModule,
@@ -48,7 +48,11 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
     provideStorage(() => getStorage()),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-center',
+      preventDuplicates: true,
+      timeOut: 5000,
+    }),
     SharedModule,
     HttpClientModule,
     NgbModule,

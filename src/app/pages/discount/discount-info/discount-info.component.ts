@@ -23,7 +23,6 @@ export class DiscountInfoComponent implements OnInit {
       this.discount = response['discountInfo'];
       this.description = this.getDescription(this.discount.description);
       this.description = this.description.splice(0, this.description.length );
-      console.log(this.description);
     })
   }
 

@@ -1,0 +1,81 @@
+
+<div class="row ms-3">
+  <ng-container *ngIf="isAdd">
+        <div class="col-10">
+            <form [formGroup]="newsForm" (ngSubmit)="addNews()">
+                <button [disabled]="newsForm.invalid"  type="submit" class="btn-add">
+                    {{ editStatus ? 'Змінити новину' : 'Додати новину' }}
+                </button>
+                <div class=" d-flex flex-row justify-content-between mb-3">                                  
+                        <input formControlName="title" name="title" type="text" class="form-control" id="name" placeholder="*Назва">            
+                </div>
+                <div class="mb-3">
+                    <textarea formControlName="description" name="description" type="text" class="form-control" placeholder="*Опис"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label  class="form-label">*Подробиці</label>
+                    <select formControlName="detail" multiple class="form-select col-2">
+                        <option [ngValue]="detail" selected  *ngFor="let detail of adminNews">{{detail.title?.length ? detail.title : (detail.description?.length ? detail.description :'без теми')| slice:0:10}}
+                        </option>
+                    </select>
+                </div>    
+                <ng-container *ngIf="!isUploaded">
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Default file input example</label>
+                        <input class="form-control" type="file" id="formFile" (change)="upload($event)">
+                    </div>
+                    <div class="progress mb-3">
+                        <div class="progress-bar progress-bar-striped" role="progressbar"
+                            [style.width.%]="uploadPercent" aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="isUploaded">
+                    <div>
+                        <img [src]="valueByControl('imagePath')" width="100px" alt="">
+                    </div>
+                    <div>
+                        <button type="button" class="btn-exit mt-3" (click)="deleteImage()">delete</button>
+                    </div>
+                </ng-container>
+                
+            </form>
+        </div>
+    </ng-container>
+
+    <button class="btn-add ms-3" (click)="openForm()" *ngIf="!isAdd">Додати новину</button>
+        <div class="table-responsive d-flex justify-center col-12"  *ngIf="!isAdd">
+        <table class="table col">
+            <thead class="table-category">
+                <tr>                    
+                    <th scope="col">Назва</th>                    
+                    <th scope="col">Опис</th>
+                    <th scope="col">Картинка</th>
+                    <th scope="col">Подробиці</th>
+                    <th scope="col">Дії</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let new of adminNews; let id=index">                    
+                    <td>{{ new.title?.length ? new.title : (new.description.length ? new.description : 'без теми')| slice:0:15 }}</td>                    
+                    <td>{{ new?.description | slice:0:105 }} <span *ngIf="new ? new?.description?.length : 0 > 105">...</span></td>
+                    <td>
+                        <img [src]="new.imagePath" alt="" height="50px">
+                    </td>
+                    <td> <tr *ngFor="let detail of new?.detail">
+                      {{ detail?.title?.length ? detail?.title : detail?.description| slice:0:10 }}</tr>
+                    </td>
+                    <td>
+                        <button (click)="editNews(new)" type="button" class="btn">Редагувати</button>
+                        <p>
+                            <button [disabled]="editStatus" (click)="deleteNews(new)" type="button" class="btn">Видалити</button>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+

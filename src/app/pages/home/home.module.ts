@@ -7,20 +7,22 @@ import { CarouselComponent } from '../carousel/carousel.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 
+
+
 @NgModule({
-  declarations: [
-    HomeComponent,
-    CarouselComponent
-  ],
-  exports: [
-    HomeComponent,
-    CarouselComponent
-  ],
-  imports: [
-    CommonModule,
-    HomeRoutingModule,
-    SharedModule,
-    NgbCarouselModule
-  ]
+    declarations: [
+      HomeComponent,
+      CarouselComponent,
+    ],
+    exports: [
+      HomeComponent,
+      CarouselComponent,
+    ],
+    imports: [
+        CommonModule,
+        HomeRoutingModule,
+        SharedModule,
+        NgbCarouselModule
+    ]
 })
 export class HomeModule { }

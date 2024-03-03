@@ -6,6 +6,7 @@ import { IProductResponse } from 'src/app/shared/interfaces/product/product.inte
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 
 @Component({
   selector: 'app-admin-orders',
@@ -25,7 +26,7 @@ export class AdminOrdersComponent implements OnInit {
     private orderService: OrderService,
     private router: Router,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) {
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {
@@ -59,7 +60,8 @@ export class AdminOrdersComponent implements OnInit {
     this.currentOrderId = order.id;
     this.orderService.updateFirebase(this.orderForm.value, this.currentOrderId as string).then(() => {
       this.getOrders();
-      this.toastr.success('Order successfully updated');
+      // this.toastr.success('Order successfully updated');
+      this.toastr.showSuccess('', 'Замовлення змінено');
     })
   }
 

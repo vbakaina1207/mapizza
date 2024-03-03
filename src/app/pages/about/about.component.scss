@@ -79,9 +79,7 @@
     height: auto;
 }
 
-.swiper-autoheight .swiper-slide {
-    // margin-bottom: 30px;
-}
+
 
 .swiper-pointer-events {
     touch-action: pan-y;
@@ -134,9 +132,9 @@
     word-wrap: normal;
 }
 
-.mejs-container, .mejs-container .mejs-controls, .mejs-embed, .mejs-embed body {
-    background: #222;
-}
+// .mejs-container, .mejs-container .mejs-controls, .mejs-embed, .mejs-embed body {
+//     background: #222;
+// }
 .mejs-container {
     clear: both;
     max-width: 100%;
@@ -172,46 +170,46 @@
 @media screen and (max-width: 1730px) {
     
 
-    .benefits-wrapper {
-        padding: 30px;
-    }
+    // .benefits-wrapper {
+    //     padding: 30px;
+    // }
 
-    .benefits-row {
-        --bs-gutter-x: 30px;
-        margin-bottom: -30px;
-    }
+    // .benefits-row {
+    //     --bs-gutter-x: 30px;
+    //     margin-bottom: -30px;
+    // }
 
-    .benefits-row>[class*=col] {
-        margin-bottom: 30px;
-    }
+    // .benefits-row>[class*=col] {
+    //     margin-bottom: 30px;
+    // }
 }
 
 @media screen and (max-width: 1199px) {
-    .benefits-wrapper .decor-img {
-        display: none;
-    }    
+    // .benefits-wrapper .decor-img {
+    //     display: none;
+    // }    
 }
 
 
 @media (max-width: 767px) { 
-    .hide-on-desktop { 
-        display: block; 
-    }
+//     .hide-on-desktop { 
+//         display: block; 
+//     }
 
-    .hide-on-mobile {
-        display: none; 
-    }
+//     .hide-on-mobile {
+//         display: none; 
+//     }
 
     
-    .carousel-indicators{
-        bottom: -28px;;
-    }
-}
+//     .carousel-indicators{
+//         bottom: -28px;;
+//     }
+// }
 
 
-@media (max-width: 575px){
-    .swiper-container {
-        overflow: visible;
-    }
+// @media (max-width: 575px){
+//     .swiper-container {
+//         overflow: visible;
+//     }
 
 }

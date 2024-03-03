@@ -6,6 +6,7 @@ import { ImageService } from 'src/app/shared/services/image/image.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormatDatePipe } from 'src/app/shared/pipes/format-date.pipe';
 import { Timestamp} from "@angular/fire/firestore";
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 
 @Component({
   selector: 'app-admin-discount',
@@ -27,7 +28,7 @@ export class AdminDiscountComponent implements OnInit {
     private fb: FormBuilder,
     private discountService: DiscountService,
     private imageService: ImageService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) { }
 
   ngOnInit() {
@@ -56,11 +57,13 @@ export class AdminDiscountComponent implements OnInit {
     if(this.editStatus){
       this.discountService.updateFirebase(this.discountForm.value, this.currentDiscountId as string).then(() => {
         this.loadDiscounts();
-        this.toastr.success('Discount successfully updated');
+        // this.toastr.success('Discount successfully updated');
+        this.toastr.showSuccess('', 'Акцію змінено');
       })
     } else {
       this.discountService.createFirebase(this.discountForm.value).then(() => {
-        this.toastr.success('Discount successfully created');
+        // this.toastr.success('Discount successfully created');
+        this.toastr.showSuccess('', 'Акцію додано');
       })
     }
     this.editStatus = false;
@@ -87,7 +90,8 @@ export class AdminDiscountComponent implements OnInit {
   deleteDiscount(discount: IDiscountResponse): void {
     this.discountService.deleteFirebase(discount.id as string).then(() => {
       this.loadDiscounts();
-      this.toastr.success('Discount successfully deleted');
+      // this.toastr.success('Discount successfully deleted');
+      this.toastr.showSuccess('', 'Акцію видалено');
     })
   }
 

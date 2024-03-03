@@ -11,6 +11,7 @@ import { IOrderResponse } from 'src/app/shared/interfaces/order/order.interface'
 import { IProductResponse } from 'src/app/shared/interfaces/product/product.interface';
 import { ITypeAdditionResponse } from 'src/app/shared/interfaces/type-addition/type-addition.interfaces';
 import { OrderService } from 'src/app/shared/services/order/order.service';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 
 @Component({
   selector: 'app-checkout',
@@ -48,13 +49,16 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   public freePizza: number = 0;
   public priceArr: Array<number> = [];
   public isBonusClick: boolean = false;
+  public atTime: boolean = false;
+  public isUseBonus: boolean = false;
+  public isCourier: boolean = true;
 
 
 
   constructor(
     private orderService: OrderService,
     private fb: FormBuilder,
-    private toastr: ToastrService,
+    private toastr: ToastService,
     private router: Router,
     private afs: Firestore,
     public dialog: MatDialog
@@ -65,16 +69,13 @@ export class CheckoutComponent implements OnInit, OnDestroy{
         this.getOrders();
         this.loadBasket();
         this.updateBasket();
-        this.initOrderForm();
-        // this.getMinPrice();
-        
+        this.initOrderForm();    
       }
     })
   }
 
   ngOnInit(): void {
-    // this.pizzaAction();
-    // this.getMinPrice();
+  
   }
 
   ngOnDestroy(): void{
@@ -91,8 +92,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
       } else this.order[0].order_number += 1;
       this.currentNumOrder = this.order[0]?.order_number;
       this.currentOrder = this.order[0]?.id ;
-      this.orderForm.patchValue({ 'order_number': this.order[0]?.order_number });
-      console.log(this.order[0].order_number)
+      this.orderForm.patchValue({ 'order_number': this.order[0]?.order_number });  
     })
   }
 
@@ -183,7 +183,6 @@ export class CheckoutComponent implements OnInit, OnDestroy{
       this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
       this.address = this.currentUser.address;
       this.sum_bonus = this.currentUser.bonus;
-      console.log(this.address);
     } 
   }
 
@@ -271,13 +270,12 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     let bonus = { bonus: this.bonus };
     setDoc(doc(this.afs, 'users', this.currentUser.uid), bonus, { merge: true });
     localStorage.setItem('currentUser', JSON.stringify( bonus));
-    if (this.currentUser && this.total >= 300) {      
+    if (this.currentUser /*&& this.total >= 300*/) {      
       this.orderService.createFirebase(this.orderForm.value).then(() => {
-        this.toastr.success('Order successfully created');
+        this.toastr.showSuccess('', 'Замовлення успішно створено');
       });
       this.removeAllFromBasket();
       this.router.navigate(['/cabinet/history']);
-      console.log(this.order);
     } 
   }
 
@@ -300,7 +298,28 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     }
   }
 
+  openLoginDialog(): void {
+    this.dialog.open(AuthDialogComponent, {
+      backdropClass: 'dialog-back',
+      panelClass: 'auth-dialog',
+      autoFocus: false
+    }).afterClosed().subscribe(result => {
+      console.log(result);
+    })
+  }
+
   getAddress(): void {
+    if (!this.currentUser) {
+      this.dialog.open(AlertDialogComponent, {
+        backdropClass: 'dialog-back',
+        panelClass: 'alert-dialog',
+        autoFocus: false,
+        data: {
+          message: 'Авторизуйтесь, будь ласка!',
+        }
+      });
+      this.openLoginDialog();
+    } else {
     let addr = this.orderForm.get('addres')?.value;    
     this.select_address = addr?.toString().split("/");
     this.select_address = this.select_address.filter(el => el != 'null')
@@ -309,6 +328,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
       'street': this.select_address[1],
       'house': this.select_address[2]
     });
+  }
   }
 
   sumBonusClick(): void {
@@ -350,8 +370,8 @@ export class CheckoutComponent implements OnInit, OnDestroy{
         }
         });
       this.isBonus = false;
-    }
-    if (this.sum_bonus > 0) this.isBonus = true;
+    } else
+      if (this.sum_bonus > 0) this.isBonus = true;
     this.isBonusClick = true;
   }
 
@@ -370,7 +390,6 @@ export class CheckoutComponent implements OnInit, OnDestroy{
         if (this.orderForm?.get('action')?.value === '-1') {
         this.sum_order = this.total;
         }
-    console.log(this.orderForm?.get('action')?.value, 'action', this.freePizza, this.minPrice,  this.sum_order)
   }
 
   bonusUse(): void {
@@ -386,8 +405,9 @@ export class CheckoutComponent implements OnInit, OnDestroy{
         }
       });
     } else 
-    if (this.orderForm.get('summa_bonus')?.value <= this.sum_bonus) {
+    if (this.orderForm.get('summa_bonus')?.value <= this.sum_bonus && !this.isUseBonus) {
       this.sum_order = this.sum_order - this.orderForm.get('summa_bonus')?.value;
+      this.isUseBonus = true;
     }
   }
 
@@ -395,9 +415,12 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     if (delivery_method === 'local_pickup') {
       this.orderForm.patchValue({ 'action': 'localPickup' });      
       this.sum_delivery = 0;
+      this.isCourier = false;
     } else {
+      console.log(delivery_method, "delivery")
       this.orderForm.patchValue({ 'action': '' });
-      this.sum_delivery = (this.total >= 500) ? 100 : 0;     
+      this.sum_delivery = (this.total >= 500) ? 100 : 0;    
+      this.isCourier = true;
     }
     this.actionClick();
   }
@@ -424,4 +447,8 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   }
 
 
+  atTimeclick(): void {
+    this.atTime = !this.atTime;
+    this.orderForm.patchValue({ 'at_time': this.atTime });
+  }
 }

@@ -8,6 +8,10 @@ import { AdminDiscountComponent } from './admin-discount/admin-discount.componen
 import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
 import { AdminAdditionTypeComponent } from './admin-addition-type/admin-addition-type.component';
 import { AdminVacancyComponent } from './admin-vacancy/admin-vacancy.component';
+import { AdminNewsComponent } from './admin-news/admin-news.component';
+import { AdminNewsDetailComponent } from './admin-news-detail/admin-news-detail.component';
+import { AdminNewsInfoComponent } from './admin-news-info/admin-news-info.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 
 
@@ -21,6 +25,10 @@ const routes: Routes = [
       { path: 'discount', component: AdminDiscountComponent },
       { path: 'order', component: AdminOrdersComponent },
       { path: 'vacancy', component: AdminVacancyComponent },
+      { path: 'news', component: AdminNewsComponent },
+      { path: 'newsDetail', component: AdminNewsDetailComponent },
+      { path: 'newsInfo', component: AdminNewsInfoComponent },
+      { path: 'page', component: AdminPageComponent },
       { path: '', pathMatch: 'full', redirectTo: 'discount' }
     ]
   }

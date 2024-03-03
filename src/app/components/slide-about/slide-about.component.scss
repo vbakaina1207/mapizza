@@ -1,0 +1,157 @@
+@import '../../shared/styles/fonts';
+@import '../../shared/styles/variables';
+@import '../../shared/styles/mixins';
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    -webkit-text-size-adjust: none;
+}
+
+
+.benefits-wrapper {
+    position: relative;
+    background: $clr-white;
+    border: 1px solid $clr-border;
+    border-radius: 25px;
+    padding: 45px 60px;
+}
+
+
+.benefits-wrapper .decor-img.left {
+    top: -150px;
+    left: -140px;
+}
+
+.benefits-wrapper .decor-img
+{
+    position: absolute;
+    z-index: -1;
+    max-width: 240px;
+    max-height: 240px;
+}
+
+.benefits-row {
+    --bs-gutter-x: 60px;
+    margin-bottom: -60px;
+}
+
+.benefits-img {
+    margin-bottom: 10px;
+}
+
+.benefits-info {
+    line-height: 1.3em;
+    font-size: 18px;
+    color: $clr-grey;
+}
+
+.hide-on-desktop {
+    display: none;
+}
+
+.swiper-entry {
+    position: relative;
+}
+
+
+.swiper-container.swiper-initialized {
+    opacity: 1;
+    height: 180px;
+}
+.swiper-container {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    z-index: 1;
+    opacity: 0;
+    transition: $transition;
+}
+
+.swiper-autoheight, .swiper-autoheight .swiper-slide {
+    height: auto;
+}
+
+
+
+.swiper-pointer-events {
+    touch-action: pan-y;
+}
+.benefits-item .title {
+    line-height: 1.3em;
+    margin-bottom: 5px;
+}
+
+
+
+
+.carousel-indicators [data-bs-target] {
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	border: 1px solid $clr-grey;
+}
+
+.carousel-indicators {
+
+	.active {
+    	background-color: $clr-secondary;
+    	border-color: $clr-secondary;
+	}
+}
+
+
+
+@media screen and (max-width: 1730px) {
+    
+
+    .benefits-wrapper {
+        padding: 30px;
+    }
+
+    .benefits-row {
+        --bs-gutter-x: 30px;
+        margin-bottom: -30px;
+    }
+
+    .benefits-row>[class*=col] {
+        margin-bottom: 30px;
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .benefits-wrapper .decor-img {
+        display: none;
+    }    
+}
+
+
+@media (max-width: 767px) { 
+    .hide-on-desktop { 
+        display: block; 
+    }
+
+    .hide-on-mobile {
+        display: none; 
+    }
+
+    
+    .carousel-indicators{
+        bottom: -28px;;
+    }
+}
+
+
+@media (max-width: 575px){
+    .swiper-container {
+        overflow: visible;
+    }
+
+}

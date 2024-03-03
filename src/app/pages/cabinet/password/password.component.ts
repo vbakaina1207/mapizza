@@ -14,6 +14,7 @@ import {
 import { ToastrService } from "ngx-toastr";
 import { MatDialog } from "@angular/material/dialog";
 import { AccountService } from "../../../shared/services/account/account.service";
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 
 @Component({
   selector: 'app-password',
@@ -30,7 +31,8 @@ export class PasswordComponent implements OnInit {
     private router: Router,
     private afs: Firestore,
     private auth: Auth,
-    private toastr: ToastrService,
+    private toast: ToastrService,
+    private toastr: ToastService,
     public dialog: MatDialog,
     private accountService: AccountService
   ) { }
@@ -60,9 +62,9 @@ export class PasswordComponent implements OnInit {
       console.log(credential, 'credential');
       reauthenticateWithCredential(getauth.currentUser as User, credential)
         .then(() => {
-          this.toastr.success('Password successfully ');
+          this.toastr.showSuccess('', 'Password successfully ');
         }).catch(e => {
-        this.toastr.error(e.message);
+        this.toast.error(e.message);
       });
     }
 
@@ -70,10 +72,10 @@ export class PasswordComponent implements OnInit {
     this.getPassword();
       const {newPassword} = this.authForm.value;
       updatePassword(getAuth().currentUser as User, newPassword).then(() => {
-        this.toastr.success('Password successfully changed');
+        this.toastr.showSuccess('', 'Password successfully changed');
         this.router.navigate(['/cabinet']);
       }).catch(e => {
-        this.toastr.error(e.message);
+        this.toast.error(e.message);
       });
   }
 

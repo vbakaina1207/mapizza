@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 // @import 'ngx-toastr/toastr';
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
 @import './app/shared/styles/fonts';
 @import './app/shared/styles/theme-material';
 @import './app/shared/styles/variables';
@@ -8,10 +10,11 @@
 
 
 body{
-    font-family: 'MontBlanc' , sans-serif !important;
+    font-family: 'MontBlanc' , sans-serif ;
     font-size: 16px; 
     line-height: 1.5em;
 }
+
 
 .section {
     position: relative;
@@ -79,7 +82,7 @@ h6, .h6 {
 }   
 
 .title {
-    font-weight: 600 !important;
+    font-weight: 600 ;
     color: $clr-black;
 }
 
@@ -306,6 +309,7 @@ ul, ol {
     line-height: 1.2em;
     margin-bottom: 10px;
     color: &clr-black;
+    word-wrap: break-word;
 }
 
 .ingredient_bottom {
@@ -661,7 +665,7 @@ a {
     text-align: left;
 }
 
-.text.text-lg {
+.text .text-lg {
     font-size: 20px;
 }
 
@@ -741,7 +745,7 @@ a {
     border-radius: 25px;
 }
 
-.text.text-lg {
+.text .text-lg {
     font-size: 20px;
 }
 
@@ -1005,6 +1009,16 @@ form .input:focus {
     border-top: 1px solid $clr-border;
 }
 
+
+.primary::before {
+    content: '\2714';
+    font-size: 18px;
+}
+
+.hide{
+    display: none;
+}
+
 @media (max-width: 1730px) { 
     h1, .h1 { 
         font-size: 40px; 
@@ -1101,6 +1115,11 @@ form .input:focus {
     .text>* {
     	margin-bottom: 20px;
 	}
+
+    .text h1, .text h2, .text h3, .text h4, .text h5, .text h6 {
+        color: $clr-black;
+        font-weight: 600;
+}
 
     .btn-link {
         font-size: 12px;
@@ -1228,7 +1247,7 @@ a{
         transition: $transition;
     
         &:hover{
-            color: $clr-primary !important;
+            color: $clr-primary;
         }
         &:hover span{
             color: $clr-primary !important;
@@ -1268,7 +1287,7 @@ a{
 
     .btn-primar:not(.disabled):hover {
         background: $clr-primary;
-        color: $clr-white;
+        color: $clr-white !important;
     }
 
     .btn-primar:hover {
@@ -1482,6 +1501,7 @@ a{
 
     .ingredient_title {
         font-size: 12px;
+        word-wrap: break-word;
     }
 
     .ingredient_bottom {
@@ -1525,6 +1545,13 @@ a{
     width: 100%;
 }
 }
+
+@media screen and (max-width: 360px){
+    .ingredient {
+        width: calc((100% / 2) - 5px);
+    }
+    
+} 
 
 
 /* Importing Bootstrap SCSS file. */

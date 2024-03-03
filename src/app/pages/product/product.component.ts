@@ -10,6 +10,7 @@ import { ProductService } from './../../shared/services/product/product.service'
 import { AccountService } from 'src/app/shared/services/account/account.service';
 import { user } from '@angular/fire/auth';
 import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 
 
 @Component({
@@ -34,6 +35,10 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
   public favoriteProducts: Array<IProductResponse> = [];
   public currentUser: any;
   public favorite!: any;
+  public isRead: boolean = false;
+  public isInfoBlock: boolean = false;
+  public btnName: string = 'замовити';
+  public isOrder: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -43,7 +48,8 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
     private router: Router,
     private orderService: OrderService,
     private accountService: AccountService,
-     private afs: Firestore
+    private afs: Firestore,
+    private toastr: ToastService
   ) {
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {
@@ -59,18 +65,18 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
   }
 
   ngDoCheck(): void {
-    this.loadFaviriteProducts();
+    this.loadFaviriteProducts();  
+    
   }
 
   ngAfterContentInit(): void {
-    this.loadFaviriteProducts();
+    this.loadFaviriteProducts();     
   }
 
 
 
   getTypeProducts(): void {
-    this.productTypeService.getAllFirebase().subscribe(data => {
-    // this.productTypeService.getAllByCategoryFirebase('pizza').subscribe(data => {
+    this.productTypeService.getAllFirebase().subscribe(data => {   
       this.userTypeProducts = data as ITypeProductResponse[];
     })
   }
@@ -88,10 +94,10 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
       });
     if (this.productTypeName){
       this.productService.getAllByProductTypeFirebase(this.productTypeName,  this.categoryName).subscribe(data => {
-            this.userProducts = data as IProductResponse[];
-        this.currentProductTypeName = this.userProducts[0]?.type_product.name;
+        this.userProducts = data as IProductResponse[];       
+        this.currentProductTypeName = this.userProducts[0]?.type_product.name;      
         this.isCategoryPizza = true;
-        this.isProductType = true;        
+        this.isProductType = true;           
       });
     }
   if (this.categoryName === 'pizza'  ||  this.categoryName === 'salads' || this.router.url == '/' || this.router.url == '/#pizza' ) {
@@ -115,8 +121,13 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
         this.isProductType = true;
       }
     }
-    if( this.router.url == '/' || this.router.url == '/#pizza') this.isCategoryPizza = true;
+    if (this.router.url == '/' || this.router.url == '/#pizza' ) {
+      this.isCategoryPizza = true;    
+    }
     if (this.isCategoryPizza) this.currentCategoryName = 'Піцца';
+    if (this.categoryName === 'pizza' || this.router.url === '/' || this.router.url === '/#pizza')
+      this.isInfoBlock = true;
+    else this.isInfoBlock = false;
   }
 
   loadFaviriteProducts(): void{
@@ -150,19 +161,37 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
     }
   }
 
-  addToBasket(product: IProductResponse): void {
+  addToBasket(product: IProductResponse, e: any): void {
     product.selected_addition = product.selected_addition || [];
     if(localStorage.length > 0 && localStorage.getItem('basket')){
       this.basket = JSON.parse(localStorage.getItem('basket') as string);      
       if(this.basket?.some(prod => prod.id === product.id)){
         const index = this.basket.findIndex(prod => prod.id === product.id);
         
-        this.basket[index].count += product.count;
+        this.basket[index].count += product.count;      
       } else {
-        this.basket?.push(product);
+        this.basket?.push(product);        
       }
     } else {
       this.basket.push(product);
+    
+    }
+    
+    this.toastr.showSuccess('',  product.name + ' успішно додано до кишику');
+    e.target.innerText = '';
+    
+    this.isOrder = true;
+    if (this.isOrder) {
+      e.target.nextSibling.classList.add('hide');
+      e.target.classList.add('primary');
+    }
+    if (this.isOrder) {      
+      setTimeout(() => {
+          e.target.innerText = 'замовити',
+          this.isOrder = false,
+          e.target.nextSibling?.classList.remove('hide'),
+          e.target.classList.remove('primary')
+      }, 2000);
     }
     localStorage.setItem('basket', JSON.stringify(this.basket));    
     product.count = 1;
@@ -190,4 +219,8 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
     console.log(this.favoriteProducts, 'favirite', this.currentUser);
   }
 
+
+  toogleRead(): void {
+    this.isRead = !this.isRead;
+  }
 }

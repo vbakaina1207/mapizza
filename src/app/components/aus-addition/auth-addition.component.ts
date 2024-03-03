@@ -11,6 +11,7 @@ import { AccountService } from 'src/app/shared/services/account/account.service'
 import { AdditionProductService } from 'src/app/shared/services/addition-product/addition-product.service';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { ProductService } from 'src/app/shared/services/product/product.service';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 
 @Component({
   selector: 'app-auth-addition',
@@ -30,6 +31,8 @@ export class AuthAdditionComponent implements OnInit {
   public isTabSouce: boolean = true;
   public isFavorite!: boolean;
   public favoriteProducts: Array<IProductResponse> = [];
+  public btnName: string = 'замовити';
+  public isOrder: boolean = false;
 
 
   constructor(
@@ -39,6 +42,7 @@ export class AuthAdditionComponent implements OnInit {
     private orderService: OrderService,
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
+    private toastr: ToastService
   ) { 
     this.eventSubscription = this.router.events.subscribe(event => {
     if(event instanceof NavigationEnd ) {
@@ -56,11 +60,6 @@ export class AuthAdditionComponent implements OnInit {
   }
 
   loadTypeAddition(): void {
-    // this.additionProductService.getAllFirebase().subscribe(data => {
-    //   this.additionProducts = data as ITypeAdditionResponse[];
-    //   console.log(this.additionProducts,'addProd1');
-    // })
-
     this.additionProductService.getAllBySauceFirebase(this.isTabSouce).subscribe(data => {
       this.additionProducts = data as ITypeAdditionResponse[];
     })
@@ -179,14 +178,16 @@ export class AuthAdditionComponent implements OnInit {
     else {     
       basket.push(product);       
     }
+    this.isOrder = true;
     localStorage.setItem('basket', JSON.stringify(basket));
-    console.log(basket, 'basket');
+    this.toastr.showSuccess('',   product.name + ' успішно додано до кишику');
     product.count = 1;
     this.orderService.changeBasket.next(true);    
     this.additionDeleteAllClick();
     product = product;
     this.isAddition = false;
-    
+    this.btnName = '';
+    setTimeout(() => { this.btnName = 'замовити', this.isOrder = false }, 2000 );
   }
 
   tabSouceClick(): void {

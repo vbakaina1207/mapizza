@@ -1,0 +1,93 @@
+@import "./../../../shared/styles/_fonts.scss";
+@import "../../../shared/styles/variables";
+@import "../../../shared/styles/mixins";
+
+.text img {
+  width: 100%;
+  height: auto;
+  display: block;
+  position: relative;
+  border-radius: 15px;
+}
+
+.text h2, .text h3, .text h4, .text h5, .text h6 {
+    color: $clr-black;
+    font-weight: 600;
+}
+p{
+    white-space: pre-wrap;
+}
+
+.text ul li,
+.text ol li {
+    position: relative;
+    padding-left: 25px;
+    color: inherit;
+    font-size: inherit;
+    margin-bottom: 15px;
+    font-weight: 400;
+
+}
+
+
+.text ul li:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $clr-secondary;
+    }
+
+.text ol li{
+  // white-space: pre-wrap;
+  
+  &:before {
+    counter-increment: number;
+    content: counter(number) ".";
+    color: $clr-secondary;
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: 600;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.text ol {
+    counter-reset: number;
+}
+
+// .text a:not(.btn) {
+//     color: $clr-secondary !important;
+//     white-space: nowrap;
+//     text-decoration: underline !important;
+// }
+
+
+// .text a:not(.btn):hover {
+//     text-decoration: none !important;
+// }
+
+.text a {
+    color: $clr-secondary !important;
+    border: none;
+    text-decoration: none;
+    background: linear-gradient(to bottom, transparent 0%, transparent 90%, $clr-secondary 100%);
+    background-size: 200% 100%;
+    background-position:  200% 0;
+    background-repeat: no-repeat;
+    transition: all 0.5s linear;
+}
+
+.text a:hover {
+  background-position:  100% 0;
+  color: $clr-secondary;
+}
+
+// a:not([href]):not([class]), a:not([href]):not([class]):hover{ 
+//     text-decoration: none;
+//   }

@@ -1,0 +1,80 @@
+<div class="section">
+  <div class="container banner">
+    <ul class="breadcrumbs">
+      <li>
+      <a  [routerLink]="[ '/' ]">
+        <span>
+          Головна
+        </span>
+      </a>
+    </li>
+    <li >
+      <a [routerLink]="[ '/news' ]">
+        <span>Новини</span>
+      </a>
+    </li>
+    <li>
+      <span itemprop="name">{{ currentNews ? currentNews.name : undefined | titlecase }}</span>
+    </li>
+    </ul>
+    <div class="banner-align">
+      <div class="bg desktop rellax" data-rellax-speed="-.6" style="background-image: url(&quot;{{currentNews?.imagePath}}&quot;); transform: translate3d(0px, 6px, 0px);">
+      </div>
+      <div class="opacity"></div>
+      <div class="row justify-content-center ">
+        <div class="col-lg-10 col-xl-8">
+          <div class="banner-info">
+            <h1 class="h2 title text-center">
+              {{ currentNews?.name }}
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section prom-detail-section">
+    <img class="decor-img rellax" data-rellax-speed="-1" src="assets/decor/decor-6.svg" alt="" style="top: 23%; right: -40px; transform: translate3d(0px, -71px, 0px) scaleX(-1);">
+    <img class="decor-img rellax" data-rellax-speed="-1" src="assets/decor/decor-5.svg" alt="" style="top: 45%; left: -40px; transform: translate3d(0px, -175px, 0px) scaleX(-1);">
+    <img class="decor-img rellax" data-rellax-speed="-1" src="assets/decor/decor-7.svg" alt="" style="top: 65%; right: -40px; transform: translate3d(0px, -243px, 0px);">
+    <div class="spacer-sm spacer-mobile-off"></div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-8">
+          <div class="text text-lg">
+            <p  [innerHTML]="currentNews?.description">
+              <!-- <p [innerHTML]="descrip"> -->
+              <!-- {{ currentNews?.description }} -->
+            </p>
+            <p>
+              <img class="alignnone" [src]="currentNews?.detail ? currentNews.detail?.imagePath : undefined">
+            </p>
+            <h2><span style="font-weight: 400;">{{ currentNews?.detail?.title }}</span></h2>
+            <p class="text" [innerHTML]="currentNews?.detail?.description"></p>
+            <div class="text" *ngFor="let detail of currentNews?.detail?.detail">
+              <h2>{{detail.title}}</h2>
+              <p>
+                <img class="" [src]="detail ? detail?.imagePath : undefined">
+              </p>
+              <!-- <p>{{detail.description}}</p> -->
+              <!-- <p>{{descrip}}</p> -->
+              <div class="text" [innerHTML]="detail.description"></div>
+              <!-- <div class="text" [innerHTML]="descrip"></div> -->
+              <div class="text" *ngFor="let subdetail of detail.detail" >
+                <h3 style="font-weight: 400;" [innerHTML]="subdetail?.title"></h3>
+                <p>
+                  <img class="" [src]="subdetail ? subdetail?.imagePath : undefined">
+                </p>
+                <div class="text" [innerHTML]="subdetail?.description"></div>
+                <!-- <p>{{descrip}}</p> -->
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="spacer-sm"></div>
+

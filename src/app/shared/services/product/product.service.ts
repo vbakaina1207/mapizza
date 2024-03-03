@@ -52,6 +52,7 @@ export class ProductService {
     let productByCategory  = query(this.productCollection, where('category.path','==', `${name}`));
       return collectionData(productByCategory,  { idField: 'id' });
   }
+  
   createFirebase(product: IProductRequest) {
     return addDoc(this.productCollection, product);
   }

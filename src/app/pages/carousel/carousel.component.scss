@@ -207,6 +207,10 @@ ngb-carousel .picsum-img-wrapper > img {
 
 
 @media screen and (max-width: 991px) {
+	.banner-slider .row {
+    	margin: 0;
+	}
+
 	.banner-content {
     	padding: 10px 0 60px;
     	margin-left: 0;
@@ -243,18 +247,28 @@ ngb-carousel .picsum-img-wrapper > img {
 	}
 
 	.carousel-indicators [data-bs-target] {
-	width: 6px;
-	height: 6px;
+		width: 6px;
+		height: 6px;
 	}
 
 	.banner-content .btn-slide{
 		bottom: 10px;
 	}
 
-	.carousel{
+	app-carousel .carousel{
 		background: $clr-third;
     	border-radius: 16px;
 		height: auto;
+	}
+
+	.row>* {
+    	box-sizing: border-box;
+    	flex-shrink: 0;
+    	width: 100%;
+    	max-width: 100%;
+    	padding-right: calc(var(--bs-gutter-x)*.5);
+    	padding-left: calc(var(--bs-gutter-x)*.5);
+    	margin-top: var(--bs-gutter-y);
 	}
 }
 

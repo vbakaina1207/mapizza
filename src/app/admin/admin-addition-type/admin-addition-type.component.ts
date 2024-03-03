@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ITypeAdditionResponse } from 'src/app/shared/interfaces/type-addition/type-addition.interfaces';
 import { AdditionProductService } from 'src/app/shared/services/addition-product/addition-product.service';
 import { ImageService } from 'src/app/shared/services/image/image.service';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 
 
 
@@ -26,7 +27,7 @@ export class AdminAdditionTypeComponent implements OnInit {
     private fb: FormBuilder,
     private additionProductService: AdditionProductService,
     private imageService: ImageService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) { }
 
   ngOnInit() {
@@ -60,11 +61,13 @@ export class AdminAdditionTypeComponent implements OnInit {
     if(this.editStatus){
       this.additionProductService.updateFirebase(this.typeAdditionForm.value, this.currentTypeAdditionId).then(() => {
         this.loadTypeAddition();
-        this.toastr.success('Type of product successfully updated');
+        // this.toastr.success('Type of product successfully updated');
+        this.toastr.showSuccess('', 'Тип продукта змінено');
       })
     } else {
       this.additionProductService.createFirebase(this.typeAdditionForm.value).then(() => {
-        this.toastr.success('Type of product  successfully created');
+        // this.toastr.success('Type of product  successfully created');
+        this.toastr.showSuccess('', 'Тип продукта додано');
       })
     }
     this.editStatus = false;
@@ -90,7 +93,8 @@ export class AdminAdditionTypeComponent implements OnInit {
   deleteAdditionProduct(additiionProduct: ITypeAdditionResponse): void {
     this.additionProductService.deleteFirebase(additiionProduct.id).then(() => {
       this.loadTypeAddition();
-      this.toastr.success('Type of product  successfully deleted');
+      // this.toastr.success('Type of product  successfully deleted');
+      this.toastr.showSuccess('', 'Тип продукта видалено');
     })
   }
 

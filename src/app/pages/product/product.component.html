@@ -16,7 +16,7 @@
      <ng-container *ngIf="categoryName == 'pizza'">
       <div class="spacer-sm"></div>
       <!-- <h1 class="title title-decor h2">{{ !isProductType || isCategoryRolls ? currentCategoryName : currentProductTypeName | titlecase }} {{  categoryName == 'pizza' ? ' Львів' : ' від МА'}}</h1> -->
-      <h1 class="title title-decor h1">{{  categoryName == 'pizza' ? currentCategoryName+' Львів' : ''}}</h1>
+      <h1 class="title title-decor h1">{{  categoryName == 'pizza' ? currentCategoryName +' Львів' : ''}}</h1>
     </ng-container>
   </div>
   
@@ -36,13 +36,13 @@
           <a [routerLink]="[ '/product/', categoryName, '' ]" routerLinkActive="active" class="nav-link" aria-current="page">
             <b>Всі</b>
           </a>
-        </li>        
-        <li class="nav-item" *ngFor="let typeProduct of userTypeProducts">
-          <a skipLocationChange  replaceUrl [routerLink]="[ '/product/', categoryName, typeProduct.path  ]" routerLinkActive="active" class="nav-link" aria-current="page">          
+        </li>         
+        <li class="nav-item" *ngFor="let typeProduct of userTypeProducts">         
+          <a skipLocationChange  replaceUrl [routerLink]="[ '/product/', categoryName, typeProduct.path  ]" routerLinkActive="active" class="nav-link" aria-current="page">                                           
             <img [src]="typeProduct.imgPath" alt="">
-            <span><b>{{typeProduct.name}}</b></span>                      
-          </a>
-        </li>
+            <span><b>{{typeProduct.name}}</b></span>                                  
+          </a>        
+        </li>        
       </ul>
     </div>
   </div>
@@ -108,8 +108,8 @@
                 <button type="button" class="increment" (click)="productCount(product, true)">+</button>
             </div>
 
-            <button class="btn-product order-btn add-to-cart-btn " (click)="addToBasket(product)">
-                <span>замовити</span>
+            <button class="btn-product order-btn add-to-cart-btn " (click)="addToBasket(product, $event)">
+                <span>{{btnName}}</span>
                   <i>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6.25 6.39167V5.58334C6.25 3.70834 7.75833 1.86667 9.63333 1.69167C11.8667 1.47501 13.75 3.23334 13.75 5.42501V6.57501" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -137,5 +137,385 @@
 <div class="spacer-lg"></div>
 
   </div>
-<!-- </div> -->
+
+  <ng-container *ngIf="isInfoBlock">
+    <app-slide-about></app-slide-about>
+
+  <div class="section">
+	<div class="container">
+		<div class="about-block-wrapper b-shadow">
+			<img class="decor-img left rellax" data-rellax-speed="1" src="assets/decor/decor-7.svg" alt="" style="transform: translate3d(0px, -50px, 0px);">
+			<div class="about-block-inner">
+				<div class="about-block-info">
+					<div class="title h2 title-decor">Трішки про нас</div>
+					<div class="text text-lg">
+						<p>Ми не італійці, в нашій команді немає іменитих шефів чи розкручених учасників кулінарних шоу.&nbsp; Проте, ми обожнюємо гастрономічні традиції Італії та експерименти на кухні, 
+							а ще ми з великою повагою ставимося до їжі, яку готуємо нашим клієнтам.
+						</p>
+						<p><strong>Наша мета – дати можливість усім і кожному закохатися у справжню італійську піцу. Піца Львів від МА піца з якісних імпортних інгредієнтів на італійському борошні Caputo. 
+							Тоненьке тісто, хрумкі бортики, багато начинки – «кусь» і Ви в Італії!</strong>
+						</p>
+					</div>
+					<a class="butn btn-primar" [routerLink]="[ '/about' ]">
+						<b>Дізнатися більше</b>
+						<i></i>
+					</a>
+				</div>
+				<div class="about-block-img">
+					<img src="assets/about_us/czikavi-fakty-pro-piczu.webp" alt="">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="spacer-lg"></div>
+  </div>
+
+<div class="section">
+	<div class="container">
+		<div class="inst-block-wrapper b-shadow">
+			<div class="inst-block-inner">
+				<div class="inst-block-img">
+					<img src="assets/about_us/salyami.webp" alt="">
+				</div>
+				<div class="inst-block-info">
+					<div class="title h2 title-decor">
+						Підпишись на наш Інстаграм
+					</div>
+					<div class="text text-lg">
+						<p></p>
+						<p>Серфите в Інстаграмі? Ми теж! Ма розуміє, що створити кращий контент, ніж відосики з котиками та 
+							песиками – складно, втім ми стараємося, щоб вам було цікаво. Підписуйтеся на нашу сторінку, щоб бачити, як справи у МА піца Львів та які смачні пропозиції вона для вас підготувала.
+						</p>
+						<p></p>
+					</div>
+					<a class="butn btn-primar" href="https://www.instagram.com/_mapizza_/?igshid=NmNmNjAwNzg%3D">
+						<b>@MA Pizza</b>
+						<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9 1.6207C11.4047 1.6207 11.6895 1.63125 12.6352 1.67344C13.5141 1.71211 13.9887 1.85977 14.3051 1.98281C14.7234 2.14453 15.0258 2.34141 15.3387 2.6543C15.6551 2.9707 15.8484 3.26953 16.0102 3.68789C16.1332 4.0043 16.2809 4.48242 16.3195 5.35781C16.3617 6.30703 16.3723 6.5918 16.3723 8.99297C16.3723 11.3977 16.3617 11.6824 16.3195 12.6281C16.2809 13.507 16.1332 13.9816 16.0102 14.298C15.8484 14.7164 15.6516 15.0188 15.3387 15.3316C15.0223 15.648 14.7234 15.8414 14.3051 16.0031C13.9887 16.1262 13.5105 16.2738 12.6352 16.3125C11.6859 16.3547 11.4012 16.3652 9 16.3652C6.59531 16.3652 6.31055 16.3547 5.36484 16.3125C4.48594 16.2738 4.01133 16.1262 3.69492 16.0031C3.27656 15.8414 2.97422 15.6445 2.66133 15.3316C2.34492 15.0152 2.15156 14.7164 1.98984 14.298C1.8668 13.9816 1.71914 13.5035 1.68047 12.6281C1.63828 11.6789 1.62773 11.3941 1.62773 8.99297C1.62773 6.58828 1.63828 6.30352 1.68047 5.35781C1.71914 4.47891 1.8668 4.0043 1.98984 3.68789C2.15156 3.26953 2.34844 2.96719 2.66133 2.6543C2.97773 2.33789 3.27656 2.14453 3.69492 1.98281C4.01133 1.85977 4.48945 1.71211 5.36484 1.67344C6.31055 1.63125 6.59531 1.6207 9 1.6207ZM9 0C6.55664 0 6.25078 0.0105469 5.29102 0.0527344C4.33477 0.0949219 3.67734 0.249609 3.10781 0.471094C2.51367 0.703125 2.01094 1.00898 1.51172 1.51172C1.00898 2.01094 0.703125 2.51367 0.471094 3.1043C0.249609 3.67734 0.0949219 4.33125 0.0527344 5.2875C0.0105469 6.25078 0 6.55664 0 9C0 11.4434 0.0105469 11.7492 0.0527344 12.709C0.0949219 13.6652 0.249609 14.3227 0.471094 14.8922C0.703125 15.4863 1.00898 15.9891 1.51172 16.4883C2.01094 16.9875 2.51367 17.2969 3.1043 17.5254C3.67734 17.7469 4.33125 17.9016 5.2875 17.9438C6.24727 17.9859 6.55312 17.9965 8.99648 17.9965C11.4398 17.9965 11.7457 17.9859 12.7055 17.9438C13.6617 17.9016 14.3191 17.7469 14.8887 17.5254C15.4793 17.2969 15.982 16.9875 16.4813 16.4883C16.9805 15.9891 17.2898 15.4863 17.5184 14.8957C17.7398 14.3227 17.8945 13.6688 17.9367 12.7125C17.9789 11.7527 17.9895 11.4469 17.9895 9.00352C17.9895 6.56016 17.9789 6.2543 17.9367 5.29453C17.8945 4.33828 17.7398 3.68086 17.5184 3.11133C17.2969 2.51367 16.991 2.01094 16.4883 1.51172C15.9891 1.0125 15.4863 0.703125 14.8957 0.474609C14.3227 0.253125 13.6688 0.0984375 12.7125 0.05625C11.7492 0.0105469 11.4434 0 9 0Z" fill="white"></path>
+							<path d="M9 4.37695C6.44766 4.37695 4.37695 6.44766 4.37695 9C4.37695 11.5523 6.44766 13.623 9 13.623C11.5523 13.623 13.623 11.5523 13.623 9C13.623 6.44766 11.5523 4.37695 9 4.37695ZM9 11.9988C7.34414 11.9988 6.00117 10.6559 6.00117 9C6.00117 7.34414 7.34414 6.00117 9 6.00117C10.6559 6.00117 11.9988 7.34414 11.9988 9C11.9988 10.6559 10.6559 11.9988 9 11.9988Z" fill="white"></path>
+							<path d="M14.8852 4.19453C14.8852 4.79219 14.4 5.27383 13.8059 5.27383C13.2082 5.27383 12.7266 4.78867 12.7266 4.19453C12.7266 3.59688 13.2117 3.11523 13.8059 3.11523C14.4 3.11523 14.8852 3.60039 14.8852 4.19453Z" fill="white"></path>
+						</svg>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="spacer-lg"></div>
+</div>
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-8 offset-xl-2">
+				<div class="title h2 title-decor">FAQ</div>
+				<div class="spacer-xs"></div>
+				<div class="accordion" id="accordionExample">
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="headingOne">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+								⭕ Скільки коштує доставка?
+								<i></i>
+							</button>
+						</h2>
+						<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+							<div class="accordion-body text">
+								<p>Доставка піци є безкоштовною при замовленні від 300 грн у зеленій зоні та 400 грн у жовтій.
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="headingTwo">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+								⭕ Який час прийому замовлень?
+								<i></i>
+							</button>							
+						</h2>
+						<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+							<div class="accordion-body text">
+								<p>Замовляти піцу в MA, можна з 10:00 по 22:30
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="headingThree">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+								⭕ Які у вас є акції?
+								<i></i>
+							</button>							
+						</h2>
+						<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+							<div class="accordion-body text">
+								<p>Акція "2+1" - отримуєте 3 піци, а платите всього за дві. Акція "3+1" - отримуєте 4 піци, а платите всього за три.
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="headingFour">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+								⭕ Піца відрізняється від фото на сайті
+								<i></i>
+							</button>					
+						</h2>
+						<div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+							<div class="accordion-body text">
+								<p>Так, піца яку ви отримаєте, може мати трохи інший вигляд, ніж та, що ви бачите на наших фото. Проте, склад і смак є незмінним.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="spacer-lg"></div>
+</div>
+<div class="section seo-section">
+	<img class="decor-img left rellax" src="assets/decor/decor-3.svg" alt="" style="transform: translate3d(0px, -114px, 0px);">
+	<img class="decor-img right rellax" data-rellax-speed="-1" src="assets/decor/decor-4.svg" alt="" style="transform: translate3d(0px, 2px, 0px);">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-12 col-xl-8">
+				<div class="seo-text-block">
+					<div class="text text-lg">
+						<h2>Ідеальна доставка піци Львів</h2>
+						<p></p>
+						<p>Відчуваєте цей неповторний аромат хрусткого тіста, соковитої начинки? Пригадуєте момент, коли тримаєте в руках теплу коробку й крадькома заглядаєте всередину, щоб глянути на цей гарячий, запашний шедевр? Піца Львів – це справжній кулінарний витвір мистецтва, 
+							а із MA Pizza неповторних, ідеальних смаків ще більше.
+						</p>
+						<p><strong>Акції від MA Pizza</strong></p>
+						<table border="1">
+							<tbody>
+								<tr>
+									<td>Середній час доставки 29 хв</td>
+									<td>Отримуйте знижку 10% на замовлення зі самовивозом</td>
+								</tr>
+								<tr>
+									<td>Акція “2+1”</td>
+									<td>Отримуєте 3 піци, а платите всього за дві</td>
+								</tr>
+								<tr>
+									<td>Акція “3+1”</td>
+									<td>Отримуєте 4 піци, а платите всього за три</td>
+								</tr>
+							</tbody>
+						</table>
+						<p>Безсумнівно, піца Львів – ідеальна страва. Адже вона має божественний смак, особливу форму, привабливий вигляд. Краєм ока поглянувши на апетитну 
+							«Карбонару», «Діаволу» або «Капрічозу» від MA Піца Львів, ніхто не зможете встояти перед спокусою скуштувати ласий шматочок. Ми пропонуємо соковиті начинки 
+							з фантастичного поєднання свіжих продуктів на запашному тісті, яке залишає післясмак справжньої райської насолоди.</p><p>Доставка піци Львів від МA Pizza– це смачно, корисно, просто. Вам потрібно витратити 
+							всього декілька хвилин на замовлення улюбленої піци. Наші майстри одразу візьмуться до роботи, щоб приготувати вам найсвіжішу, найсмачнішу піцу.
+						</p>
+						<p></p>
+						<div class="more-text">
+							<ng-container *ngIf="isRead">
+							<div class="text text-lg">
+								<h2>Піца Львів від MА Pizza – кохання з першого погляду, аромату, шматочку!</h2>
+								<p>Справжня італійська піца Львів готується під керівництвом професіоналів. Найсвіжіші продукти у золотих руках майстрів перетворюються у шедеври кулінарного мистецтва. Вони знають секрети італійських піцайол, 
+									які вміють робити тісто по-особливому хрустким, а начинку неперевершеною. Піца на дровах у Львові MA Pizza – смачна, ситна страва, але окрім цього, особлива насолода, яка приваблює усіх ще не раз повертатись до наших закладів.
+								</p>
+								<p>Кожен, хто скуштує навіть найменший шматочок MА Pizza, отримає можливість відчути справжню атмосферу Італії. Де б ви не були: у одному з наших закладів, вдома з рідними, на прогулянці з друзями, – за допомогою 
+									блискавичної доставки можна перенестись до теплого Неаполя чи Мілану. Наші заклади розташовані у різних куточках, а тому доставка піци Львів є максимально швидкою. Кожен може насолодитись гарячою стравою, лише декілька хвилин тому 
+									приготованою на дровах.
+								</p>
+								<p>Доставка піци у м. Львів від MA Pizza максимально зручна для кожного, хто хоче скуштувати шматочок італійської насолоди:
+								</p>
+								<ol>
+									<li>
+										Ви можете зробити замовлення на нашому сайті або ж зателефонувати до нашого кол-центру, де вам допоможуть обрати ідеальну піцу на будь-який смак.
+									</li>
+									<li>
+										У нашому застосунка можна зробити замовлення або ж переглянути всі акції.
+									</li>
+									<li>
+										За допомогою інтерактивної карти можна визначити, до якої зони доставки належить ваша адреса – зеленої (середній час доставки – до 29 хв) або жовтої (до 59 хв).
+									</li>
+								</ol>
+								<h2>MА Pizza – доставка піци у Львові #1!</h2>
+								<p>А для всіх, хто знає, що піци багато не буває, ми пропонуємо бонус – безкоштовна доставка піци у Львові. Адже це чудова можливість зекономити, якщо ви плануєте замовити багато смачної, ароматної піци для себе та друзів. Замовити піцу у м. Львів безкоштовно, а також цілодобово, можна придбавши замовлення на відповідну мінімальну суму.
+								</p>
+								<h2>Чому піца у Львові така популярна?</h2>
+								<ul>
+									<li>
+										Для когось це ситна страва, яка додає енергії протягом шаленого робочого дня.
+									</li>
+									<li>
+										Іншим вона створює затишну атмосферу під час посиденьок з друзями чи рідними.
+									</li>
+									<li>
+										А ще для когось – стає романтичною домашньою вечерею з коханою половинкою.
+									</li>
+								</ul>
+								<p>Іноді так не хочеться стояти увесь день на кухні, витрачаючи увесь час та енергію на приготування одноманітної домашньої кухні. МА піца у Львові– то шматочок італійської атмосфери тепла, релаксу, душевного спокою. Також ж вона може стати доповненням шаленої вечірки з друзями, немов у найкрутіших клубах на узбережжі Італії.
+
+								</p>
+								<h3>Чому варто обирати піцу у Львові від МА піца?</h3>
+								<ul>
+									<li>
+										Майстерність на найвищому рівні – за допомогою найкрутіших технологій наші майстри готують таку піцу, що навіть італійці можуть позаздрити;
+									</li>
+									<li>
+										Свіжі, корисні продукти – поєднання найкращих овочів, сирів, м’яса, зелені із Італії, Польщі, Німеччини, Іспанії роблять MA Pizza однією з найкращих піцерій у Львові;
+									</li>
+									<li>
+										Швидка доставка – до 29 хвилин в межах зеленої зони;
+									</li>
+									<li>
+										Оригінальні смаки для гурманів – якщо вам набридли одноманітні начинки, ми пропонуємо особливі поєднання смаків:&nbsp; «Брі», «3 сири з грушкою», «Мафіо де Цезаріні» тощо;
+									</li>
+									<li>
+										Доставка піци в межах Львова – дарує можливість насолодитись апетитною, теплою стравою на відпочинку на природі, в гостях у друзів чи вдома переглядаючи фільм!
+									</li>
+								</ul>
+								<p>Скуштуйте МA Pizza й відчуйте неповторну атмосферу Італії у себе вдома у Львові!</p>
+								<p>На даний момент МА Піца не може запропонувати вам: суші, роли, філадельфія, дракон, сети, лосось, каліфорнія, теплі чи запечені роли. Додавати такий продукт як суші у Львові наразі ми не плануємо. Дякуємо за довіру до нашого бренду.
+
+								</p>
+								
+							</div>
+							</ng-container>
+							<div class="read-more" data-read-more="Читати більше" data-read-less="Згорнути" (click)="toogleRead()">
+								{{ isRead ? 'Згорнути' : 'Читати більше' }}
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="spacer-lg"></div>
+</div>
+</ng-container>
+
+<ng-container *ngIf="categoryName ==='deserts'">
+	<div class="section seo-section">
+        <img class="decor-img left rellax" src="assets/decor/decor-3.svg" alt="" style="transform: translate3d(0px, -242px, 0px);">
+        <img class="decor-img right rellax" src="assets/decor/decor-4.svg" alt="" style="transform: translate3d(0px, 242px, 0px);">
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-8">
+                    <div class="seo-text-block">
+                        <div class="text text-lg">
+                            <h3>Найсмачніші десерти у Львові&nbsp;</h3>
+                            <p><span style="font-weight: 400">Хочете чогось солоденького, але бажання стояти на кухні зовсім немає? Без апетитного смаколика чай чи кава не приносять задоволення? Десерти від MA Pizza у м. Львів – це особлива можливість посмакувати улюбленими ласощами, не виходячи з дому. Швидка доставка привезе вам ідеальні десерти у будь який куточок у м. Львів. Вже за кілька хвилин після замовлення ви зможете насолодитись улюбленими смаколиками.
+							</span></p>					
+                            <div class="more-text open">
+								<ng-container *ngIf="isRead">
+                                	<div class="text text-lg" style="display: block;">
+                                		<p>
+											<span style="font-weight: 400">Десерти від MA Pizza у Львові є неповторними за консистенцією, смаком і естетичним виглядом. Пропонуємо апетитні ласощі, приготовані професійними майстрами з найкращих, найсвіжіших продуктів.
+											</span>
+											<b></b>
+										</p>
+										<ul>
+											<li><strong>Тирамісу</strong></li>
+										</ul>
+										<p>
+											<span style="font-weight: 400">
+												Хто ж не пробував цей класичний, один з найпопулярніших у світі десерт? Ніжний крем на основі сиру маскарпоне, легкі палички Савоярді дарують справжнє відчуття легкості. А наші кухарі знають секрети приготування такого ідеального смаколика, що навіть італійські кондитери будуть в захваті!
+											</span>
+										</p>
+										<ul>
+											<li><strong>Горішки зі згущеним молоком</strong></li>
+										</ul>
+										<p>Поєднання пісочного тіста з натуральним згущеним молоком на маслом з MA Pizza у Львові, поверне яскраві спогади родом із дитинства.</p>
+										<ul>
+											<li><strong>Десерт Снікерс</strong></li>
+										</ul>
+										<p>Порційний торт Снікерс не залишить вас байдужими. Шоколадний бісквіт неперевершено смакує з горіхами та сирним кремом. Чудово доповнює солона карамель. Десерт ідеально підійде як вдале доповнення смавчної вечері з піцою від MA Pizza.</p>
+										<h2><b>Чим особливі десерти MA Pizza у Львові?</b></h2>
+										<ul>
+											<li style="font-weight: 400">
+												<span style="font-weight: 400">неповторна, ніжна текстура;</span>
+											</li>
+											<li style="font-weight: 400">
+												<span style="font-weight: 400">натуральні інгредієнти;</span>
+											</li>
+											<li style="font-weight: 400">
+												<span style="font-weight: 400">досконале поєднання смаків;</span>
+											</li>
+											<li style="font-weight: 400">
+												<span style="font-weight: 400">елегантний, вишуканий вигляд;</span>
+											</li>
+											<li style="font-weight: 400">
+												<span style="font-weight: 400">швидка доставка у будь-який куточок Львова.</span>
+											</li>
+										</ul>
+										<h2><b>Доставка десертів Львів</b></h2>
+										<p>
+											<span style="font-weight: 400">
+												Замовити улюблений десерт у м. Львів можна всього лиш за декілька хвилин на сайті MA Pizza. Тоді до справи візьмуться наші майстри, котрі з любов’ю приготують для вас найкращі десерти. А доставка у різні куточки у м. Львів гарантована завдяки роботі блискавичних кур’єрів.&nbsp;
+											</span>
+										</p>
+										<p><b><i>Ніжний десерт у м. Львів обов’язково підніме вам настрій, подарує естетичну, смакову насолоду!</i></b>
+											<span style="font-weight: 400">&nbsp;</span>
+										</p>
+										<p>&nbsp;</p>
+                                    </div>
+								</ng-container>	
+                                <div class="read-more" data-read-more="Читати більше" data-read-less="Згорнути" (click)="toogleRead()">
+									{{ isRead ? 'Згорнути' : 'Читати більше' }}
+								</div>										
+                            </div>							
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="spacer-lg"></div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="categoryName ==='salads'">
+	<div class="section seo-section">
+        <img class="decor-img left rellax" data-rellax-speed="1" src="assets/decor/decor-3.svg" alt="">
+        <img class="decor-img right rellax" data-rellax-speed="-1" src="assets/decor/decor-4.svg" alt="">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-8">
+                    <div class="seo-text-block">
+                        <div class="text text-lg">
+                            <h3>Салати у Львові</h3>
+                            <p><span style="font-weight: 400">
+								Салати у м. Львів – це універсальна страва, що може стати сніданком, обідом, вечерею або ж навіть родзинкою свята. Завжди нове, неповторне поєднання інгредієнтів дозволяє експериментувати, винаходити нові, ще кращі закуски. А доставка завжди доречних, ситних, освіжаючих салатів у м. Львів максимально швидка.&nbsp;
+								</span>
+							</p>
+                            <div class="more-text open">
+								<ng-container *ngIf="isRead">
+                                	<div class="text text-lg" style="display: block;">
+                                    <p>
+										<span style="font-weight: 400">У спекотний літній день, коли зовсім не хочеться жирних, калорійних страв, на допомогу приходять салати від MA Pizza у м. Львів.&nbsp; Завдяки найкращим, соковитим овочам та зелені можна чудово освіжитись. А у поєднанні з іншими інгредієнтами ситний перекус додасть вам сили, енергії. Навіть найвибагливіші гурмани не можуть відірватись від неповторних, вишуканих салатів.&nbsp;
+										</span>
+									</p>
+									<h2><b>Чому варто замовити салат від MA Pizza у м. Львів?&nbsp;</b></h2>
+									<ol>
+										<li style="font-weight: 400"><span style="font-weight: 400">Майстерні кухарі використовують найкращі продукти з Італії, Польщі, Іспанії, Німеччини та створюють справжні мистецькі шедеври на тарілці;</span></li>
+										<li style="font-weight: 400"><span style="font-weight: 400">Смачні, ситні салати дарують енергію без зайвого переїдання, освіжають, додають сили, гарний настрій;</span></li>
+										<li style="font-weight: 400"><span style="font-weight: 400">Смачні салати можуть урізноманітнити буденне меню, коли зовсім немає часу стояти на кухні;</span></li>
+										<li style="font-weight: 400"><span style="font-weight: 400">Салати – оригінальне доповнення до піци MA Pizza у м. Львів;</span></li>
+										<li style="font-weight: 400"><span style="font-weight: 400">Приготовані з любов’ю до кожного клієнта, салати MA Pizza у м. Львів дивують неповторними смаками, дарують особливу насолоду.</span></li>
+									</ol>
+									<p><span style="font-weight: 400">Відчуваєте цей чарівний аромат смаженої курочки під пікантним соусом? &nbsp; Або ж хочете спробувати щось особливе, неповторне, таке, що раніше не куштували? Пікантна груша з сиром Дор Блю</span><span style="font-weight: 400">,</span><span style="font-weight: 400"> класчний цезар з мірс&nbsp;</span></p>
+									<h2><b>Найсмачніші салати у Львові</b></h2>
+									<h2><b>Замовити салат у м. Львів</b><span style="font-weight: 400">&nbsp;</span></h2>
+									<p><span style="font-weight: 400">Доставка салатів у м. Львів є легкою, доступною. Вам достатньо обрати на сайті улюблений салат, тип доставки, спосіб оплати. Як тільки замовлення буде прийнято, наші кухарі миттєво візьмуться до роботи. Швидка доставка їжі від MA Pizza, зокрема салатів, дозволяє смачно перекусити вдома, на роботі чи навіть під час прогулянки у м. Львів.&nbsp;</span></p>
+									<p><span style="font-weight: 400">А якщо не впевнені, який салат краще обрати, зателефонуйте до нашого кол-центру. Консультанти допоможуть вам визначитись зі стравою, швидко її замовити. Вже через кілька хвилин ви не зможете відірватись від апетитних салатів MA Pizza.&nbsp;</span></p>
+									<p><em><b>Апетитний вигляд, спокусливий аромат, чудовий смак – це все про салати MA Pizza у м. Львів!</b></em></p>
+                                	</div>
+								</ng-container>	
+                                <div class="read-more" data-read-more="Читати більше" data-read-less="Згорнути" (click)="toogleRead()">
+									{{ isRead ? 'Згорнути' : 'Читати більше' }}
+								</div>
+									
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="spacer-lg"></div>
+        </div>
+</ng-container>
 

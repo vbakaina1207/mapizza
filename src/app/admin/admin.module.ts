@@ -10,6 +10,10 @@ import { AdminProductComponent } from './admin-product/admin-product.component';
 import { AdminCategoryComponent } from './admin-category/admin-category.component';
 import { AdminAdditionTypeComponent } from './admin-addition-type/admin-addition-type.component';
 import { AdminVacancyComponent } from './admin-vacancy/admin-vacancy.component';
+import { AdminNewsComponent } from './admin-news/admin-news.component';
+import { AdminNewsDetailComponent } from './admin-news-detail/admin-news-detail.component';
+import { AdminNewsInfoComponent } from './admin-news-info/admin-news-info.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 
 @NgModule({
@@ -21,7 +25,11 @@ import { AdminVacancyComponent } from './admin-vacancy/admin-vacancy.component';
     AdminOrdersComponent,
     AdminProductTypeComponent,
     AdminAdditionTypeComponent,
-    AdminVacancyComponent
+    AdminVacancyComponent,
+    AdminNewsComponent,
+    AdminNewsDetailComponent,
+    AdminNewsInfoComponent,
+    AdminPageComponent
   ],
   imports: [
     CommonModule,

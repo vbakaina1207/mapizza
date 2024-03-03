@@ -30,7 +30,6 @@ export class FavoriteComponent implements OnInit {
     if(localStorage.length > 0 && localStorage.getItem('currentUser')){
       this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
       this.favoriteProducts = this.currentUser.favorite;
-      console.log(this.favoriteProducts);
     }
   }
 

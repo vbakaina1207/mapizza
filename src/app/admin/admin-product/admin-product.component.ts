@@ -10,6 +10,7 @@ import { ITypeProductResponse } from 'src/app/shared/interfaces/type-product/typ
 import { TypeProductService } from 'src/app/shared/services/type-product/type-product.service';
 import { IAdditionResponse } from 'src/app/shared/interfaces/addition/addition.interfaces';
 import { AdditionProductService } from 'src/app/shared/services/addition-product/addition-product.service';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 
 @Component({
   selector: 'app-admin-product',
@@ -32,7 +33,7 @@ export class AdminProductComponent implements OnInit {
   public currentCategoryName = '';
   private currentProductId!: string;
 
-  // public currentAddition
+  
 
   constructor(
     private fb: FormBuilder,
@@ -41,7 +42,7 @@ export class AdminProductComponent implements OnInit {
     private additionService: AdditionProductService,
     private typeProductService: TypeProductService,
     private imageService: ImageService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -106,11 +107,12 @@ export class AdminProductComponent implements OnInit {
     if(this.editStatus){
       this.productService.updateFirebase(this.productForm.value, this.currentProductId).then(() => {
         this.loadProduct();
-        this.toastr.success('Product successfully updated');
+        this.toastr.showSuccess('','Продукт змінено');
+        // this.toastr.success('Product successfully updated');
       })
     } else {
       this.productService.createFirebase(this.productForm.value).then(() => {
-        this.toastr.success('Product successfully created');
+        this.toastr.showSuccess('', 'Продукт додано');
       })
     }
     this.isOpen = false;
@@ -151,7 +153,7 @@ export class AdminProductComponent implements OnInit {
   deleteProduct(product: IProductResponse): void {
     this.productService.deleteFirebase(product.id).then(() => {
       this.loadProduct();
-      this.toastr.success('Product successfully deleted');
+      this.toastr.showSuccess('', 'Продукт видалено');
     })
   }
 

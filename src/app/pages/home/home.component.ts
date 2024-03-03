@@ -9,6 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class HomeComponent implements OnInit {
   
+
   constructor() { }
 
   ngOnInit() {

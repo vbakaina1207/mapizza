@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ICategoryResponse } from 'src/app/shared/interfaces/category/category.interface';
 import { CategoryService } from 'src/app/shared/services/category/category.service';
 import { ImageService } from 'src/app/shared/services/image/image.service';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 
 @Component({
   selector: 'app-admin-category',
@@ -25,7 +26,7 @@ export class AdminCategoryComponent implements OnInit {
     private fb: FormBuilder,
     private categoryService: CategoryService,
     private imageService: ImageService,
-    private toastr: ToastrService
+    private toastr: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -55,11 +56,13 @@ export class AdminCategoryComponent implements OnInit {
     if(this.editStatus){
       this.categoryService.updateFirebase(this.categoryForm.value, this.currentCategoryId as string).then(() => {
         this.loadCategories();
-        this.toastr.success('Category successfully updated');
+        // this.toastr.success('Category successfully updated');
+        this.toastr.showSuccess('', 'Категорію змінено');
       })
     } else {
       this.categoryService.createFirebase(this.categoryForm.value).then(() => {
-        this.toastr.success('Category successfully created');
+        // this.toastr.success('Category successfully created');
+        this.toastr.showSuccess('', 'Категорію додано');
       })
     }
     this.editStatus = false;
@@ -84,7 +87,8 @@ export class AdminCategoryComponent implements OnInit {
   deleteCategory(category: ICategoryResponse): void {
     this.categoryService.deleteFirebase(category.id as string).then(() => {
       this.loadCategories();
-      this.toastr.success('Category successfully deleted');
+      // this.toastr.success('Category successfully deleted');
+      this.toastr.showSuccess('', 'Категорію видалено');
     })
   }
 

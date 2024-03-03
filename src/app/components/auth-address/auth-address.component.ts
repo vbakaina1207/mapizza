@@ -92,7 +92,7 @@ constructor(
 
   addAddress():void{
     this.updateAddress().then(() => {
-      this.toastr.success('Address successfully changed');
+      this.toastr.success('Адресу успішно змінено!');
     }).catch(e => {
       this.toastr.error(e.message);
     });

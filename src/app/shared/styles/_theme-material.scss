@@ -3,6 +3,8 @@
 @import 'mixins';
 @import 'fonts';
 
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
 
 $primary-default-value: (
   50: #009246,
@@ -67,6 +69,7 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 
 .auth-dialog {
     // widt;h: 600px;
+   
     width: 500px;
     // max-width: 100vw;
     // max-width: 300px;
@@ -109,6 +112,10 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
   //width: 500px;
   padding: 0 20px;
   max-height: 350px;
+
+  .popup-container {
+    overflow: hidden;
+  }
 }
 
 .alert-dialog .mat-dialog-container {
@@ -202,7 +209,7 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 }
 
 .form .btn-login{
-  border: 2px solid $clr-primary;
+  border: 2px solid $clr-secondary;
   transition: .35s;
   text-transform: uppercase;
   // @include text-bold($text-color);
@@ -213,21 +220,21 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
   text-align: center;
   box-shadow: none;
   background-color: $clr-secondary;
+
+  &:hover{
+    background-color: $clr-primary;
+    color: $clr-white;
 }
 
-
-.btn-login:hover{
-  background-color: $clr-primary;
-
-}
-
-.btn-login:disabled{
+  &:disabled{
     pointer-events: none;
     border-color: $clr-grey;
     background: $clr-grey;
     color:$clr-grey;
     font-weight: bold;
 }
+}
+
 
 .open-popup{
   color: $clr-black;
@@ -317,6 +324,7 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 .auth-addition-dialog .mat-dialog-container{
   padding: 0;
   border-radius: 15px;
+  overflow: auto;
 }
 
 .popup-content {
@@ -333,7 +341,7 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 .popup-container {
     display: inline-block;
     vertical-align: middle;
-    overflow: hidden;
+    // overflow: hidden;
     width: 100%;
     position: relative;
     text-align: left;
@@ -344,7 +352,7 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 
 .popup-align {
     padding: 40px;
-    overflow: hidden;
+    // overflow: hidden;
 }
 .ing-popup .popup-align {
     padding: 0;
@@ -370,6 +378,7 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
     background: $clr-white;
     border-radius: 16px;
     transition: $transition;
+    margin-top: 15px;
 }
 
 
@@ -387,6 +396,8 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
     font-size: 16px;
     line-height: 1.5em;
     margin-bottom: 10px;
+    flex-shrink: 0;
+    flex-basis: 70px;
 }
 
 .product_title i {
@@ -651,6 +662,11 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 }
 
 
+.primary::before {
+    content: '\2714';
+    font-size: 10px;
+    padding: 0 41px;
+}
 
 .auth-dialog-basket .mat-dialog-container {
     border-radius: 12px;
@@ -661,8 +677,9 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
     transition: .25s;
     padding: 0;
     max-width: 100vw;
-    height: 350px;
-    // min-height: 100vh;
+    // height: 350px;
+    max-height: 100vh;
+    height: auto;
 }
 
 .cart_title {
@@ -804,6 +821,8 @@ a:hover {
     & .butn {
       margin-left: 10px;
       flex-shrink: 0;
+       
+      
     }
 }
 
@@ -860,7 +879,7 @@ a:hover {
 @media screen and (max-width: 1400px) {
 .popup-container {
     max-width: 980px;
-    max-height: calc(100vh - 30px);
+    // max-height: calc(100vh - 30px);
 }
 
   .ing_body {
@@ -939,6 +958,10 @@ a:hover {
     margin: 0 15px 0 10px;
   }
 
+  .primary::before {
+    padding: 0 36px;
+}
+
   .cart_title {
     padding: 15px;
     height: 62px;
@@ -954,7 +977,7 @@ a:hover {
   }
 
   .cart_bottom {
-    height: 62px;
+    // height: 62px;
     padding: 10px 15px;
   }
 
@@ -983,6 +1006,10 @@ a:hover {
   
   .prod_horiz a.title:hover {
     color: $clr-primary;
+  }
+
+  .btn-primar:hover {
+    color:$clr-white !important;
   }
 }
 
@@ -1062,7 +1089,7 @@ a:hover {
 
   .cart_bottom {
     padding: 10px 15px;
-    height: 67px;
+    // height: 67px;
   }
 
   
@@ -1070,7 +1097,7 @@ a:hover {
     width: 100vw;
     padding: 0 !important;
     border-radius: 0;
-    
+    overflow: scroll;
   }
 
   .cart_bottom_flex {

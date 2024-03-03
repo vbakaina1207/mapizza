@@ -1,0 +1,31 @@
+
+ <!-- <ng-container *ngIf="newsPage.length > 0">
+<div *ngFor="let new of newsPage">
+  {{ new.name }}
+  {{ new.description }}
+</div>
+</ng-container> -->
+<div class="row news-row promotions justify-content-center no-reverse">
+  <div class="col-12 col-xl-10">
+    <div class="news-item" *ngFor="let new of newsPage">
+      <a class="news-img " [routerLink]="[ '/news', new.id ]">
+        <img [src]="new.imagePath" alt="">
+      </a>
+      <div class="news-content">
+        <div class="title h3 text-cut-3">
+          <a [routerLink]="[ '/news', new.id ]">
+            {{ new.name }}                                            
+          </a>
+        </div>
+        <div class="text text-cut-5">
+          <p>{{ new.description | slice:0:280 }} <span *ngIf="new.description.length > 280">…</span> 
+          </p>
+        </div>
+        <a [routerLink]="[ '/news', new.id ]" class="btn-link">
+          <span>Дізнатись більше</span>
+          <i></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

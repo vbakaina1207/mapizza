@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthAddressComponent } from 'src/app/components/auth-address/auth-address.component';
 
 import { AccountService } from 'src/app/shared/services/account/account.service';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 
 
 @Component({
@@ -31,7 +32,8 @@ export class PersonalComponent implements OnInit {
     private router: Router,
     private afs: Firestore,
     private auth: Auth,
-    private toastr: ToastrService,
+    private toastr: ToastService,
+    private toast: ToastrService,
     public dialog: MatDialog,
     private accountService: AccountService
   ) { }
@@ -106,10 +108,11 @@ export class PersonalComponent implements OnInit {
 
   updateUser():void{        
     this.updateDoc().then(() => {
-      this.toastr.success('User successfully changed');
+      // this.toastr.success('User successfully changed');
+      this.toastr.showSuccess('', 'Дані змінено');
       console.log('User update');
     }).catch(e => {
-      this.toastr.error(e.message);
+      this.toast.error(e.message);
     });
     
   }

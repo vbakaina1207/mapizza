@@ -36,14 +36,6 @@ export class AdminComponent implements OnInit {
       console.log(result);
     })
   }
-  // loginUser(): void {
-  //   const { email, password } = this.authForm.value;
-  //   console.log(this.authForm.value);
-  //   this.login(email, password).then(() => {
-  //     this.toastr.success('User successfully login');
-  //   }).catch(e => {
-  //     this.toastr.error(e.message);
-  //   })
-  // }
+  
 
 }

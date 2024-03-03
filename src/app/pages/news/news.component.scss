@@ -1,0 +1,103 @@
+@import '../../shared/styles/fonts';
+@import '../../shared/styles/variables';
+@import '../../shared/styles/mixins';
+
+
+.promotions {
+    position: relative;
+}
+
+.custom-pagination {
+    text-align: center;
+    display: block;
+    position: relative;
+    margin-top: 60px;
+
+    & ul {
+    position: relative;
+    display: inline-block;
+    margin: 0 auto;
+    text-align: center;
+    // font-size: 0;
+
+        & li {
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 15px;
+
+                & .active-route span {
+                    color: $clr-white;
+                    background: $clr-secondary;
+                }
+
+                & span {
+                    display: inline-block;
+                    position: relative;
+                    vertical-align: top;
+                    z-index: 2;
+                    color: #636662;
+                    font-size: 16px;
+                    line-height: 40px;
+                    font-weight: 400;
+                    height: 40px;
+                    width: 40px;
+                    border-radius: 100%;
+                    background: $clr-white;
+                }
+
+                & a {
+                    display: inline-block;
+                    position: relative;
+                    vertical-align: top;
+                    z-index: 2;
+                    color: $clr-grey;
+                    font-size: 16px;
+                    line-height: 40px;
+                    font-weight: 400;
+                    height: 40px;
+                    width: 40px;
+                    border-radius: 100%;
+                    background: $clr-white;
+                }
+        }        
+    }
+}
+
+@media screen and (max-width: 1400px){
+    .custom-pagination {
+        margin-top: 30px;
+
+        & ul li {
+            margin-right: 10px;
+
+            & a {
+                line-height: 36px;
+                height: 36px;
+                width: 36px;
+            }
+        }
+    }
+
+    
+}
+
+
+@media (min-width: 1200px){
+    .custom-pagination ul li a span:hover {
+        color: $clr-white !important;
+        background:$clr-primary;
+    }
+
+}
+
+
+
+@media screen and (max-width: 767px){
+    .custom-pagination ul li {
+        margin-right: 5px;
+    }
+
+    
+
+}

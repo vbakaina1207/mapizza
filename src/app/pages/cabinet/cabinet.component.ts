@@ -28,7 +28,6 @@ export class CabinetComponent implements OnInit {
   }
 
   closeMenu(event:any):void {
-    //this.isOpen = false;
     this.title = event.target.value;
   }
 

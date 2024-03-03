@@ -1,0 +1,42 @@
+
+<div class="row ms-3">
+    <ng-container *ngIf="isAdd">
+        <div class="col-10">
+            <form [formGroup]="pageForm" (ngSubmit)="addPage()">
+                <button [disabled]="pageForm.invalid"  type="submit" class="btn-add">
+                    {{ editStatus ? 'Змінити сторінку' : 'Додати сторінку' }}
+                </button>
+                <div class=" row">
+                    <div class="col mb-3">
+                        <label for="page" class="form-label">*Сторінка</label>
+                        <input formControlName="page" name="page" type="number" class="form-control" id="page">
+                    </div>                    
+                </div>                          
+            </form>
+        </div>
+    </ng-container>
+
+    <button class="btn-add ms-3" (click)="openForm()" *ngIf="!isAdd">Додати сторінку</button>
+    <div class="table-responsive col-12 d-flex justify-center" *ngIf="!isAdd">
+        <table class="table">
+            <thead class="table-category">
+                <tr>
+                    <th scope="col">Сторінка №</th>                    
+                    <th scope="col">Дії</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let page of adminPages; let id=index">
+                    <td>№ {{ page.page }}</td>                    
+                    <td>
+                        <button (click)="editPage(page)" type="button" class="btn">Редагувати</button>
+                        <p>
+                            <button [disabled]="editStatus" (click)="deletePage(page)" type="button" class="btn">Видалити</button>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

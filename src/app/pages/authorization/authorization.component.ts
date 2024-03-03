@@ -42,7 +42,7 @@ export class AuthorizationComponent implements OnInit {
   login(): void {
     const {email, password} = this.authForm.value;
     this.loginUser(email, password).then(() => {
-      this.toastr.success('User successfully login');
+      this.toastr.success('Ви успішно авторизувались!');
     }).catch(e=>{
       this.toastr.error(e.message);
     })

@@ -5,7 +5,7 @@
 
 
 *{
-    // margin: 0;
+    
     padding: 0;
     box-sizing: border-box;
 }
@@ -187,7 +187,7 @@ ul{
         margin-right: 0;
     }
 
-    // &.active a {
+    
     & .route-active {    
         color: $clr-primary;        
     }
