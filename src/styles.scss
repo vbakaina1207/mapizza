@@ -1228,6 +1228,10 @@ form .input:focus {
     }
   }
 
+  .decor-img {
+      display: none;
+    }
+
   .contacts-wrapper {
     padding: 20px 30px 30px;
     max-width: 680px;
@@ -1376,7 +1380,7 @@ a{
     .bg.mobile {
         display: block;
         position: relative !important;
-        padding-top: 57%;
+        // padding-top: 57%;
         border-radius: 16px;
         height: 188px;
     }

@@ -131,12 +131,10 @@ table {
 }
 
 td button{
-    // @include btn-save;
-        
             color: $clr-secondary;
             font-weight: bold;
-        
 }
+
 td .btn{
             color: $clr-secondary;
             font-weight: bold;
@@ -208,7 +206,7 @@ td .btn-close {
 .cabinet_address td:last-child {
     text-align: right;
     padding-right: 15px;
-    width: 8%;
+    // width: 8%;
 }
 
 .cabinet_address {
@@ -230,7 +228,7 @@ td .btn-close {
 }
 
 .cabinet_address td:nth-child(3) {
-    width: 50%;
+    // width: 50%;
 }
 
 .cabinet_address td {
@@ -300,6 +298,10 @@ table td {
 
     .btn {
         padding: 10px 20px;
+    }
+
+    .input{
+        margin-bottom: 15px;
     }
 }
 

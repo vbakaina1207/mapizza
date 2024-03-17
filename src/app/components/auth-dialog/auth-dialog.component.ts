@@ -23,6 +23,7 @@ export class AuthDialogComponent implements OnInit {
   public credential!: any;
   public currentUser!: any;
   public loginSubscription!: Subscription;
+  public role!: any; 
 
   constructor(
     private auth: Auth,
@@ -92,7 +93,6 @@ export class AuthDialogComponent implements OnInit {
         console.log('role', user['role']);
       } else if(user && user['role'] === ROLE.ADMIN){
         this.router.navigate(['/admin']);
-        
       }
       this.accountService.isUserLogin$.next(true);
     }, (e) => {
@@ -122,7 +122,7 @@ export class AuthDialogComponent implements OnInit {
       phoneNumber: phoneNumber,
       address: [],
       orders: [],
-      role: 'USER'
+      role:"USER"
     };
     setDoc(doc(this.afs, 'users', this.credential.user.uid), user);
   }

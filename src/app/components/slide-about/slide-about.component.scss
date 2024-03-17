@@ -9,7 +9,7 @@
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
-    -webkit-text-size-adjust: none;
+    // -webkit-text-size-adjust: none;
 }
 
 
@@ -61,7 +61,8 @@
 
 .swiper-container.swiper-initialized {
     opacity: 1;
-    height: 180px;
+    height: auto;
+    // height: 180px;
 }
 .swiper-container {
     margin-left: auto;
@@ -102,10 +103,11 @@
 .carousel-indicators {
 
 	.active {
-    	background-color: $clr-secondary;
-    	border-color: $clr-secondary;
+        background-color: $clr-secondary;
+        border-color: $clr-secondary;
 	}
 }
+
 
 
 
@@ -114,6 +116,7 @@
 
     .benefits-wrapper {
         padding: 30px;
+        margin: 20px 0 ;
     }
 
     .benefits-row {
@@ -143,8 +146,13 @@
     }
 
     
-    .carousel-indicators{
+    .swiper-wrapper .carousel-indicators{
         bottom: -28px;;
+        padding: 20px;
+    }
+
+    .swiper-wrapper .carousel{
+        margin-bottom: 0;
     }
 }
 
@@ -153,5 +161,10 @@
     .swiper-container {
         overflow: visible;
     }
+
+    
+.swiper-wrapper .carousel-inner {
+    // height: 185px;
+}
 
 }

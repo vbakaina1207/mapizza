@@ -32,9 +32,9 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
   public productTypeName!: string;
   public basket: Array<IProductResponse> = [];
   public isFavorite!: boolean;
-  public favoriteProducts: Array<IProductResponse> = [];
+  // public favoriteProducts: Array<IProductResponse> = [];
   public currentUser: any;
-  public favorite!: any;
+  public favorite: Array<IProductResponse> = [];
   public isRead: boolean = false;
   public isInfoBlock: boolean = false;
   public btnName: string = 'замовити';
@@ -66,11 +66,10 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
 
   ngDoCheck(): void {
     this.loadFaviriteProducts();  
-    
   }
 
   ngAfterContentInit(): void {
-    this.loadFaviriteProducts();     
+    this.loadFaviriteProducts();    
   }
 
 
@@ -84,7 +83,6 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
   
 
   loadProducts(): void {
-    this.favoriteProducts = this.accountService.favoriteProducts;
     this.categoryName = this.activatedRoute.snapshot.paramMap.get('category') as string;
     this.productTypeName = this.activatedRoute.snapshot.paramMap.get('type_product') as string;
     let currentExtras = this.router.getCurrentNavigation()?.extras.skipLocationChange;
@@ -131,20 +129,18 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
   }
 
   loadFaviriteProducts(): void{
-    let elem = document.querySelectorAll('.fav-btn');
-    for (let i = 0; i < this.favoriteProducts?.length; i++) {
-      let index = this.userProducts.findIndex(prod => prod.id === this.favoriteProducts[i]?.id)
-      if (index > -1) {
-        elem[index]?.classList.add('active');           
-      }
-    };
+    if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
+      this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
+    }
+    if (this.favorite.length == 0) this.favorite = this.currentUser.favorite;
+    for (let i = 0; i < this.userProducts.length; i++) {
+      this.isFavorite = this.isProductFavorite(this.userProducts[i]);      
+    }    
   }
 
   loadUser(): void {
     if(localStorage.length > 0 && localStorage.getItem('currentUser')){
       this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string); 
-      this.favorite = this.currentUser.favorite;
-      if (this.favoriteProducts.length==0) this.favoriteProducts = this.favorite;     
     }
   }
 
@@ -198,27 +194,31 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
     this.orderService.changeBasket.next(true);
   }
 
-  buttonFavoriteClick(product: IProductResponse): void {    
-    let elem = document.querySelectorAll('.fav-btn');    
-    for (let i = 0; i < elem.length; i++) {
-      if (this.userProducts[i].id == product.id) {        
-        elem[i].classList.toggle('active');
-        if (elem[i].classList.contains('active')) {
-        this.favoriteProducts.push(product);
-        } else {
-          let index = this.favoriteProducts.indexOf(product);
-          this.favoriteProducts.splice(index, 1);
-        }
-      }      
-    
-    } 
-    this.accountService.favoriteProducts = this.favoriteProducts;    
-    let favorite = { favorite: this.favoriteProducts };
-    // setDoc(doc(this.afs, 'users', this.currentUser.uid), favorite, { merge: true });
-    localStorage.setItem('currentUser', JSON.stringify(favorite));
-    console.log(this.favoriteProducts, 'favirite', this.currentUser);
+  isProductFavorite(product: IProductResponse): boolean {
+    return this.favorite.some((favProduct: IProductResponse) => favProduct.id === product.id);
   }
 
+  buttonFavoriteClick(product: IProductResponse): void {  
+    this.isFavorite = this.isProductFavorite(product);
+    this.isFavorite = !this.isFavorite;
+    if (this.isFavorite)
+      this.favorite.push(product);
+    else {
+      let index = this.favorite.findIndex((prod: { id: string; }) => prod.id === product.id);
+      this.favorite.splice(index, 1);
+    }
+        localStorage.setItem('favorite', JSON.stringify(this.favorite));
+        this.accountService.changeFavorite.next(true);
+        this.currentUser.favorite = this.favorite;
+        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+  }
+
+  updateFavorite(): void {
+    this.accountService.changeFavorite.subscribe(() => {
+      this.loadFaviriteProducts;
+      this.loadUser();
+    })
+  }
 
   toogleRead(): void {
     this.isRead = !this.isRead;

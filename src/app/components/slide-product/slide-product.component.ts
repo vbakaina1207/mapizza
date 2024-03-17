@@ -13,6 +13,7 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
 import { TypeProductService } from 'src/app/shared/services/type-product/type-product.service';
 import { CarouselModule } from 'primeng/carousel';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { EventListenerFocusTrapInertStrategy } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-slide-product',
@@ -23,6 +24,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 export class SlideProductComponent implements OnInit, OnDestroy, AfterContentInit, DoCheck {
 
   public userProducts: Array<IProductResponse> = [];
+  public drinksProducts: Array<IProductResponse> = [];
   public userTypeProducts: Array<ITypeProductResponse> = [];
   private eventSubscription!: Subscription;
   public isCategoryPizza: boolean = false;
@@ -34,40 +36,41 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
   public productTypeName!: string;
   public basket: Array<IProductResponse> = [];
   public isFavorite!: boolean;
-  public favoriteProducts: Array<IProductResponse> = [];
+  // public favoriteProducts: Array<IProductResponse> = [];
   public currentUser: any;
   public favorite!: any;
   public btnName: string = 'замовити';
   public isOrder: boolean = false;
   public countProduct: number = 0;
   public countSlide: number = 0;
-  public responsiveOptions: any[] = [
-    {
-                breakpoint: '1730px',
-                numVisible: 3,
-                numScroll: 0
-            },
-            {
-                breakpoint: '1200px',
-                numVisible: 3,
-                numScroll: 3
-            },
-            {
-                breakpoint: '901px',
-                numVisible: 2,
-                numScroll: 2
-            },
-            {
-                breakpoint: '560px',
-                numVisible: 1,
-                numScroll: 1
-            }
-];
+  public responsiveOptions: any[] = [];
+//     [
+//     {
+//                 breakpoint: '1730px',
+//                 numVisible: 3,
+//                 numScroll: 3
+//             },
+//             {
+//                 breakpoint: '1200px',
+//                 numVisible: 3,
+//                 numScroll: 3
+//             },
+//             {
+//                 breakpoint: '991px',
+//                 numVisible: 2,
+//                 numScroll: 2
+//             },
+//             {
+//                 breakpoint: '769px',
+//                 numVisible: 1,
+//                 numScroll: 1
+//             }
+// ];
   
   constructor(
     private productService: ProductService,
-    private productTypeService: TypeProductService,
-    private categoryService: CategoryService,
+    // private productTypeService: TypeProductService,
+    // private categoryService: CategoryService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private orderService: OrderService,
@@ -78,8 +81,9 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {
         this.loadProducts();
-        this.loadFaviriteProducts();
+        // this.loadFaviriteProducts();
         this.loadUser();  
+        this.updateFavorite();
       }
     })
     
@@ -89,94 +93,63 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
   }
 
   ngAfterContentInit(): void {
-    this.loadFaviriteProducts();     
+    this.loadFaviriteProducts();    
+    // this.loadProducts();
   }
 
   ngDoCheck(): void {
     this.loadFaviriteProducts();  
+    // this.loadProducts();
   } 
 
   loadProducts(): void {
-    this.favoriteProducts = this.accountService.favoriteProducts;
     this.categoryName = this.activatedRoute.snapshot.paramMap.get('category') as string;
-    // this.productTypeName = this.activatedRoute.snapshot.paramMap.get('type_product') as string;
-    // let currentExtras = this.router.getCurrentNavigation()?.extras.skipLocationChange;
-      this.productService.getAllByCategoryFirebase(this.categoryName).subscribe((data) => {
-        this.userProducts = data as IProductResponse[];
-        this.currentCategoryName = this.userProducts[0]?.category.name;
+    this.productService.getAllByCategoryFirebase(this.categoryName).subscribe((data) => {
+      this.userProducts = data as IProductResponse[];
+      this.currentCategoryName = this.userProducts[0]?.category.name;
+      
+      if (this.categoryName === 'pizza') {
+        this.productService.getAllByCategoryFirebase('drinks').subscribe((data) => {
+          this.drinksProducts = data as IProductResponse[];
+          this.currentCategoryName = this.drinksProducts[0]?.category.name;
+        });
+      }
 
-        this.responsiveOptions = [
-            {
-                breakpoint: '1730px',
-                numVisible: this.userProducts?.length < 4 ?  this.userProducts?.length : 4,
-                numScroll: 4,
-                showIndicator: true
-            },
-            {
-                breakpoint: '1200px',
-                numVisible: this.userProducts?.length < 3 ? this.userProducts?.length : 3,
-                numScroll: 3,
-                showIndicator:false
-            },
-            {
-                breakpoint: '991px',
-                numVisible: 2,
-                numScroll: 2,
-                showIndicator:false              
-            },
-            {
-                breakpoint: '769px',
-                numVisible: 1,
-              numScroll: this.userProducts?.length,
-              showIndicator:false  
-            }
-          ];
-      });
+      this.responsiveOptions = [
+        {
+          breakpoint: '1730px',
+          numVisible: this.userProducts?.length < 4 ? this.userProducts?.length : 4,
+          numScroll: 4,
+          showIndicator: true
+        },
+        {
+          breakpoint: '1200px',
+          numVisible: this.userProducts?.length < 3 ? this.userProducts?.length : 3,
+          numScroll: 3,
+          showIndicator: false
+        },
+        {
+          breakpoint: '991px',
+          numVisible: 2,
+          numScroll: 2,
+          showIndicator: false
+        },
+        {
+          breakpoint: '769px',
+          numVisible: 1,
+          numScroll: 1,
+          showIndicator: false
+        }
+      ];
+            
+      this.loadFaviriteProducts();
+    });
     
-    
-  //   if (this.productTypeName){
-  //     this.productService.getAllByProductTypeFirebase(this.productTypeName,  this.categoryName).subscribe(data => {
-  //       this.userProducts = data as IProductResponse[];       
-  //       this.currentProductTypeName = this.userProducts[0]?.type_product.name;      
-  //       this.isCategoryPizza = true;
-  //       this.isProductType = true;           
-  //     });
-    }
-  // if (this.categoryName === 'pizza'  ||  this.categoryName === 'salads' || this.router.url == '/' || this.router.url == '/#pizza' ) {
-  //     this.isCategoryPizza = true;
-  //     if(this.router.url == '/#pizza' || this.router.url == '/') {
-  //       this.categoryName = 'pizza';
-  //       this.currentCategoryName = '';
-  //       this.productService.getAllByCategoryFirebase(this.categoryName).subscribe((data) => {
-  //         this.userProducts = data as IProductResponse[];
-  //         this.currentCategoryName = this.userProducts[0]?.category.name;
-  //       });
-  //     }
-  //   } else this.isCategoryPizza = false;
-  //   if (this.router.url !== '/product/pizza/' && this.categoryName === 'pizza') {
-  //     if(currentExtras )
-  //     {
-  //       this.isCategoryPizza = true;
-  //       this.isProductType = false;
-  //     } else {
-  //       this.isCategoryPizza = false;
-  //       this.isProductType = true;
-  //     }
-  //   }
-  //   if (this.router.url == '/' || this.router.url == '/#pizza' ) {
-  //     this.isCategoryPizza = true;
-  //   }
-  //   if (this.isCategoryPizza) this.currentCategoryName = 'Піцца';
-  //   if (this.categoryName === 'pizza' || this.router.url === '/' || this.router.url === '/#pizza')
-  //     this.isInfoBlock = true;
-  //   else this.isInfoBlock = false;
-  // }
+  }
   
   loadUser(): void {
     if(localStorage.length > 0 && localStorage.getItem('currentUser')){
       this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string); 
-      this.favorite = this.currentUser.favorite;
-      if (this.favoriteProducts.length==0) this.favoriteProducts = this.favorite;     
     }
   }
 
@@ -193,7 +166,7 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
     }
   }
 
- 
+
 
   addToBasket(product: IProductResponse, e: any): void {
     product.selected_addition = product.selected_addition || [];
@@ -233,37 +206,40 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
   }
 
   buttonFavoriteClick(product: IProductResponse): void {    
-    let elem = document.querySelectorAll('.fav-btn');    
-    for (let i = 0; i < elem.length; i++) {
-      if (this.userProducts[i]?.id == product.id) {        
-        elem[i].classList.toggle('active');
-        if (elem[i].classList.contains('active')) {
-        this.favoriteProducts.push(product);
-        } else {
-          let index = this.favoriteProducts.indexOf(product);
-          this.favoriteProducts.splice(index, 1);
-        }
-      }      
-    
-    } 
-    this.accountService.favoriteProducts = this.favoriteProducts;    
-    let favorite = { favorite: this.favoriteProducts };
-    // setDoc(doc(this.afs, 'users', this.currentUser.uid), favorite, { merge: true });
-    localStorage.setItem('currentUser', JSON.stringify(favorite));
-    // console.log(this.favoriteProducts, 'favirite', this.currentUser);
+    this.isFavorite = this.isProductFavorite(product);
+    this.isFavorite = !this.isFavorite;
+    if (this.isFavorite)
+      this.favorite.push(product);
+    else {
+      let index = this.favorite.findIndex((prod: { id: string; }) => prod.id === product.id);
+      this.favorite.splice(index, 1);
+    }
+      
+    localStorage.setItem('favorite', JSON.stringify(this.favorite));
+    this.accountService.changeFavorite.next(true);
+    this.currentUser.favorite = this.favorite;
+    localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+  }
+
+  isProductFavorite(product: IProductResponse): boolean {
+    return this.favorite.some((favProduct: IProductResponse) => favProduct.id === product.id);
   }
 
   loadFaviriteProducts(): void{
-    // console.log(this.accountService.favoriteProducts, this.favoriteProducts, "accountService.favoriteProducts");
-    let elem = document.querySelectorAll('.fav-btn');
-    // console.log(elem, 'elem');
-    for (let i = 0; i < this.favoriteProducts?.length; i++) {
-      let index = this.userProducts.findIndex(prod => prod.id === this.favoriteProducts[i]?.id)
-      if (index > -1) {
-        elem[index]?.classList.add('active');           
+      if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
+        this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
       }
-    };
+    for (let i = 0; i < this.userProducts.length; i++) {
+      this.isFavorite = this.isProductFavorite(this.userProducts[i]);      
+    }         
   }
 
+  updateFavorite(): void {
+    this.accountService.changeFavorite.subscribe(() => {
+      this.loadProducts();
+      this.loadFaviriteProducts();
+      this.loadUser();      
+    })
+  }
   
 }

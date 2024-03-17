@@ -33,7 +33,8 @@ export class AuthAdditionComponent implements OnInit {
   public favoriteProducts: Array<IProductResponse> = [];
   public btnName: string = 'замовити';
   public isOrder: boolean = false;
-
+  public currentUser!: any;
+  public favorite: Array<IProductResponse> = [];
 
   constructor(
     private router: Router,
@@ -55,8 +56,17 @@ export class AuthAdditionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadUser();
     this.loadTypeAddition();
     this.loadProduct();
+    this.loadFavoriteProduct();
+    this.updateFavorite();
+  }
+
+  loadUser(): void {
+    if(localStorage.length > 0 && localStorage.getItem('currentUser')){
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string); 
+    }
   }
 
   loadTypeAddition(): void {
@@ -68,13 +78,19 @@ export class AuthAdditionComponent implements OnInit {
   loadProduct(): void {
     const PRODUCT_ID = this.accountService.PRODUCT_ID;
     this.productService.getOneFirebase(PRODUCT_ID).subscribe(data => {
-      this.currentProduct = data as IProductResponse;
-      console.log(this.currentProduct);
-      this.favoriteProducts = this.accountService.favoriteProducts;      
-      if (this.favoriteProducts.findIndex(prod => prod.id === this.currentProduct.id) !==-1) this.isFavorite = true;
-    console.log(this.isFavorite, 'isFav', this.favoriteProducts);
-    })
-    
+      this.currentProduct = data as IProductResponse;  
+    })    
+  }
+
+  loadFavoriteProduct(): void {
+    const PRODUCT_ID = this.accountService.PRODUCT_ID;
+    if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
+      this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
+    if (this.favorite.length == 0) this.favorite = this.currentUser.favorite;
+    if (this.favorite.findIndex(prod => prod.id === PRODUCT_ID) !== -1)
+      this.isFavorite = true;
+    };
+    console.log(this.isFavorite, 'isFav', this.favorite);
   }
 
   additionClick(additionName: any): void {
@@ -200,22 +216,35 @@ export class AuthAdditionComponent implements OnInit {
     this.loadTypeAddition();
   }
 
-  favoriteCheck(productName: string): void {
-    if (this.isFavorite) {
-      this.favoriteProducts.push(this.currentProduct);
-    } else {
-      this.favoriteProducts.forEach(() => {
-        let index = this.favoriteProducts.findIndex(prod => prod.name === productName);
-        this.favoriteProducts.splice(index, 1);
-      });
-    }
-    this.accountService.favoriteProducts = this.favoriteProducts;    
-  }
-
-  buttonFavoriteClick(productName: string): void {
+  buttonFavoriteClick(product: IProductResponse): void {
     this.isFavorite = !this.isFavorite;
-    this.favoriteCheck(productName);
+    if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
+      this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
+    }
+      if (this.isFavorite) {
+        this.favorite.push(product);
+        localStorage.setItem('favorite', JSON.stringify(this.favorite));
+      } else {
+        if (this.favorite.some(prod => prod.id === product.id)) {
+          const index = this.favorite.findIndex(prod => prod.id === product.id);
+          this.favorite.splice(index, 1);
+        }
+      }
+      localStorage.setItem('favorite', JSON.stringify(this.favorite));
+      this.accountService.changeFavorite.next(true);
+      this.currentUser.favorite = this.favorite;
+      localStorage.setItem('currentUser', JSON.stringify(this.currentUser)); 
+      console.log(this.isFavorite, this.favorite, );
   }
 
+
+  updateFavorite(): void {
+    this.accountService.changeFavorite.subscribe(() => {
+      this.loadProduct();
+      // this.currentUser.favorite = this.favorite;
+      this.loadUser();
+      this.loadFavoriteProduct();
+    })
+  }
 
 }

@@ -57,14 +57,14 @@
     <img class="decor-img right rellax" data-rellax-speed="-1" src="assets/decor/decor-5.svg" alt="" style="transform: translate3d(0px, 76px, 0px);">
     <div class="row product-row">
       <ng-container *ngIf="userProducts.length > 0">
-        <div class="col-sm-6 col-lg-4 col-xl-43 ryba" *ngFor="let product of userProducts">
+        <div class="col-sm-6 col-lg-4 col-xl-43 mt-3 ryba" *ngFor="let product of userProducts">
           <div class="product js-product type-2">
             <div class="product_image-wrap">
               <a class="product_image" [routerLink]="[ '/product/', product.category.path , product?.type_product?.path ? product.type_product.path : 'other', product.id ]">
                   <img [src]="product.imagePath" class="img imgLoaded" alt="">
               </a>
               <div class="product_top-right">
-                <button class="fav-btn" (click)="buttonFavoriteClick(product)">
+                <button class="fav-btn" (click)="buttonFavoriteClick(product)" [ngClass]="{'active': isProductFavorite(product)}">
                   <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path class="fill-anime" d="M10.5167 16.3416C10.2334 16.4416 9.76675 16.4416 9.48342 16.3416C7.06675 15.5166 1.66675 12.075 1.66675 6.24165C1.66675 3.66665 3.74175 1.58331 6.30008 1.58331C7.81675 1.58331 9.15842 2.31665 10.0001 3.44998C10.8417 2.31665 12.1917 1.58331 13.7001 1.58331C16.2584 1.58331 18.3334 3.66665 18.3334 6.24165C18.3334 12.075 12.9334 15.5166 10.5167 16.3416Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                   </svg>

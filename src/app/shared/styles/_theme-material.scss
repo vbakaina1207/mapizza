@@ -80,7 +80,7 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 .auth-address-dialog {
     width: 800px;
     min-height: 400px;
-    
+    overflow: auto;
 }
 
 .auth-dialog-basket{
@@ -230,11 +230,14 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
     pointer-events: none;
     border-color: $clr-grey;
     background: $clr-grey;
-    color:$clr-grey;
+    color:$clr-white;
     font-weight: bold;
 }
 }
 
+.mobile input{
+  // width: 48%;
+}
 
 .open-popup{
   color: $clr-black;
@@ -260,12 +263,20 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 
 .form .flex input{
   &:first-child{
-    margin-right: 5px;
+    // margin-right: 5px;
   }
 
   &:last-child{
-    margin-left: 5px;
+    // margin-left: 5px;
   }
+}
+
+.mobile div:first-child{
+  margin-right: 5px;
+}
+
+.mobile div:last-child{
+  margin-left: 5px;
 }
 
 .text-bottom{
@@ -869,6 +880,7 @@ a:hover {
 
   .product_title {
     font-size: 18px;
+    height: 54px;
   }
 
   .product_desc {

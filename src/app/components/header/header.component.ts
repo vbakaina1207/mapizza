@@ -25,6 +25,8 @@ export class HeaderComponent implements OnInit {
   public total = 0;
   public count = 0;
   public basket: Array<IProductResponse> = [];
+  public favorite: Array<IProductResponse> = []; 
+  public countFavorite: number = 0;
 
   public currentUser!: any;
   public isOpenmenu: boolean = false;
@@ -46,6 +48,8 @@ export class HeaderComponent implements OnInit {
     this.updateBasket();
     this.checkUserLogin();
     this.checkUpdatesUserLogin();
+    this.loadFavorite();
+    this.updateFavorite();
   }
 
 
@@ -71,6 +75,19 @@ export class HeaderComponent implements OnInit {
     
   }
 
+  loadFavorite(): void {
+    if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
+      this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
+    };  
+    this.countFavorite = this.favorite.length;
+  }
+
+  updateFavorite(): void {
+    this.accountService.changeFavorite.subscribe(() => {
+      this.loadFavorite();
+    })
+  }
+
   getTotalPrice(): void {
     this.total = this.basket
       ?.reduce((total: number, prod: IProductResponse) => total + prod.count * prod.price, 0);
@@ -83,7 +100,6 @@ export class HeaderComponent implements OnInit {
   updateBasket(): void {
     this.orderService.changeBasket.subscribe(() => {
       this.loadBasket();
-      console.log(this.basket, 'bas');
     })
   }
 
@@ -134,6 +150,8 @@ export class HeaderComponent implements OnInit {
   logout(): void {
     this.router.navigate(['/']);
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('basket');
+    localStorage.removeItem('favorite');
     this.accountService.isUserLogin$.next(true);
   }
 
