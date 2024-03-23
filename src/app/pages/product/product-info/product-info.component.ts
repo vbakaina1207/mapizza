@@ -77,9 +77,8 @@ export class ProductInfoComponent implements OnInit, DoCheck, AfterContentInit {
 
   loadFavoriteProduct(): void {
     if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
-      this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
+      if (this.favorite.length == 0) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
     };  
-    if (this.favorite.length == 0) this.favorite = this.currentUser.favorite;
         const PRODUCT_ID = (this.activatedRoute.snapshot.paramMap.get('id') as string);
         let index = this.favorite.findIndex(prod => prod.id === PRODUCT_ID);    
         if (index > -1) 
@@ -97,6 +96,7 @@ export class ProductInfoComponent implements OnInit, DoCheck, AfterContentInit {
   loadUser(): void {
     if(localStorage.length > 0 && localStorage.getItem('currentUser')){
       this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
+      this.favorite = this.currentUser.favorite;
     }
   }
 
@@ -238,7 +238,7 @@ export class ProductInfoComponent implements OnInit, DoCheck, AfterContentInit {
         this.favorite.push(product);
         localStorage.setItem('favorite', JSON.stringify(this.favorite));
       } else {
-        if (this.favorite.some(prod => prod.id === product.id)) {
+        if (this.favorite?.some(prod => prod.id === product.id)) {
           const index = this.favorite.findIndex(prod => prod.id === product.id);
           this.favorite.splice(index, 1);
         }

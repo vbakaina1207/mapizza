@@ -37,7 +37,6 @@ export class HistoryComponent implements OnInit {
   getOrders(): void {
     this.orderService.getUserFirebase(this.currentUser?.uid).subscribe(data => {
       this.userOrders = data as IOrderResponse[];
-      console.log(this.userOrders);
     })
   }
 

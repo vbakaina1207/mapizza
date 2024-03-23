@@ -50,17 +50,21 @@ const routes: Routes = [
   },
   {
     path: 'cabinet',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/cabinet/cabinet.module').then(m => m.CabinetModule)
   },
   {
     path: 'admin',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   {
     path: 'checkout',
     loadChildren: () => import('./pages/checkout/checkout.module').then(m => m.CheckoutModule)
+  },
+  {
+    path: 'privacy-policy',
+    loadChildren: () => import('./pages/privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule)
   },
 ];
 

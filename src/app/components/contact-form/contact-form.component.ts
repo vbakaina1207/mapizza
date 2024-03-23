@@ -75,7 +75,6 @@ export class ContactFormComponent implements OnInit {
       this.isAbout = true;
     }
     this.mailto = 'mailto:' + this.email;
-    console.log(this.route.component?.name); 
   }
 
   loadMassages(): void {
@@ -97,7 +96,6 @@ export class ContactFormComponent implements OnInit {
       .catch(err => {
         console.log(err);
       })
-    console.log(this.isUploaded, this.file);
   }
 
   deleteImage(): void {

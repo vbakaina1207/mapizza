@@ -1045,6 +1045,25 @@ form .input:focus {
 }
 
 
+.text ul li, .text ol li {
+    position: relative;
+    padding-left: 25px;
+    color: inherit;
+    font-size: inherit;
+    margin-bottom: 15px;
+}
+
+.text ul li:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $clr-secondary;
+}
+
 @media (max-width: 1400px) { 
     .spacer-lg { 
         height: 90px; 

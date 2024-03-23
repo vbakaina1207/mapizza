@@ -130,10 +130,9 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
 
   loadFaviriteProducts(): void{
     if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
-      this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
+      if (this.favorite.length == 0) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
     }
-    if (this.favorite.length == 0) this.favorite = this.currentUser.favorite;
-    for (let i = 0; i < this.userProducts.length; i++) {
+      for (let i = 0; i < this.userProducts.length; i++) {
       this.isFavorite = this.isProductFavorite(this.userProducts[i]);      
     }    
   }
@@ -141,6 +140,7 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
   loadUser(): void {
     if(localStorage.length > 0 && localStorage.getItem('currentUser')){
       this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string); 
+      this.favorite = this.currentUser.favorite;
     }
   }
 
@@ -195,7 +195,7 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
   }
 
   isProductFavorite(product: IProductResponse): boolean {
-    return this.favorite.some((favProduct: IProductResponse) => favProduct.id === product.id);
+    return this.favorite?.some((favProduct: IProductResponse) => favProduct.id === product.id);
   }
 
   buttonFavoriteClick(product: IProductResponse): void {  

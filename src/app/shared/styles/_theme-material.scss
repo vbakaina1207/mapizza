@@ -263,11 +263,11 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 
 .form .flex input{
   &:first-child{
-    // margin-right: 5px;
+    margin-right: 5px;
   }
 
   &:last-child{
-    // margin-left: 5px;
+    margin-left: 5px;
   }
 }
 

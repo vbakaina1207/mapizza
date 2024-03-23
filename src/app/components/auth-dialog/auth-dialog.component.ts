@@ -23,8 +23,7 @@ export class AuthDialogComponent implements OnInit {
   public credential!: any;
   public currentUser!: any;
   public loginSubscription!: Subscription;
-  public role!: any; 
-
+  
   constructor(
     private auth: Auth,
     private afs: Firestore,
@@ -89,10 +88,11 @@ export class AuthDialogComponent implements OnInit {
       this.currentUser = { ...user, uid: credential.user.uid };
       localStorage.setItem('currentUser', JSON.stringify(this.currentUser));            
       if(user && user['role'] === ROLE.USER) {
-        this.router.navigate(['/cabinet']);
+        //this.router.navigate(['/cabinet']);
         console.log('role', user['role']);
       } else if(user && user['role'] === ROLE.ADMIN){
         this.router.navigate(['/admin']);
+        console.log('role', user['role']);
       }
       this.accountService.isUserLogin$.next(true);
     }, (e) => {
@@ -106,6 +106,11 @@ export class AuthDialogComponent implements OnInit {
       this.toastr.success('Реєстрація пройшла успішно!');
       this.isLogin = !this.isLogin;
       this.regForm.reset();
+      this.login(email, password).then(() => {
+        this.toastr.success('Ви успішно авторизувались!');
+      }).catch(e => {
+        this.toastr.error(e.message);
+      })
     }).catch(e => {
       this.toastr.error(e.message);
     });
@@ -121,6 +126,7 @@ export class AuthDialogComponent implements OnInit {
       birthday: birthday,
       phoneNumber: phoneNumber,
       address: [],
+      favorite: [],
       orders: [],
       role:"USER"
     };

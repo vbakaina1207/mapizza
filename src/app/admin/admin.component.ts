@@ -10,6 +10,8 @@ import { AuthDialogComponent } from 'src/app/components/auth-dialog/auth-dialog.
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+  // public currentUser!: any;
+  // public isAdmin: boolean = false;
 
   constructor(
     private router: Router,
@@ -18,7 +20,7 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.openLoginDialog();
+    // this.openLoginDialog();
   }
 
   logout(): void {
@@ -27,15 +29,6 @@ export class AdminComponent implements OnInit {
     this.accountService.isUserLogin$.next(true);
   }
 
-  openLoginDialog(): void {
-    this.dialog.open(AuthDialogComponent, {
-      backdropClass: 'dialog-back',
-      panelClass: 'auth-dialog',
-      autoFocus: false
-    }).afterClosed().subscribe(result => {
-      console.log(result);
-    })
-  }
   
 
 }
