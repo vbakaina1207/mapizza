@@ -31,8 +31,7 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
   public currentProductTypeName!: string;
   public productTypeName!: string;
   public basket: Array<IProductResponse> = [];
-  public isFavorite!: boolean;
-  // public favoriteProducts: Array<IProductResponse> = [];
+  public isFavorite!: boolean ; 
   public currentUser: any;
   public favorite: Array<IProductResponse> = [];
   public isRead: boolean = false;
@@ -204,7 +203,7 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
     if (this.isFavorite)
       this.favorite.push(product);
     else {
-      let index = this.favorite.findIndex((prod: { id: string; }) => prod.id === product.id);
+      let index = this.favorite.findIndex(prod => prod.id === product.id);
       this.favorite.splice(index, 1);
     }
         localStorage.setItem('favorite', JSON.stringify(this.favorite));

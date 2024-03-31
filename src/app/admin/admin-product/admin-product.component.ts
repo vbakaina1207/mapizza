@@ -31,7 +31,7 @@ export class AdminProductComponent implements OnInit {
 
   public currentCategoryId!: number | string;
   public currentCategoryName = '';
-  private currentProductId!: string;
+  private currentProductId!: string | number;
 
   
 
@@ -105,7 +105,7 @@ export class AdminProductComponent implements OnInit {
 
   addProduct(): void {
     if(this.editStatus){
-      this.productService.updateFirebase(this.productForm.value, this.currentProductId).then(() => {
+      this.productService.updateFirebase(this.productForm.value, this.currentProductId as string).then(() => {
         this.loadProduct();
         this.toastr.showSuccess('','Продукт змінено');
         // this.toastr.success('Product successfully updated');
@@ -151,7 +151,7 @@ export class AdminProductComponent implements OnInit {
   }
 
   deleteProduct(product: IProductResponse): void {
-    this.productService.deleteFirebase(product.id).then(() => {
+    this.productService.deleteFirebase(product.id as string).then(() => {
       this.loadProduct();
       this.toastr.showSuccess('', 'Продукт видалено');
     })

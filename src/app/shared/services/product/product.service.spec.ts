@@ -44,7 +44,7 @@ describe('Service: Product', () => {
         imagePath: '',
         count: 15
       }]
-    productService.getAll().subscribe((response: any) => expect(response).toBe(data));
+    productService.getAllFirebase().subscribe((response: any) => expect(response).toBe(data));
     const req = httpTestingController.expectOne('http://localhost:3000/products');
     expect(req.request.method).toBe('GET');
     req.flush(data);
@@ -54,25 +54,47 @@ describe('Service: Product', () => {
 
   it('should send create request and return new product', () => {
     const productRequest: IProductRequest = {
-        category: {
+      category: {
+        id: 1,
+        name: 'rol',
+        path: 'rol',
+        imagePath: 'www.monosuschi',
+      },
+      type_product: {
+        id: 1,
+        name: 'set',
+        path: 'set',
+        imgPath: 'www.monosuschi',
+      },
+      type_addition: [{
           id: 1,
-          name: 'rol',
-          path: 'rol',
-          imagePath: 'www.monosuschi',
-        },
-        type_product: {
+          name: 'souce',
+          path: 'souce',
+          description: 'souce',
+          weight: '20',
+          price: 50,
+          imagePath: 'souce',
+          isSauce: true,
+        }],
+      selected_addition: [{
           id: 1,
-          name: 'set',
-          path: 'set',
-        },
-        name: 'california',
-        path: 'california',
-        ingredients: 'fish',
-        weight: '120',
-        price: 200,
-        price_old: 300,
-        imagePath: 'www.monosushi',
-        count: 2
+          name: 'souce',
+          path: 'souce',
+          description: 'souce',
+          weight: '20',
+          price: 50,
+          imagePath: 'souce',
+          isSauce: true,
+        }],
+      name: 'california',
+      path: 'california',
+      ingredients: 'fish',
+      weight: '120',
+      price: 200,
+      addition_price: 300,
+      bonus: 8,
+      imagePath: 'www.monosushi',
+      count: 2,      
     };
 
     const expectedProduct: IProductResponse = {
@@ -87,18 +109,40 @@ describe('Service: Product', () => {
         id: 1,
         name: 'set',
         path: 'set',
+        imgPath: 'www.monosuschi',
       },
+      type_addition: [{
+          id: 1,
+          name: 'souce',
+          path: 'souce',
+          description: 'souce',
+          weight: '20',
+          price: 50,
+          imagePath: 'souce',
+          isSauce: true,
+        }],
+      selected_addition: [{
+          id: 1,
+          name: 'souce',
+          path: 'souce',
+          description: 'souce',
+          weight: '20',
+          price: 50,
+          imagePath: 'souce',
+          isSauce: true,
+        }],
       name: 'california',
       path: 'california',
       ingredients: 'fish',
       weight: '120',
       price: 200,
-      price_old: 300,
+      addition_price: 300,
+      bonus: 8,
       imagePath: 'www.monosushi',
       count: 2
     };
 
-    productService.create(productRequest).subscribe(result => {
+    productService.createFirebase(productRequest).then((result: any) => {
       expect(result).toEqual(expectedProduct);
     });
 

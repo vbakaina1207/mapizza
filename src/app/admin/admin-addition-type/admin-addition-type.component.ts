@@ -87,11 +87,11 @@ export class AdminAdditionTypeComponent implements OnInit {
       isSauce: additionProduct.isSauce
     });
     this.editStatus = true;
-    this.currentTypeAdditionId = additionProduct.id;
+    this.currentTypeAdditionId = additionProduct.id as string;
   }
 
   deleteAdditionProduct(additiionProduct: ITypeAdditionResponse): void {
-    this.additionProductService.deleteFirebase(additiionProduct.id).then(() => {
+    this.additionProductService.deleteFirebase(additiionProduct.id as string).then(() => {
       this.loadTypeAddition();
       // this.toastr.success('Type of product  successfully deleted');
       this.toastr.showSuccess('', 'Тип продукта видалено');

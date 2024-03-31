@@ -75,11 +75,11 @@ export class AdminProductTypeComponent implements OnInit {
       imgPath: typeProduct.imgPath
     });
     this.editStatus = true;
-    this.currentTypeProductId = typeProduct.id;
+    this.currentTypeProductId = typeProduct.id as string;
   }
 
   deleteTypeProduct(typeProduct: ITypeProductResponse): void {
-    this.typeProductService.deleteFirebase(typeProduct.id).then(() => {
+    this.typeProductService.deleteFirebase(typeProduct.id as string).then(() => {
       this.loadTypeProducts();
       this.toastr.success('Type of product  successfully deleted');
     })

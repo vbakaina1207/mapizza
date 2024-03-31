@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { TypeProductService } from '../type-product.service';
+import { TypeProductService } from './type-product.service';
 
 describe('Service: TypeProduct', () => {
   beforeEach(() => {

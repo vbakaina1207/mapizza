@@ -5,8 +5,8 @@ import { ITypeProductResponse } from "../type-product/type-product.interface";
 export interface IProductRequest {
     category: ICategoryResponse;
     type_product: ITypeProductResponse;
-    type_addition: [ITypeAdditionResponse];
-    selected_addition: [ITypeAdditionResponse];
+    type_addition: ITypeAdditionResponse[];
+    selected_addition: ITypeAdditionResponse[];
     name: string;
     path: string;
     ingredients: string;
@@ -19,5 +19,5 @@ export interface IProductRequest {
 }
 
 export interface IProductResponse extends IProductRequest {
-    id: string;
+    id: number | string;
 }

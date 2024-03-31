@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { AdminPageComponent } from './admin-page/admin-page.component';
+import { AdminPageComponent } from './admin-page.component';
 
 describe('AdminPageComponent', () => {
   let component: AdminPageComponent;

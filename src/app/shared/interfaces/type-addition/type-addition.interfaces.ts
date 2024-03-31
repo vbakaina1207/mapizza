@@ -9,5 +9,5 @@ export interface ITypeAdditionRequest {
 }
 
 export interface ITypeAdditionResponse extends ITypeAdditionRequest {
-    id: string;
+    id: string | number;
 }
