@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { CabinetComponent } from './cabinet.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CabinetComponent', () => {
   let component: CabinetComponent;
@@ -11,7 +13,11 @@ describe('CabinetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CabinetComponent ]
+      declarations: [CabinetComponent],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ]
     })
     .compileComponents();
   }));

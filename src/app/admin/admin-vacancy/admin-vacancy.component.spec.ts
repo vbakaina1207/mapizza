@@ -4,6 +4,10 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { AdminVacancyComponent } from './admin-vacancy.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ToastrService } from 'ngx-toastr';
+import { Storage } from '@angular/fire/storage';
 
 describe('AdminVacancyComponent', () => {
   let component: AdminVacancyComponent;
@@ -11,7 +15,15 @@ describe('AdminVacancyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminVacancyComponent ]
+      declarations: [AdminVacancyComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientTestingModule
+      ],
+      providers: [
+        { provide: Storage, useValue: {} },
+        { provide: ToastrService, useValue: {} },
+      ]
     })
     .compileComponents();
   }));

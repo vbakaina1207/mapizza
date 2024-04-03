@@ -4,6 +4,13 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { AdminNewsComponent } from './admin-news.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ToastrService } from 'ngx-toastr';
+import { Storage } from '@angular/fire/storage';
+import { Firestore } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 describe('AdminNewsComponent', () => {
   let component: AdminNewsComponent;
@@ -11,7 +18,18 @@ describe('AdminNewsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminNewsComponent ]
+      declarations: [AdminNewsComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        AngularFireStorageModule,
+        AngularFireModule
+      ],
+      providers: [
+        { provide: Storage, useValue: {} },
+        { provide: ToastrService, useValue: {} },
+        { provide: Firestore, useValue: {} },
+      ]
     })
     .compileComponents();
   }));

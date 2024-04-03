@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { ProductInfoComponent } from './product-info.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ProductInfoComponent', () => {
   let component: ProductInfoComponent;
@@ -11,7 +12,10 @@ describe('ProductInfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProductInfoComponent ]
+      declarations: [ProductInfoComponent],
+      imports: [
+        HttpClientTestingModule,
+      ]
     })
     .compileComponents();
   }));

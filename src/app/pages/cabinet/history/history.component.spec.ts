@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { HistoryComponent } from './history.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HistoryComponent', () => {
   let component: HistoryComponent;
@@ -11,7 +13,11 @@ describe('HistoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HistoryComponent ]
+      declarations: [HistoryComponent],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ]
     })
     .compileComponents();
   }));

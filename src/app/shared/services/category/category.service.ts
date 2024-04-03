@@ -12,7 +12,7 @@ import {
     Firestore,
     updateDoc
 } from '@angular/fire/firestore';
-import { DocumentData, collection } from '@firebase/firestore'
+import { DocumentData, collection } from '@firebase/firestore';
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +20,7 @@ import { DocumentData, collection } from '@firebase/firestore'
     
 export class CategoryService {
 
-    private url = environment.BACKEND_URL;
+    // private url = environment.BACKEND_URL;
     private categoryCollection!: CollectionReference<DocumentData>;
 
 

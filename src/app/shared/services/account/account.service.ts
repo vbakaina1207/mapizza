@@ -27,8 +27,7 @@ export class AccountService {
     private api = { auth: `${this.url}/auth` };
 
     constructor(
-        private http: HttpClient,
-        private afs: Firestore
+        private http: HttpClient
     ) { }
 
     login(credential: ILogin): Observable<any> {

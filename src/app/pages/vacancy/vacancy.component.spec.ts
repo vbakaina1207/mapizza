@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { VacancyComponent } from './vacancy.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('VacancyComponent', () => {
   let component: VacancyComponent;
@@ -11,7 +13,11 @@ describe('VacancyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VacancyComponent ]
+      declarations: [VacancyComponent],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));

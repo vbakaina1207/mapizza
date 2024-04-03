@@ -2,11 +2,15 @@
 
 import { TestBed, async, inject } from '@angular/core/testing';
 import { ToastService } from './toast.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('Service: Toast', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ToastService]
+      providers: [ToastService],
+      imports: [
+        HttpClientTestingModule
+      ]
     });
   });
 

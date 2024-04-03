@@ -4,6 +4,10 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { AdminAdditionTypeComponent } from './admin-addition-type.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ToastrService } from 'ngx-toastr';
+import { Storage } from '@angular/fire/storage';
 
 describe('AdminAdditionTypeComponent', () => {
   let component: AdminAdditionTypeComponent;
@@ -11,7 +15,15 @@ describe('AdminAdditionTypeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminAdditionTypeComponent ]
+      declarations: [AdminAdditionTypeComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientTestingModule
+      ],
+      providers: [
+        { provide: Storage, useValue: {} },
+        { provide: ToastrService, useValue: {} },
+      ]
     })
     .compileComponents();
   }));

@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { FavoriteComponent } from './favorite.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('FavoriteComponent', () => {
   let component: FavoriteComponent;
@@ -11,7 +13,11 @@ describe('FavoriteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FavoriteComponent ]
+      declarations: [FavoriteComponent],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ]
     })
     .compileComponents();
   }));

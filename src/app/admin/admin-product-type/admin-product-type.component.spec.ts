@@ -4,6 +4,10 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { AdminProductTypeComponent } from './admin-product-type.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ToastrService } from 'ngx-toastr';
+import { Storage } from '@angular/fire/storage';
 
 describe('AdminProductTypeComponent', () => {
   let component: AdminProductTypeComponent;
@@ -11,7 +15,15 @@ describe('AdminProductTypeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminProductTypeComponent ]
+      declarations: [AdminProductTypeComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientTestingModule
+      ],
+      providers: [
+        { provide: Storage, useValue: {} },
+        { provide: ToastrService, useValue: {} },
+      ]
     })
     .compileComponents();
   }));

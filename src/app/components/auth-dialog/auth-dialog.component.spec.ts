@@ -4,6 +4,13 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { AuthDialogComponent } from './auth-dialog.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Auth } from '@angular/fire/auth';
+import { Firestore } from '@angular/fire/firestore';
+import { ToastrService } from 'ngx-toastr';
 
 describe('AuthDialogComponent', () => {
   let component: AuthDialogComponent;
@@ -11,7 +18,19 @@ describe('AuthDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthDialogComponent ]
+      declarations: [AuthDialogComponent],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        ReactiveFormsModule,
+        MatDialogModule
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: Auth, useValue: {} },
+        { provide: Firestore, useValue: {} },
+        { provide: ToastrService, useValue: {} },
+      ]
     })
     .compileComponents();
   }));

@@ -49,7 +49,7 @@
               <img class="alignnone" [src]="currentNews?.detail ? currentNews.detail?.imagePath : undefined">
             </p>
             <h2><span style="font-weight: 400;">{{ currentNews?.detail?.title }}</span></h2>
-            <p class="text" [innerHTML]="currentNews?.detail?.description"></p>
+            <p class="text" [innerHTML]="currentNews.detail.description"></p>
             <div class="text" *ngFor="let detail of currentNews?.detail?.detail">
               <h2>{{detail.title}}</h2>
               <p>
