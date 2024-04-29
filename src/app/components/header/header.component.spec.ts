@@ -7,6 +7,9 @@ import { HeaderComponent } from './header.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CategoryService } from 'src/app/shared/services/category/category.service';
+import { Firestore } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -18,10 +21,13 @@ describe('HeaderComponent', () => {
       imports:[
         HttpClientTestingModule,
         MatDialogModule,
-        RouterTestingModule
+        RouterTestingModule,
+        AngularFireModule
       ],
       providers: [
-        { provide: MatDialogRef, useValue: {} }
+        CategoryService,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: Firestore, useValue: {} },
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

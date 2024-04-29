@@ -15,6 +15,9 @@ import { ToastrService } from 'ngx-toastr';
 import { ImageService } from 'src/app/shared/services/image/image.service';
 import { Storage } from '@angular/fire/storage';
 import { AngularFireModule } from '@angular/fire/compat';
+import { FaqService } from 'src/app/shared/services/faq/faq.service';
+import { environment } from 'src/environments/environment';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 describe('FaqComponent', () => {
   let component: FaqComponent;
@@ -28,11 +31,13 @@ describe('FaqComponent', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         MatDialogModule,
-        AngularFireStorageModule,
-      
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule,
+        AngularFireStorageModule        
       ],
       providers: [
-        ImageService  ,
+        ImageService,
+        FaqService,
         { provide: Storage, useValue: {} },
         { provide: MatDialogRef, useValue: {} },       
         { provide: Firestore, useValue: {} },

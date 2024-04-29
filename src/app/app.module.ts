@@ -18,10 +18,15 @@ import { SharedModule } from './shared/sahared.module';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideStorage, getStorage } from '@angular/fire/storage';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import {  getStorage } from '@angular/fire/storage';
+import { provideFirestore, getFirestore,  Firestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 
+
+
+import { provideStorage } from '@angular/fire/storage';
+
+// import { ToastrModule } from 'ngx-toastr';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';

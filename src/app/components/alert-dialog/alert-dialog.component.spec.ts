@@ -16,11 +16,11 @@ describe('AlertDialogComponent', () => {
       declarations: [AlertDialogComponent],
       imports: [
         HttpClientTestingModule,       
-        MatDialogModule,
-        MAT_DIALOG_DATA
+        MatDialogModule
       ],
       providers: [
-        { provide: MatDialogRef, useValue: {} }
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} } 
       ]
     })
     .compileComponents();

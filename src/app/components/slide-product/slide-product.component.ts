@@ -21,7 +21,7 @@ import { EventListenerFocusTrapInertStrategy } from '@angular/cdk/a11y';
   styleUrls: ['./slide-product.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SlideProductComponent implements OnInit, OnDestroy, AfterContentInit, DoCheck {
+export class SlideProductComponent implements OnInit, OnDestroy, AfterContentInit {
 
   public userProducts: Array<IProductResponse> = [];
   public drinksProducts: Array<IProductResponse> = [];
@@ -97,10 +97,9 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
     // this.loadProducts();
   }
 
-  ngDoCheck(): void {
-    this.loadFaviriteProducts();  
-    // this.loadProducts();
-  } 
+  // ngDoCheck(): void {
+  //   this.loadFaviriteProducts();  
+  // } 
 
   loadProducts(): void {
     this.categoryName = this.activatedRoute.snapshot.paramMap.get('category') as string;
@@ -222,7 +221,7 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
   }
 
   isProductFavorite(product: IProductResponse): boolean {
-    return this.favorite.some((favProduct: IProductResponse) => favProduct.id === product.id);
+    return this.favorite?.some((favProduct: IProductResponse) => favProduct.id === product.id);
   }
 
   loadFaviriteProducts(): void{

@@ -9,5 +9,5 @@ export interface IDiscountRequest {
 }
 
 export interface IDiscountResponse extends IDiscountRequest {
-    id:  string;
+    id:  string | number;
 }

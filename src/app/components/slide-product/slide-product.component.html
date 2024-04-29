@@ -5,7 +5,7 @@
     <div class="swiper-entry products_swiper">
       
       <p-carousel [value]= "drinksProducts" styleClass="custom-carousel" [numVisible]="4" [numScroll]="1"
-          [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+          [circular]="true" [autoplayInterval]="10000" [responsiveOptions]="responsiveOptions">
           <ng-template let-product pTemplate="item"  >
             <div class="item card">              
               <div class="product js-product type-2">
@@ -89,7 +89,7 @@
     <div class="swiper-entry products_swiper">
       <ng-container *ngIf="userProducts.length>0">
         <p-carousel [value]= "userProducts" styleClass="custom-carousel" [numVisible]="4" [numScroll]="1"
-          [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+          [circular]="true" [autoplayInterval]="10000" [responsiveOptions]="responsiveOptions">
           <ng-template let-product pTemplate="item"  >
             <div class="item card">              
               <div class="product js-product type-2">

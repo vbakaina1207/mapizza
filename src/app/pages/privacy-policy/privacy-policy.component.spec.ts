@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { PrivacyPolicyComponent } from './privacy-policy.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PrivacyPolicyComponent', () => {
   let component: PrivacyPolicyComponent;
@@ -11,7 +12,8 @@ describe('PrivacyPolicyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PrivacyPolicyComponent ]
+      declarations: [PrivacyPolicyComponent],
+      imports: [RouterTestingModule]
     })
     .compileComponents();
   }));

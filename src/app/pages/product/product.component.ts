@@ -61,6 +61,10 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
   }
 
   ngOnInit(): void {
+    this.loadProducts();
+    this.getTypeProducts();   
+    this.loadFaviriteProducts();
+    this.loadUser();       
   }
 
   ngDoCheck(): void {
@@ -82,7 +86,7 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
   
 
   loadProducts(): void {
-    this.categoryName = this.activatedRoute.snapshot.paramMap.get('category') as string;
+    this.categoryName = this.activatedRoute.snapshot.paramMap.get('category') as string  || 'pizza';
     this.productTypeName = this.activatedRoute.snapshot.paramMap.get('type_product') as string;
     let currentExtras = this.router.getCurrentNavigation()?.extras.skipLocationChange;
       this.productService.getAllByCategoryFirebase(this.categoryName).subscribe((data) => {
@@ -109,8 +113,7 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
       }
     } else this.isCategoryPizza = false;
     if (this.router.url !== '/product/pizza/' && this.categoryName === 'pizza') {
-      if(currentExtras )
-      {
+      if(currentExtras ) {
         this.isCategoryPizza = true;
         this.isProductType = false;
       } else {

@@ -11,7 +11,7 @@ describe('CabinetComponent', () => {
   let component: CabinetComponent;
   let fixture: ComponentFixture<CabinetComponent>;
 
-  beforeEach(async(() => {
+  beforeEach((() => {
     TestBed.configureTestingModule({
       declarations: [CabinetComponent],
       imports: [

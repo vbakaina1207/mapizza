@@ -1,27 +1,41 @@
 import { Injectable } from '@angular/core';
-import { CollectionReference, DocumentData, Firestore, addDoc, collection, collectionData, deleteDoc, doc, docData, updateDoc } from '@angular/fire/firestore';
+import {
+  CollectionReference, DocumentData, doc, Firestore, addDoc, collection, collectionData,
+  deleteDoc, docData, updateDoc
+} from '@angular/fire/firestore';
+// import { doc } from '@firebase/firestor';
 import { IVacancyRequest } from '../../interfaces/vacancy/vacancy.interface';
 
 @Injectable({
     providedIn: 'root'
 })
+
 export class VacancyService {
 
     private vacancyCollection!: CollectionReference<DocumentData>;
 
-constructor(private afs: Firestore
-  ) {
+// constructor(private afs: Firestore
+//   ) {
 
-    this.vacancyCollection = collection(this.afs, 'vacancies');
+  //   this.vacancyCollection = collection(this.afs, 'vacancies');
 
+  // }
+
+  constructor(private afs: Firestore) {
   }
 
-    
+    private initializeCollection() {
+        if (!this.vacancyCollection) {
+            this.vacancyCollection = collection(this.afs, 'vacancies');
+        }
+  }  
+  
   getAllFirebase() {
+    this.initializeCollection();
     return collectionData(this.vacancyCollection, { idField: 'id' });
   }
 
-  getOneFirebase(id: string) {
+  getOneFirebase(id: string) {    
     const vacancyDocumentReference = doc(this.afs, `vacancies/${id}`);
     return docData(vacancyDocumentReference, { idField: 'id' });
   }

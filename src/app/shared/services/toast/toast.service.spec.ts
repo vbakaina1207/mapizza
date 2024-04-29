@@ -7,7 +7,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 describe('Service: Toast', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ToastService],
+      providers: [
+        { provide: ToastService, useValue: {} }
+      ],
       imports: [
         HttpClientTestingModule
       ]

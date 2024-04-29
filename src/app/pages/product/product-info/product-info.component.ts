@@ -80,7 +80,7 @@ export class ProductInfoComponent implements OnInit, DoCheck, AfterContentInit {
       if (this.favorite.length == 0) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
     };  
         const PRODUCT_ID = (this.activatedRoute.snapshot.paramMap.get('id') as string);
-        let index = this.favorite.findIndex(prod => prod.id === PRODUCT_ID);    
+        let index = this.favorite?.findIndex(prod => prod.id === PRODUCT_ID);    
         if (index > -1) 
           this.isFavorite = true;
   }

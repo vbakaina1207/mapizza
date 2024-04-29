@@ -31,7 +31,7 @@ export class PageComponent implements OnInit {
   }
 
   ngOnInit() {
-   
+    this.loadPageNews();   
   }
 
   loadPageNews(): void {

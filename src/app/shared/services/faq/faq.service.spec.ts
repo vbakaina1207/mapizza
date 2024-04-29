@@ -8,31 +8,42 @@ import { AngularFireStorage, AngularFireStorageModule } from '@angular/fire/comp
 import { AngularFireModule } from '@angular/fire/compat';
 
 import { FirebaseApp, FirebaseAppModule, getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { environment } from 'src/environments/environment';
 import * as firebase from 'firebase/compat';
 import { Auth } from '@angular/fire/auth';
+import { environment } from 'src/environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFirestoreCollection, AngularFirestoreCollectionGroup } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreCollectionGroup, AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { of } from 'rxjs';
 
 describe('Service: Faq', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FaqService,
-        { provide: Firestore, useValue: {} },
-        { provide: Auth, useValue: {} },
+      providers: [
+        FaqService,
+        // { provide: Firestore, useValue: {} },
+        // { provide: Storage, useValue: {} },
         // AngularFirestoreCollection,
         // { provide: AngularFirestoreCollection, useValue: {Document} },
         // { provide: addDoc, useValue: {} },
         // { provide: collectionData, useValue: {}}
+          { 
+          provide: Firestore,
+          useValue: {
+            // collection: jasmine.createSpy('collection').and.returnValue({
+            //   valueChanges: jasmine.createSpy('valueChanges').and.returnValue(of([]))
+            // }),
+            // doc: jasmine.createSpy('doc').and.returnValue({
+            //   valueChanges: jasmine.createSpy('valueChanges').and.returnValue(of({}))
+            // }),
+            // add: jasmine.createSpy('add').and.returnValue(Promise.resolve({})),
+          }
+        },
       ],
       imports: [
         HttpClientTestingModule,
-        
-      
-        AngularFireModule,
-        // AngularFireStorageModule,
-        // AngularFireAuthModule
-      
+        // AngularFireAuthModule,
+        // AngularFireModule.initializeApp(environment.firebase),       
+        AngularFireModule
       ]
     });
   });

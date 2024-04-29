@@ -39,32 +39,58 @@ export class PersonalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadUser();
-    this.getUser();
+    // this.loadUser();
+    // this.getUser();
+    // this.initAuthFormData();
+    // this.updateAddress();   
+    // this.updateCurrentUser();
+    this.loadUser().then(() => {
     this.initAuthFormData();
-    this.updateAddress();   
+    this.getUser();
+    this.updateAddress();
     this.updateCurrentUser();
+  });
   }
 
-  initAuthFormData(): void {
-      this.authFormData = this.fb.group({
-        email: [this.currentUser['email'], [Validators.required, Validators.email]],
-        password: [null, [Validators.required]],
-        firstName: [this.currentUser['firstName'], [Validators.required]],
-        lastName:[this.currentUser['lastName'], [Validators.required]],
-        phoneNumber: [this.currentUser['phoneNumber'], [Validators.required]],
-        birthday: [this.currentUser['birthday']]
-      });
-  }
 
-  loadUser(): void {
-    if(localStorage.length > 0 && localStorage.getItem('currentUser')){
+  loadUser(): Promise<void> {
+  return new Promise((resolve) => {
+    if (localStorage.length > 0 && localStorage.getItem('currentUser')) {
       this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
-      this.accountService.userAddress = this.currentUser['address'];    
-      this.dataUser = this.accountService.userAddress;      
+      this.accountService.userAddress = this.currentUser['address'];
+      this.dataUser = this.accountService.userAddress;
       if (this.isOpenAddressForm) {
         this.updateAddress();
+      }
+      resolve();
+    } else {
+      resolve();
     }
+  });
+}
+  
+
+  // loadUser(): void {
+  //   if(localStorage.length > 0 && localStorage.getItem('currentUser')){
+  //     this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
+  //     this.accountService.userAddress = this.currentUser['address'];    
+  //     this.dataUser = this.accountService.userAddress;      
+  //     if (this.isOpenAddressForm) {
+  //       this.updateAddress();
+  //   }
+  //   }
+  // }
+
+  initAuthFormData(): void {
+    if (this.currentUser) {
+      this.authFormData = this.fb.group({
+        email: [this.currentUser['email'] || null, [Validators.required, Validators.email]],
+        password: [null, [Validators.required]],
+        firstName: [this.currentUser['firstName'] || null, [Validators.required]],
+        lastName: [this.currentUser['lastName'] || null, [Validators.required]],
+        phoneNumber: [this.currentUser['phoneNumber'] || null, [Validators.required]],
+        birthday: [this.currentUser['birthday'] || null]
+      });
     }
   }
 
@@ -92,7 +118,8 @@ export class PersonalComponent implements OnInit {
     this.dataUser = this.accountService.userAddress;    
   }
 
-  getUser():void{
+  getUser(): void{
+    if (this.currentUser)
     getDoc(doc(this.afs, "users", this.currentUser.uid)).then((user_doc) => {        
         this.authFormData = this.fb.group({
           email: [this.currentUser['email'], [Validators.required, Validators.email]],          

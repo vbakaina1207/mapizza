@@ -22,8 +22,7 @@ describe('AdminProductComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientTestingModule,
-        AngularFireModule,
-        
+        AngularFireModule
       ],
       providers: [
         { provide: Storage, useValue: {} },

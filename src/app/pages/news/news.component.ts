@@ -35,6 +35,7 @@ export class NewsComponent implements OnInit {
     })}
 
   ngOnInit() {
+
   }
 
   loadPageNews(): void {

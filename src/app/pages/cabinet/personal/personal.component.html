@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     
     <div class="col-lg-10 col-xl-8 col-xxl-6">        
-        <form class="form-cabinet" id="user-edit-form" [formGroup]="authFormData" (ngSubmit)="updateUser()">
+        <form class="form-cabinet" id="user-edit-form" *ngIf="authFormData" [formGroup]="authFormData" (ngSubmit)="updateUser()">
             <div class="form-group">
                 <div class="form-title title h4">Особисті дані</div>
 
