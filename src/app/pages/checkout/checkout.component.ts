@@ -52,7 +52,8 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   public atTime: boolean = false;
   public isUseBonus: boolean = false;
   public isCourier: boolean = true;
-
+  public isResult: boolean = false;
+  public minPriceProduct!: IProductResponse;
 
 
   constructor(
@@ -158,15 +159,21 @@ export class CheckoutComponent implements OnInit, OnDestroy{
         priceArr.push(item.price + item.addition_price);
       }        
     });
-    this.minPrice = priceArr.slice(0, this.freePizza).reduce((a, b) => a + b, 0);
+    // this.minPrice = priceArr.slice(0, this.freePizza).reduce((a, b) => a + b, 0);
+    this.minPrice = Math.min(...priceArr);
+
     if (this.pizzaCount > 2 || this.pizzaCount % 3 == 2) {
       this.pizzaAction();
       if (this.pizzaCount > 2) {
         this.isPizzaCount = true;
         this.orderForm?.patchValue({ 'action': '2+1' });
       }
-      
     }
+    let arrMinPriceProduct : Array<IProductResponse>=[];
+    arrMinPriceProduct = this.basket.filter((el) => el.category.path === 'pizza' && el.price === this.minPrice);
+    this.minPriceProduct = arrMinPriceProduct[0];
+    console.log(this.minPrice, priceArr);
+    console.log(this.minPriceProduct);
   }
 
   getTotalPrice(): void {
@@ -273,9 +280,10 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     if (this.currentUser /*&& this.total >= 300*/) {      
       this.orderService.createFirebase(this.orderForm.value).then(() => {
         this.toastr.showSuccess('', 'Замовлення успішно створено');
+        this.removeAllFromBasket();
+        this.router.navigate(['/cabinet/history']);
       });
-      this.removeAllFromBasket();
-      this.router.navigate(['/cabinet/history']);
+      
     } 
   }
 
@@ -339,7 +347,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
         panelClass: 'alert-dialog',
         autoFocus: false,
         data: {
-          message: 'Сума бонусів не може перевищувати ' + this.sum_bonus + ' грн',
+          message: 'Сума бонусів не може перевищувати ' + this.sum_bonus + ' грн',          
         }
       });
       this.orderForm.patchValue({ 'summa_bonus': this.sum_bonus });
@@ -349,7 +357,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
 
   pizzaAction(): void {    
     if (this.pizzaCount % 3 ==  2) {
-      this.actionCountDialog();
+      this.actionCountDialog();      
       }
     if (this.pizzaCount > 2) {
       this.isPizzaCount = true;
@@ -439,10 +447,16 @@ export class CheckoutComponent implements OnInit, OnDestroy{
         data: {
           message: 'При замовленні будь-яких 3 піц, кожна 3 безкоштовно. Бажаєте додати піцу?',
           icon: '',
-          isError: true
+          isError: true,
+          btnOkText: 'Так, додати піцу',
+          btnCancelText: 'Ні, дякую'
         }
       }).afterClosed().subscribe(result => {
-        console.log(result);    
+        console.log(result);   
+        if (result) {       
+          // this.updateBasket();
+          if (this.minPriceProduct) this.addToBasket(this.minPriceProduct, true); 
+        }
       });
   }
 

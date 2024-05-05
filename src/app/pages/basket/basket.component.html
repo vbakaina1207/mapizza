@@ -74,9 +74,7 @@
         <a [routerLink]="[ '/checkout']" class="butn btn-primar" *ngIf="currentUser  && basket.length" [class.disabled]="!total && !basket.length" mat-dialog-close>
           {{ currentUser ? 'ОФОРМИТИ ЗАМОВЛЕННЯ': 'АВТОРИЗУВАТИСЯ' }} 
         </a>
-        <!-- <a [routerLink]="[ '/']" class="butn btn-primar" *ngIf="currentUser  && !total"  mat-dialog-close>
-          {{ currentUser ? 'ОФОРМИТИ ЗАМОВЛЕННЯ': 'АВТОРИЗУВАТИСЯ' }}
-        </a> -->
+        
         <a (click)="openLoginDialog()" class="butn btn-primar" *ngIf="!currentUser"  mat-dialog-close>
           {{ currentUser ? 'ОФОРМИТИ ЗАМОВЛЕННЯ' : 'АВТОРИЗУВАТИСЯ' }}
         </a>

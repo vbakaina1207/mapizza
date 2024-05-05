@@ -4,6 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ITypeProductResponse } from 'src/app/shared/interfaces/type-product/type-product.interface';
 import { TypeProductService } from 'src/app/shared/services/type-product/type-product.service';
 import { ImageService } from 'src/app/shared/services/image/image.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogComponent } from 'src/app/components/alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-admin-product-type',
@@ -25,7 +27,8 @@ export class AdminProductTypeComponent implements OnInit {
     private fb: FormBuilder,
     private typeProductService: TypeProductService,
     private imageService: ImageService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -65,6 +68,8 @@ export class AdminProductTypeComponent implements OnInit {
     this.editStatus = false;
     this.typeProductForm.reset();
     this.isAdd = false;
+    this.isUploaded = false;
+    this.uploadPercent = 0;
   }
 
   editTypeProduct(typeProduct: ITypeProductResponse): void {
@@ -76,12 +81,27 @@ export class AdminProductTypeComponent implements OnInit {
     });
     this.editStatus = true;
     this.currentTypeProductId = typeProduct.id as string;
+    this.isUploaded = true;
   }
 
   deleteTypeProduct(typeProduct: ITypeProductResponse): void {
-    this.typeProductService.deleteFirebase(typeProduct.id as string).then(() => {
-      this.loadTypeProducts();
-      this.toastr.success('Type of product  successfully deleted');
+    this.dialog.open(AlertDialogComponent, {
+      backdropClass: 'dialog-back',
+      panelClass: 'alert-dialog',
+      autoFocus: false,
+      data: {
+        message: 'Ви впевнені, що хочете видалити вакасію?',
+        icon: '',
+        isError: true
+      }
+    }).afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.typeProductService.deleteFirebase(typeProduct.id as string).then(() => {
+        this.loadTypeProducts();
+        this.toastr.success('Type of product successfully deleted');    
+      })
+      }
     })
   }
 
@@ -100,7 +120,7 @@ export class AdminProductTypeComponent implements OnInit {
   }
 
   deleteImage(): void {
-    this.imageService.deleteUploadFile(this.valueByControl('imagePath')).then(() => {
+    this.imageService.deleteUploadFile(this.valueByControl('imgPath')).then(() => {
       console.log('File deleted');
       this.isUploaded = false;
       this.uploadPercent = 0;
@@ -109,6 +129,8 @@ export class AdminProductTypeComponent implements OnInit {
       })
     })
   }
+
+  
 
   valueByControl(control: string): string {
     return this.typeProductForm.get(control)?.value;

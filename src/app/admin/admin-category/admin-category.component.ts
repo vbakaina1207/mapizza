@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogComponent } from 'src/app/components/alert-dialog/alert-dialog.component';
 import { ICategoryResponse } from 'src/app/shared/interfaces/category/category.interface';
 import { CategoryService } from 'src/app/shared/services/category/category.service';
 import { ImageService } from 'src/app/shared/services/image/image.service';
@@ -26,7 +27,8 @@ export class AdminCategoryComponent implements OnInit {
     private fb: FormBuilder,
     private categoryService: CategoryService,
     private imageService: ImageService,
-    private toastr: ToastService
+    private toastr: ToastService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -55,13 +57,11 @@ export class AdminCategoryComponent implements OnInit {
   addCategory(): void {
     if(this.editStatus){
       this.categoryService.updateFirebase(this.categoryForm.value, this.currentCategoryId as string).then(() => {
-        this.loadCategories();
-        // this.toastr.success('Category successfully updated');
+        this.loadCategories();    
         this.toastr.showSuccess('', 'Категорію змінено');
       })
     } else {
-      this.categoryService.createFirebase(this.categoryForm.value).then(() => {
-        // this.toastr.success('Category successfully created');
+      this.categoryService.createFirebase(this.categoryForm.value).then(() => {      
         this.toastr.showSuccess('', 'Категорію додано');
       })
     }
@@ -85,12 +85,26 @@ export class AdminCategoryComponent implements OnInit {
   }
 
   deleteCategory(category: ICategoryResponse): void {
-    this.categoryService.deleteFirebase(category.id as string).then(() => {
-      this.loadCategories();
-      // this.toastr.success('Category successfully deleted');
-      this.toastr.showSuccess('', 'Категорію видалено');
+    this.dialog.open(AlertDialogComponent, {
+      backdropClass: 'dialog-back',
+      panelClass: 'alert-dialog',
+      autoFocus: false,
+      data: {
+        message: 'Ви впевнені, що хочете видалити категорію?',
+        icon: '',
+        isError: true
+      }
+    }).afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.categoryService.deleteFirebase(category.id as string).then(() => {
+          this.loadCategories();
+          this.toastr.showSuccess('', 'Категорію видалено');
+        })
+      }
     })
   }
+
 
   upload(event: any): void {
     const file = event.target.files[0];

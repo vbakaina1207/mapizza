@@ -106,33 +106,49 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
   background-color: $clr-white;
 }
 
-
-.alert-dialog {
-  max-width: 600px;
-  //width: 500px;
-  padding: 0 20px;
-  max-height: 350px;
-
-  .popup-container {
-    overflow: hidden;
-  }
+.mat-mdc-dialog-surface {
+  padding: 20px;
+ 
 }
 
-.alert-dialog .mat-dialog-container {
-  padding: 0;
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 12px !important;
+}
+.mat-mdc-dialog-surface  {
+  max-width: 600px;
+  //width: 500px;
+  // padding: 0 20px;
+  max-height: 350px;
+
+    & .popup-container {
+    overflow: hidden;
+    }
+    // & .popup-container .size-2 {
+    // max-width: 600px;
+    // padding: 0 20px;
+    // position: relative;
+    // }
+
+    & .mat-dialog-container {
+    padding: 0;
     overflow: auto;
     border-radius: 12px;
     background-color: $clr-white;    
 }
 
-
-.popup-container{
-    width: 100%;
-    position: relative;
-    text-align: left;    
 }
 
-.mat-dialog-actions > .btn-close {
+
+
+
+
+// .popup-container{
+//     width: 100%;
+//     position: relative;
+//     text-align: left;    
+// }
+
+.mat-mdc-dialog-content  > .btn-close {
     position: absolute;
     right: 20px;
     top: 20px;
@@ -140,38 +156,41 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
     
 }
 
-.mat-dialog-actions {
+.mat-mdc-dialog-content {
   justify-content: center;
 
   & .decor {
       position: absolute;
   }
+  & .left {
+      width: 152px;
+      left: -40px;
+      top: -70px;
 
-    & .decor.left {
-    width: 152px;
-    left: -40px;
-    top: -70px;
-
-    & img {
-      width: 100%;
+      & img {
+        width: 100%;
+      }
     }
-  }
+  
+    & .right {
+      width: 120px;
+      right: -40px;
+      bottom: -70px;
 
-  & .decor.right {
-    width: 120px;
-    right: -40px;
-    bottom: -70px;
-
-    & img {
-      width: 100%;
+      & img {
+        width: 100%;
+      }
     }
-  }
+  
+    & .popup-align {
+      padding: 20px 20px;
+      display: flex;
+      justify-content: space-around;
+    }
 }
 
-.popup-align {
-    padding: 40px 40px;
-    // overflow: hidden;
-}
+
+
 
 .form input, .form textarea{
   width: 100%;
@@ -186,7 +205,6 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
   padding: 0 20px 0 23px;
   transition: 0.35s;
   text-overflow: ellipsis;
-
 }
 
 
@@ -212,7 +230,6 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
   border: 2px solid $clr-secondary;
   transition: .35s;
   text-transform: uppercase;
-  // @include text-bold($text-color);
   font-size: 16px;
   line-height: 20px;
   padding: 16px 22px;
@@ -235,9 +252,6 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 }
 }
 
-.mobile input{
-  // width: 48%;
-}
 
 .open-popup{
   color: $clr-black;
@@ -352,18 +366,15 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 .popup-container {
     display: inline-block;
     vertical-align: middle;
-    // overflow: hidden;
     width: 100%;
     position: relative;
     text-align: left;
     background: $clr-white;
     border-radius: 12px;
-    // height: 100vh;
 }
 
 .popup-align {
     padding: 40px;
-    // overflow: hidden;
 }
 .ing-popup .popup-align {
     padding: 0;
@@ -503,24 +514,9 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 
 }
 
-
-
 .product_image-wrap {
     position: relative;
 }
-
-// .fav-btn {
-//     @include fav-btn;
-// }
-
-// .fav-btn .fill-anime {
-//     @include fill-anime;
-// }
-
-// .fill-anime {
-//     transition: $transition;
-// }
-
 
 .product_controls {
     flex-wrap: wrap;
@@ -679,18 +675,18 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
     padding: 0 41px;
 }
 
-.auth-dialog-basket .mat-dialog-container {
-    border-radius: 12px;
-    background-color: $clr-white;    
-    display: flex;
-    flex-direction: column;
-    transform: translateX(130%);
-    transition: .25s;
-    padding: 0;
-    max-width: 100vw;
-    // height: 350px;
-    max-height: 100vh;
-    height: auto;
+.auth-dialog-basket  {
+    // border-radius: 12px;
+    // background-color: $clr-white;    
+    // display: flex;
+    // flex-direction: column;
+    // transform: translateX(130%);
+    // transition: .25s;
+    // padding: 0;
+    // max-width: 100vw;    
+    // max-height: 100vh;
+    // height: auto;
+    overflow: auto;
 }
 
 .cart_title {
@@ -716,7 +712,6 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 
 .cart-popup-out {
     height: calc(100% - 74px);
-    // min-height: 240px;
 }
 
 .cart_items {
@@ -831,9 +826,7 @@ a:hover {
 
     & .butn {
       margin-left: 10px;
-      flex-shrink: 0;
-       
-      
+      flex-shrink: 0;             
     }
 }
 
@@ -891,7 +884,6 @@ a:hover {
 @media screen and (max-width: 1400px) {
 .popup-container {
     max-width: 980px;
-    // max-height: calc(100vh - 30px);
 }
 
   .ing_body {

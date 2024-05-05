@@ -5,7 +5,6 @@ import { IOrderResponse } from 'src/app/shared/interfaces/order/order.interface'
 import { IProductResponse } from 'src/app/shared/interfaces/product/product.interface';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
 
 @Component({
@@ -59,8 +58,7 @@ export class AdminOrdersComponent implements OnInit {
     
     this.currentOrderId = order.id;
     this.orderService.updateFirebase(this.orderForm.value, this.currentOrderId as string).then(() => {
-      this.getOrders();
-      // this.toastr.success('Order successfully updated');
+      this.getOrders();      
       this.toastr.showSuccess('', 'Замовлення змінено');
     })
   }

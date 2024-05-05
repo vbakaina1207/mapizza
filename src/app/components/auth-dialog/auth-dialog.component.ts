@@ -84,19 +84,22 @@ export class AuthDialogComponent implements OnInit {
   async login(email: string, password: string): Promise<any> {
     const credential = await signInWithEmailAndPassword(this.auth, email, password);
     console.log('credential', credential);
-    this.loginSubscription = docData(doc(this.afs, 'users', credential.user.uid)).subscribe(user => {
-      this.currentUser = { ...user, uid: credential.user.uid };
-      localStorage.setItem('currentUser', JSON.stringify(this.currentUser));            
-      if(user && user['role'] === ROLE.USER) {
-        //this.router.navigate(['/cabinet']);
-        console.log('role', user['role']);
-      } else if(user && user['role'] === ROLE.ADMIN){
-        this.router.navigate(['/admin']);
-        console.log('role', user['role']);
+    this.loginSubscription = docData(doc(this.afs, 'users', credential.user.uid)).subscribe({
+      next: (user) => {
+        this.currentUser = { ...user, uid: credential.user.uid };
+        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+        if (user && user['role'] === ROLE.USER) {
+          //this.router.navigate(['/cabinet']);
+          console.log('role', user['role']);
+        } else if (user && user['role'] === ROLE.ADMIN) {
+          this.router.navigate(['/admin']);
+          console.log('role', user['role']);
+        }
+        this.accountService.isUserLogin$.next(true);
+      },
+      error: (e) => {
+        console.log('error', e);
       }
-      this.accountService.isUserLogin$.next(true);
-    }, (e) => {
-      console.log('error', e);
     })
   }
 

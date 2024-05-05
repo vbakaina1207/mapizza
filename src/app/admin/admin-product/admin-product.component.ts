@@ -11,6 +11,8 @@ import { TypeProductService } from 'src/app/shared/services/type-product/type-pr
 import { IAdditionResponse } from 'src/app/shared/interfaces/addition/addition.interfaces';
 import { AdditionProductService } from 'src/app/shared/services/addition-product/addition-product.service';
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogComponent } from 'src/app/components/alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-admin-product',
@@ -42,7 +44,8 @@ export class AdminProductComponent implements OnInit {
     private additionService: AdditionProductService,
     private typeProductService: TypeProductService,
     private imageService: ImageService,
-    private toastr: ToastService
+    private toastr: ToastService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -143,17 +146,29 @@ export class AdminProductComponent implements OnInit {
       imagePath: product.imagePath,
       count:1
     });
-
-
     this.isUploaded = true;
     this.editStatus = true;
     this.currentProductId = product.id;
   }
 
   deleteProduct(product: IProductResponse): void {
-    this.productService.deleteFirebase(product.id as string).then(() => {
-      this.loadProduct();
-      this.toastr.showSuccess('', 'Продукт видалено');
+    this.dialog.open(AlertDialogComponent, {
+      backdropClass: 'dialog-back',
+      panelClass: 'alert-dialog',
+      autoFocus: false,
+      data: {
+        message: 'Ви впевнені, що хочете видалити продукт?',
+        icon: '',
+        isError: true
+      }
+    }).afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.productService.deleteFirebase(product.id as string).then(() => {
+        this.loadProduct();
+        this.toastr.showSuccess('', 'Продукт видалено');      
+      })
+      }
     })
   }
 

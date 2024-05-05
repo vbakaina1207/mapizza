@@ -7,6 +7,10 @@
     white-space: nowrap;
 }
 
+td a:hover{
+    color: $clr-primary !important;
+}
+
 
 @media screen and (max-width: 598px) {
     td button{

@@ -14,8 +14,16 @@
       
     <tr *ngFor="let product of favoriteProducts; let i = index">
       <td><b>{{ i+1 }}</b></td>
-      <td>{{ product.name }}</td>
-      <td>{{ product.category.name }}</td>
+      <td>
+        <a [routerLink]="[ '/product/'+ product.category.path,  product?.type_product?.path ? product.type_product.path : 'other', product.id ]">
+          {{  product.name }}                                    
+        </a>
+      </td>
+      <td>
+        <a [routerLink]="[ '/product/', product.category.path,'' ]">
+          {{  product.category.name }}                                    
+        </a>
+      </td>
       <td (click)="ingredientClick()" *ngIf="!isFullText">{{ product.ingredients| slice:0:75 }} <span *ngIf="product.ingredients">...</span></td>
       <td (click)="ingredientClick()" *ngIf="isFullText">{{ product.ingredients }}</td>
       <td class="status"> <b>{{ product.price }} </b> грн</td>

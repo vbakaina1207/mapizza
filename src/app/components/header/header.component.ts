@@ -110,8 +110,7 @@ export class HeaderComponent implements OnInit {
         this.loginUrl = 'admin';
         this.loginPage = 'Admin';
       } else if(this.currentUser && this.currentUser.role === ROLE.USER) {
-        this.isLogin = true;
-       // this.loginUrl = 'cabinet';
+        this.isLogin = true;       
         this.loginPage = 'Cabinet';
 
       } else {

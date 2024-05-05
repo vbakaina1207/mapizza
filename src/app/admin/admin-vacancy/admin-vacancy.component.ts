@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { AlertDialogComponent } from 'src/app/components/alert-dialog/alert-dialog.component';
 import { IVacancyResponse } from 'src/app/shared/interfaces/vacancy/vacancy.interface';
 import { ImageService } from 'src/app/shared/services/image/image.service';
 import { VacancyService } from 'src/app/shared/services/vacancy/vacancy.service';
@@ -23,7 +25,8 @@ export class AdminVacancyComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private vacancyService: VacancyService,
     private imageService: ImageService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -50,7 +53,7 @@ export class AdminVacancyComponent implements OnInit {
     if(this.editStatus){
       this.vacancyService.updateFirebase(this.vacancyForm.value, this.currentVacancyId as string).then(() => {
         this.loadVacancy();
-        this.toastr.success('Discount successfully updated');
+        this.toastr.success('Vacancy successfully updated');
       })
     } else {
       this.vacancyService.createFirebase(this.vacancyForm.value).then(() => {
@@ -78,9 +81,23 @@ export class AdminVacancyComponent implements OnInit {
   }
 
   deleteDiscount(vacancy: IVacancyResponse): void {
-    this.vacancyService.deleteFirebase(vacancy.id as string).then(() => {
-      this.loadVacancy();
-      this.toastr.success('Vacancy successfully deleted');
+    this.dialog.open(AlertDialogComponent, {
+      backdropClass: 'dialog-back',
+      panelClass: 'alert-dialog',
+      autoFocus: false,
+      data: {
+        message: 'Ви впевнені, що хочете видалити вакасію?',
+        icon: '',
+        isError: true
+      }
+    }).afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.vacancyService.deleteFirebase(vacancy.id as string).then(() => {
+        this.loadVacancy();
+        this.toastr.success('Vacancy successfully deleted');
+      })
+      }
     })
   }
 

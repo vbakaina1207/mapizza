@@ -1,4 +1,10 @@
 <div class="col-12 d-flex justify-center table-width">
+  <!-- <div *ngFor="let order of userOrders; let i=index">
+    <div>{{ order.order_number }}</div>
+    <div>
+      {{ order.product.name}}
+    </div>
+  </div> -->
   <table class="table table-responsive table-responsive-md table-responsive-sm table-responsive-lg table-responsive-xl">
     <thead class="table-category">
     <tr>
@@ -13,7 +19,7 @@
 
     <tbody>
 
-    <tr *ngFor="let order of userOrders; let i=index">
+    <tr *ngFor="let order of userOrders; let i=index">      
       <td><b> {{ order.order_number }}</b></td>
       <td>{{ order.date_order | formatDates: 'yyyy/MM/dd h:mm:ss a' }}
         <tr *ngFor="let product of order ? order.product : products; let i=index">
@@ -21,7 +27,12 @@
           <tr colspan="2" *ngFor="let prod of product.selected_addition" class="addition">
             <td>{{ prod.name}} </td>
           </tr>
+          
           </td>
+          
+          <!-- <td colspan="2" *ngFor="let prod of product.selected_addition" class="addition">
+            {{ prod.name}} 
+          </td> -->
         </tr>
       </td>
 

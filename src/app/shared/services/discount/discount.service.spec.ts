@@ -126,41 +126,36 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { DiscountService } from './discount.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { IDiscountRequest, IDiscountResponse } from '../../interfaces/discount/discount.interface';
 import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from 'src/environments/environment';
-import { Firestore, Timestamp, collection } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
+
+// import { IDiscountRequest, IDiscountResponse } from '../../interfaces/discount/discount.interface';
+// import { AngularFireModule } from '@angular/fire/compat';
+// import { environment } from 'src/environments/environment';
+// import { Firestore, FirestoreModule } from '@angular/fire/firestore';
+// import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+// import { PROVIDED_FIRESTORE_INSTANCES } from '@angular/fire/firestore/firestore.module';
 
 describe('Service: Discount', () => {
   let httpTestingController: HttpTestingController;
   let discountService: DiscountService;
+  let angularFirestoreMock: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        DiscountService, 
-        { provide: Firestore, useValue: {} },
-      // { 
-      //     provide: Firestore, 
-      //     useValue: {
-      //       collection: (path: string) => {
-      //         return {
-      //           doc: (docPath: string) => ({
-      //             set: () => Promise.resolve(),
-      //             get: () => Promise.resolve(),
-      //             update: () => Promise.resolve(),
-      //             delete: () => Promise.resolve(),
-      //           }),
-      //         };
-      //       },
-      //     },
-      //   },
+        DiscountService,       
+        { provide: Firestore, useValue: { angularFirestoreMock } },
+        // PROVIDED_FIRESTORE_INSTANCES
+        // { provide: AngularFirestore, useValue: angularFirestoreMock }
       ],
       imports: [
         HttpClientTestingModule,
         AngularFireModule,
+        // FirestoreModule,
+        
       ],
-    });
+    }).compileComponents();
     httpTestingController = TestBed.inject(HttpTestingController);
     discountService = TestBed.inject(DiscountService);
   });

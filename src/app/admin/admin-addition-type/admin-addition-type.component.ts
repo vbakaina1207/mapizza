@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogComponent } from 'src/app/components/alert-dialog/alert-dialog.component';
 import { ITypeAdditionResponse } from 'src/app/shared/interfaces/type-addition/type-addition.interfaces';
 import { AdditionProductService } from 'src/app/shared/services/addition-product/addition-product.service';
 import { ImageService } from 'src/app/shared/services/image/image.service';
@@ -27,7 +28,8 @@ export class AdminAdditionTypeComponent implements OnInit {
     private fb: FormBuilder,
     private additionProductService: AdditionProductService,
     private imageService: ImageService,
-    private toastr: ToastService
+    private toastr: ToastService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -61,18 +63,18 @@ export class AdminAdditionTypeComponent implements OnInit {
     if(this.editStatus){
       this.additionProductService.updateFirebase(this.typeAdditionForm.value, this.currentTypeAdditionId).then(() => {
         this.loadTypeAddition();
-        // this.toastr.success('Type of product successfully updated');
         this.toastr.showSuccess('', 'Тип продукта змінено');
       })
     } else {
       this.additionProductService.createFirebase(this.typeAdditionForm.value).then(() => {
-        // this.toastr.success('Type of product  successfully created');
         this.toastr.showSuccess('', 'Тип продукта додано');
       })
     }
     this.editStatus = false;
     this.typeAdditionForm.reset();
     this.isAdd = false;
+    this.isUploaded = false;
+    this.uploadPercent = 0;
   }
 
   editAdditionProduct(additionProduct: ITypeAdditionResponse): void {
@@ -88,14 +90,30 @@ export class AdminAdditionTypeComponent implements OnInit {
     });
     this.editStatus = true;
     this.currentTypeAdditionId = additionProduct.id as string;
+    this.isUploaded = true;
   }
 
   deleteAdditionProduct(additiionProduct: ITypeAdditionResponse): void {
-    this.additionProductService.deleteFirebase(additiionProduct.id as string).then(() => {
-      this.loadTypeAddition();
-      // this.toastr.success('Type of product  successfully deleted');
+    this.dialog.open(AlertDialogComponent, {
+      backdropClass: 'dialog-back',
+      panelClass: 'alert-dialog',
+      autoFocus: false,
+      data: {
+        message: 'Ви впевнені, що хочете видалити додатковий складник?',
+        icon: '',
+        isError: true
+      }
+    }).afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.additionProductService.deleteFirebase(additiionProduct.id as string).then(() => {
+      this.loadTypeAddition();      
       this.toastr.showSuccess('', 'Тип продукта видалено');
     })
+      }
+    })
+
+    
   }
 
   upload(event: any): void {

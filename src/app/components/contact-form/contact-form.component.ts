@@ -70,8 +70,7 @@ export class ContactFormComponent implements OnInit {
       this.workTime = 'пн-нд 10:00 - 22:30';      
       this.placeholderDescription = 'Повідомлення...';
     }
-    if ( this.route.component?.name === 'AboutComponent' ) {
-      // this.workTime = `Працюємо щодня без вихідних з <strong>10:00</strong> до <strong>22:30</strong>`;
+    if ( this.route.component?.name === 'AboutComponent' ) {      
       this.isAbout = true;
     }
     this.mailto = 'mailto:' + this.email;

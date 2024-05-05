@@ -3,10 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IDiscountResponse } from 'src/app/shared/interfaces/discount/discount.interface';
 import { DiscountService } from 'src/app/shared/services/discount/discount.service';
 import { ImageService } from 'src/app/shared/services/image/image.service';
-import { ToastrService } from 'ngx-toastr';
-import { FormatDatePipe } from 'src/app/shared/pipes/format-date.pipe';
-import { Timestamp} from "@angular/fire/firestore";
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogComponent } from 'src/app/components/alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-admin-discount',
@@ -28,7 +27,8 @@ export class AdminDiscountComponent implements OnInit {
     private fb: FormBuilder,
     private discountService: DiscountService,
     private imageService: ImageService,
-    private toastr: ToastService
+    private toastr: ToastService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -36,8 +36,7 @@ export class AdminDiscountComponent implements OnInit {
     this.loadDiscounts();
   }
 
-  initDiscountForm(): void {
-    //let dateFormat = new Date().getMilliseconds();
+  initDiscountForm(): void {    
     this.discountForm = this.fb.group({
       date: [new Date(), Validators.required],
       name: [null, Validators.required],
@@ -56,13 +55,11 @@ export class AdminDiscountComponent implements OnInit {
   addDiscount(): void {
     if(this.editStatus){
       this.discountService.updateFirebase(this.discountForm.value, this.currentDiscountId as string).then(() => {
-        this.loadDiscounts();
-        // this.toastr.success('Discount successfully updated');
+        this.loadDiscounts();        
         this.toastr.showSuccess('', 'Акцію змінено');
       })
     } else {
-      this.discountService.createFirebase(this.discountForm.value).then(() => {
-        // this.toastr.success('Discount successfully created');
+      this.discountService.createFirebase(this.discountForm.value).then(() => {        
         this.toastr.showSuccess('', 'Акцію додано');
       })
     }
@@ -88,12 +85,25 @@ export class AdminDiscountComponent implements OnInit {
   }
 
   deleteDiscount(discount: IDiscountResponse): void {
-    this.discountService.deleteFirebase(discount.id as string).then(() => {
-      this.loadDiscounts();
-      // this.toastr.success('Discount successfully deleted');
-      this.toastr.showSuccess('', 'Акцію видалено');
-    })
-  }
+    this.dialog.open(AlertDialogComponent, {
+      backdropClass: 'dialog-back',
+      panelClass: 'alert-dialog',
+      autoFocus: false,
+      data: {
+        message: 'Ви впевнені, що хочете видалити акцію?',
+        icon: '',
+        isError: true
+      }
+    }).afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.discountService.deleteFirebase(discount.id as string).then(() => {
+        this.loadDiscounts();     
+        this.toastr.showSuccess('', 'Акцію видалено');
+      })
+    }
+  })  
+}
 
   upload(event: any): void {
     const file = event.target.files[0];

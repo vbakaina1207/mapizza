@@ -14,7 +14,6 @@ export class HistoryComponent implements OnInit {
   public userOrders: Array<IOrderResponse> = [];
   public products: Array<IProductResponse> | any = [];
   private eventSubscription!: Subscription;
-  // private uid!: string;
   public currentUser: any;
 
   constructor(
@@ -25,13 +24,13 @@ export class HistoryComponent implements OnInit {
       if(event instanceof NavigationEnd ) {
         this.loadUser();
         this.getOrders();
-
       }
     })
   }
 
   ngOnInit() {
-
+    this.loadUser();
+    this.getOrders();
   }
 
   getOrders(): void {

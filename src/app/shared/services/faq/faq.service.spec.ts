@@ -20,15 +20,12 @@ describe('Service: Faq', () => {
     TestBed.configureTestingModule({
       providers: [
         FaqService,
-        // { provide: Firestore, useValue: {} },
-        // { provide: Storage, useValue: {} },
-        // AngularFirestoreCollection,
-        // { provide: AngularFirestoreCollection, useValue: {Document} },
-        // { provide: addDoc, useValue: {} },
-        // { provide: collectionData, useValue: {}}
-          { 
-          provide: Firestore,
-          useValue: {
+        { provide: Firestore, useValue: {} },    
+        { provide: AngularFirestore, useValue: {} },        
+        // AngularFirestoreCollection,      
+          // { 
+          // provide: Firestore,
+          // useValue: {
             // collection: jasmine.createSpy('collection').and.returnValue({
             //   valueChanges: jasmine.createSpy('valueChanges').and.returnValue(of([]))
             // }),
@@ -36,16 +33,17 @@ describe('Service: Faq', () => {
             //   valueChanges: jasmine.createSpy('valueChanges').and.returnValue(of({}))
             // }),
             // add: jasmine.createSpy('add').and.returnValue(Promise.resolve({})),
-          }
-        },
+        //   }
+        // },
       ],
       imports: [
         HttpClientTestingModule,
         // AngularFireAuthModule,
-        // AngularFireModule.initializeApp(environment.firebase),       
-        AngularFireModule
+        AngularFireModule.initializeApp(environment.firebase),  
+        AngularFirestoreModule     
+        // AngularFireModule
       ]
-    });
+    }).compileComponents();
   });
 
   it('should ...', inject([FaqService], (service: FaqService) => {

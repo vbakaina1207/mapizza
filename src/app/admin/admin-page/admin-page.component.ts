@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogComponent } from 'src/app/components/alert-dialog/alert-dialog.component';
 import { IPageResponse } from 'src/app/shared/interfaces/page/page.interface';
 import { PageService } from 'src/app/shared/services/page/page.service';
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
@@ -16,12 +17,14 @@ export class AdminPageComponent implements OnInit {
   public pageForm!: FormGroup;
   public isAdd = false;
   public editStatus = false;
-  public currentPageId!: number | string;
+  public currentPageId!: number | string;  
+  public isUploaded = false;
 
   constructor(
     private fb: FormBuilder,
     private pageService: PageService,
-    private toastr: ToastService
+    private toastr: ToastService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -48,19 +51,18 @@ export class AdminPageComponent implements OnInit {
   addPage(): void {
     if(this.editStatus){
       this.pageService.updateFirebase(this.pageForm.value, this.currentPageId as string).then(() => {
-        this.loadPages();
-        // this.toastr.success('Page successfully updated');
+        this.loadPages();        
         this.toastr.showSuccess('', 'Сторінку змінено');
       })
     } else {
-      this.pageService.createFirebase(this.pageForm.value).then(() => {
-        // this.toastr.success('Page successfully created');
+      this.pageService.createFirebase(this.pageForm.value).then(() => {       
         this.toastr.showSuccess('', 'Сторінку додано');
       })
     }
     this.editStatus = false;
     this.pageForm.reset();
     this.isAdd = false;
+    this.isUploaded = false;    
   }
 
   editPage(page: IPageResponse): void {
@@ -70,13 +72,27 @@ export class AdminPageComponent implements OnInit {
     });
     this.editStatus = true;
     this.currentPageId = page.id;
+    this.isUploaded = true;
   }
 
   deletePage(page: IPageResponse): void {
-    this.pageService.deleteFirebase(page.id as string).then(() => {
-      this.loadPages();
-      // this.toastr.success('Page successfully deleted');
-      this.toastr.showSuccess('', 'Сторінку видалено');
+    this.dialog.open(AlertDialogComponent, {
+      backdropClass: 'dialog-back',
+      panelClass: 'alert-dialog',
+      autoFocus: false,
+      data: {
+        message: 'Ви впевнені, що хочете видалити сторінку?',
+        icon: '',
+        isError: true
+      }
+    }).afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.pageService.deleteFirebase(page.id as string).then(() => {
+        this.loadPages();     
+        this.toastr.showSuccess('', 'Сторінку видалено');      
+      })
+      }
     })
   }
 

@@ -16,6 +16,8 @@ export class AlertDialogComponent implements OnInit {
   public icon: string = '';
   public buttonText = 'Ok';
   public isError: boolean = false;
+  public btnOkText: string = 'OK';
+  public btnCancelText: string = 'Cancel';
   
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -24,12 +26,16 @@ export class AlertDialogComponent implements OnInit {
         message: string;
         icon: string;
         isError: boolean;
+        btnOkText: string;
+        btnCancelText: string;
     },
     private dialogRef: MatDialog
   ) {
     if (data?.message) this.message = data.message;
     if (data?.icon) this.icon = data.icon;
     if (data?.isError) this.isError = data.isError;
+    if (data?.btnOkText) this.btnOkText = data.btnOkText;
+    if (data?.btnCancelText) this.btnCancelText = data.btnCancelText;
   }
 
   ngOnInit() {

@@ -24,6 +24,7 @@ export class FavoriteComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadUser();
   }
 
   loadUser(): void {

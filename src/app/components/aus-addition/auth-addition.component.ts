@@ -241,7 +241,6 @@ export class AuthAdditionComponent implements OnInit {
   updateFavorite(): void {
     this.accountService.changeFavorite.subscribe(() => {
       this.loadProduct();
-      // this.currentUser.favorite = this.favorite;
       this.loadUser();
       this.loadFavoriteProduct();
     })

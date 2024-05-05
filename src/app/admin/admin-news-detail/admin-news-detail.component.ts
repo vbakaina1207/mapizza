@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { AlertDialogComponent } from 'src/app/components/alert-dialog/alert-dialog.component';
 import { INewsDetailResponse } from 'src/app/shared/interfaces/news/news-info.interface';
 import { ImageService } from 'src/app/shared/services/image/image.service';
 import { NewsDetailService } from 'src/app/shared/services/news-detail/news-detail.service';
@@ -25,7 +27,8 @@ export class AdminNewsDetailComponent implements OnInit {
     private fb: FormBuilder,
     private newsService: NewsDetailService,
     private imageService: ImageService,
-    private toastr: ToastService
+    private toastr: ToastService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -52,19 +55,16 @@ export class AdminNewsDetailComponent implements OnInit {
   addNews(): void {
     if(this.editStatus){
       this.newsService.updateFirebase(this.newsForm.value, this.currentNewsId as string).then(() => {
-        this.loadNews();
-        // this.toastr.success('News successfully updated');
+        this.loadNews();        
         this.toastr.showSuccess('', 'Новину змінено');
       })
     } else {
-      this.newsService.createFirebase(this.newsForm.value).then(() => {
-        // this.toastr.success('News successfully created');
+      this.newsService.createFirebase(this.newsForm.value).then(() => {       
         this.toastr.showSuccess('', 'Новину додано');
       })
     }
     this.editStatus = false;
-    this.newsForm.reset();
-    //this.isUploaded = false;
+    this.newsForm.reset();   
     this.uploadPercent = 0;
     this.isAdd = false;
     
@@ -80,15 +80,28 @@ export class AdminNewsDetailComponent implements OnInit {
     });
     this.editStatus = true;
     this.currentNewsId = news.id;
-    //this.isUploaded = true;
+    this.isUploaded = true;
   }
 
   deleteNews(news: INewsDetailResponse): void {
-    this.newsService.deleteFirebase(news.id as string).then(() => {
-      this.loadNews();
-      // this.toastr.success('News successfully deleted');
-      this.toastr.showSuccess('', 'Новину видалено');
-    })
+    this.dialog.open(AlertDialogComponent, {
+      backdropClass: 'dialog-back',
+      panelClass: 'alert-dialog',
+      autoFocus: false,
+      data: {
+        message: 'Ви впевнені, що хочете видалити деталі новини?',
+        icon: '',
+        isError: true
+      }
+    }).afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.newsService.deleteFirebase(news.id as string).then(() => {
+        this.loadNews();      
+        this.toastr.showSuccess('', 'Новину видалено');
+      })
+      }
+    })    
   }
 
   upload(event: any): void {
