@@ -68,24 +68,53 @@ public total = 0;
     this.addToBasket(product, value);
   }
 
+  // addToBasket(product: IProductResponse, value: boolean): void {
+  //   let basket: Array<IProductResponse> = [];
+  //   if(localStorage?.length > 0 && localStorage.getItem('basket')){
+  //     basket = JSON.parse(localStorage.getItem('basket') as string);
+  //     if(basket.some(prod => prod.id === product.id)){
+  //       const index = basket.findIndex(prod => prod.id === product.id);
+  //       if (value) basket[index].count += 1;
+  //       if (!value && basket[index].count > 1) basket[index].count -= 1;
+  //     } else {
+  //       basket.push(product);
+  //     }
+  //   } else {
+  //     basket.push(product);
+  //   }
+  //   localStorage.setItem('basket', JSON.stringify(basket));
+  //   product.count = 1;
+  //   this.orderService.changeBasket.next(true);
+  // }
+
   addToBasket(product: IProductResponse, value: boolean): void {
     let basket: Array<IProductResponse> = [];
     if(localStorage?.length > 0 && localStorage.getItem('basket')){
-      basket = JSON.parse(localStorage.getItem('basket') as string);
-      if(basket.some(prod => prod.id === product.id)){
-        const index = basket.findIndex(prod => prod.id === product.id);
-        if (value) basket[index].count += 1;
-        if (!value && basket[index].count > 1) basket[index].count -= 1;
-      } else {
+        basket = JSON.parse(localStorage.getItem('basket') as string);
+        const existingProductIndex = basket.findIndex(prod => prod.id === product.id && this.areSelectedAdditionsEqual(prod.selected_addition, product.selected_addition));
+        if(existingProductIndex !== -1){            
+            if (value) {
+                basket[existingProductIndex].count += 1;
+            } else if (!value && basket[existingProductIndex].count > 1) {
+                basket[existingProductIndex].count -= 1;
+            }
+        } else {            
+            basket.push(product);
+        }
+    } else {        
         basket.push(product);
-      }
-    } else {
-      basket.push(product);
     }
     localStorage.setItem('basket', JSON.stringify(basket));
     product.count = 1;
     this.orderService.changeBasket.next(true);
-  }
+}
+
+areSelectedAdditionsEqual(additions1: Array<ITypeAdditionResponse>, additions2: Array<ITypeAdditionResponse>): boolean {    
+    const sortedAdditions1 = additions1.slice().sort();
+    const sortedAdditions2 = additions2.slice().sort();
+
+    return JSON.stringify(sortedAdditions1) === JSON.stringify(sortedAdditions2);
+}
 
   removeFromBasket(product: IProductResponse): void{
     let basket: Array<IProductResponse> = [];
@@ -111,14 +140,61 @@ public total = 0;
   }
 
 
+  // additionDeleteClick(product: IProductResponse, additionName: any): void {
+  //   for (let i = 0; i < product.selected_addition.length; i++) {
+  //     if (product.selected_addition[i].name == additionName) {
+  //       product.addition_price = product.addition_price - Number(product.selected_addition[i].price);
+  //       product.selected_addition.splice(i, 1);
+  //     }
+  //   }
+  // }
+
   additionDeleteClick(product: IProductResponse, additionName: any): void {
-    for (let i = 0; i < product.selected_addition.length; i++) {
-      if (product.selected_addition[i].name == additionName) {
-        product.addition_price = product.addition_price - Number(product.selected_addition[i].price);
-        product.selected_addition.splice(i, 1);
-      }
+    if(localStorage?.length > 0 && localStorage.getItem('basket')){
+      let basket = JSON.parse(localStorage.getItem('basket') as string);
+    
+    // Find the index of the product in the basket array
+    const productIndex = this.findProductIndexInBasket(product);
+    
+    if (productIndex !== -1) {      
+        for (let i = 0; i < basket.length; i++) {           
+            if (basket[i].id === product.id && this.areAdditionsEqual(basket[i].selected_addition, product.selected_addition)) {               
+                basket[i].addition_price -= Number(product.selected_addition.find(addition => addition.name === additionName)?.price);                
+                const additionIndex = basket[i].selected_addition.findIndex((addition: { name: any; }) => addition.name === additionName);
+                if (additionIndex !== -1) {
+                    basket[i].selected_addition.splice(additionIndex, 1);
+                }               
+                this.updateProductInBasket(basket[i], i);               
+                break;
+            }
+        }
     }
   }
+}
+
+
+areAdditionsEqual(arr1: Array<ITypeAdditionResponse>, arr2: Array<ITypeAdditionResponse>): boolean {
+    const str1 = JSON.stringify(arr1);
+    const str2 = JSON.stringify(arr2);
+    return str1 === str2;
+}
+
+findProductIndexInBasket(product: IProductResponse): number {
+    if (localStorage?.length > 0 && localStorage.getItem('basket')) {        
+        let basket = JSON.parse(localStorage.getItem('basket') as string);        
+        return basket.findIndex((prod: { id: string | number; }) => prod.id === product.id);
+    }   
+    return -1;
+}
+
+updateProductInBasket(product: IProductResponse, index: number): void {
+    if (localStorage?.length > 0 && localStorage.getItem('basket')) {
+        let basket = JSON.parse(localStorage.getItem('basket') as string);
+        basket.splice(index, 1, product);
+        localStorage.setItem('basket', JSON.stringify(basket));
+        this.orderService.changeBasket.next(true);
+    }
+}
 
 }
 

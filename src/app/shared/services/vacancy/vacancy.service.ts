@@ -3,7 +3,6 @@ import {
   CollectionReference, DocumentData, doc, Firestore, addDoc, collection, collectionData,
   deleteDoc, docData, updateDoc
 } from '@angular/fire/firestore';
-// import { doc } from '@firebase/firestor';
 import { IVacancyRequest } from '../../interfaces/vacancy/vacancy.interface';
 
 @Injectable({
@@ -13,13 +12,6 @@ import { IVacancyRequest } from '../../interfaces/vacancy/vacancy.interface';
 export class VacancyService {
 
     private vacancyCollection!: CollectionReference<DocumentData>;
-
-// constructor(private afs: Firestore
-//   ) {
-
-  //   this.vacancyCollection = collection(this.afs, 'vacancies');
-
-  // }
 
   constructor(private afs: Firestore) {
   }

@@ -42,8 +42,6 @@
         <div class="col-lg-10 col-xl-8">
           <div class="text text-lg">
             <p  [innerHTML]="currentNews?.description">
-              <!-- <p [innerHTML]="descrip"> -->
-              <!-- {{ currentNews?.description }} -->
             </p>
             <p>
               <img class="alignnone" [src]="currentNews?.detail ? currentNews.detail?.imagePath : undefined">
@@ -55,18 +53,13 @@
               <p>
                 <img class="" [src]="detail ? detail?.imagePath : undefined">
               </p>
-              <!-- <p>{{detail.description}}</p> -->
-              <!-- <p>{{descrip}}</p> -->
               <div class="text" [innerHTML]="detail.description"></div>
-              <!-- <div class="text" [innerHTML]="descrip"></div> -->
               <div class="text" *ngFor="let subdetail of detail.detail" >
                 <h3 style="font-weight: 400;" [innerHTML]="subdetail?.title"></h3>
                 <p>
                   <img class="" [src]="subdetail ? subdetail?.imagePath : undefined">
                 </p>
                 <div class="text" [innerHTML]="subdetail?.description"></div>
-                <!-- <p>{{descrip}}</p> -->
-                
               </div>
             </div>
           </div>

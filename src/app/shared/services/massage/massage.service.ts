@@ -16,15 +16,9 @@ export class MassageService {
 constructor(private afs: Firestore
     ) {
         this.massageCollection = collection(this.afs, 'massages');
-    }
-    // private initializeCollection() {
-    //     if (!this.massageCollection) {
-    //         this.massageCollection = collection(this.afs, 'massages');
-    //     }
-    // }  
+    } 
     
     getAllFirebase() {
-        // this.initializeCollection();
         return collectionData(this.massageCollection, { idField: 'id' });
     }
 

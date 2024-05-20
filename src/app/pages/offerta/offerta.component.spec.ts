@@ -10,13 +10,13 @@ describe('OffertaComponent', () => {
   let component: OffertaComponent;
   let fixture: ComponentFixture<OffertaComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       declarations: [OffertaComponent],
       imports: [RouterTestingModule]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(OffertaComponent);

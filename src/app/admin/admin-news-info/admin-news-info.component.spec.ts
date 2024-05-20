@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
@@ -13,8 +13,8 @@ describe('AdminNewsInfoComponent', () => {
   let component: AdminNewsInfoComponent;
   let fixture: ComponentFixture<AdminNewsInfoComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       declarations: [AdminNewsInfoComponent],
       imports: [
         ReactiveFormsModule,
@@ -26,7 +26,7 @@ describe('AdminNewsInfoComponent', () => {
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminNewsInfoComponent);

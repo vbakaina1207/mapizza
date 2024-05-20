@@ -8,8 +8,7 @@
     border: 0;
     font-size: 100%;
     font: inherit;
-    vertical-align: baseline;
-    // -webkit-text-size-adjust: none;
+    vertical-align: baseline;   
 }
 
 
@@ -61,8 +60,7 @@
 
 .swiper-container.swiper-initialized {
     opacity: 1;
-    height: auto;
-    // height: 180px;
+    height: auto;   
 }
 .swiper-container {
     margin-left: auto;
@@ -162,9 +160,6 @@
         overflow: visible;
     }
 
-    
-.swiper-wrapper .carousel-inner {
-    // height: 185px;
-}
+
 
 }

@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { ICategoryRequest } from '../../interfaces/category/category.interface';
 import {
     addDoc,
@@ -20,7 +18,6 @@ import { DocumentData, collection } from '@firebase/firestore';
     
 export class CategoryService {
 
-    // private url = environment.BACKEND_URL;
     private categoryCollection!: CollectionReference<DocumentData>;
 
 

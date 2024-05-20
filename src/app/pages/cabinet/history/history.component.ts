@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IOrderResponse } from 'src/app/shared/interfaces/order/order.interface';
@@ -10,7 +10,7 @@ import { OrderService } from 'src/app/shared/services/order/order.service';
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss']
 })
-export class HistoryComponent implements OnInit {
+export class HistoryComponent implements OnInit, OnDestroy {
   public userOrders: Array<IOrderResponse> = [];
   public products: Array<IProductResponse> | any = [];
   private eventSubscription!: Subscription;
@@ -31,6 +31,12 @@ export class HistoryComponent implements OnInit {
   ngOnInit() {
     this.loadUser();
     this.getOrders();
+  }
+
+  ngOnDestroy(): void{    
+    if (this.eventSubscription) {
+      this.eventSubscription.unsubscribe();
+    }
   }
 
   getOrders(): void {

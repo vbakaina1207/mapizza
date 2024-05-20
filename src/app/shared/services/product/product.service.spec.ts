@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { ProductService } from './product.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { IProductRequest, IProductResponse } from '../../interfaces/product/product.interface';
@@ -10,14 +10,14 @@ describe('Service: Product', () => {
   let productService: ProductService;
 
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       providers: [ ProductService ],
       imports: [ HttpClientTestingModule ]
-    });
+    }).compileComponents();
 
-    httpTestingController = TestBed.get( HttpTestingController );
-    productService = TestBed.get(ProductService);
+    httpTestingController = Object.assign(TestBed.inject( HttpTestingController ));
+    productService = Object.assign(TestBed.inject(ProductService));
   });
 
   afterEach(() => {

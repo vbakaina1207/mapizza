@@ -5,13 +5,13 @@ import { AdditionProductService } from './addition-product.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('Service: AdditionProduct', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       providers: [AdditionProductService],
       imports: [
         HttpClientTestingModule
       ]
-    });
+    }).compileComponents();
   });
 
   it('should ...', inject([AdditionProductService], (service: AdditionProductService) => {

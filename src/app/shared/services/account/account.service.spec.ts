@@ -5,13 +5,13 @@ import { AccountService } from './account.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('Service: Account', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       providers: [AccountService],
       imports: [
         HttpClientTestingModule
       ]
-    });
+    }).compileComponents();
   });
 
   it('should ...', inject([AccountService], (service: AccountService) => {

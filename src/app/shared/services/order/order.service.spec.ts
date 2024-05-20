@@ -1,15 +1,14 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { OrderService } from './order.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Firestore } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { AngularFireModule } from '@angular/fire/compat';
 
 describe('Service: Order', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       providers: [OrderService,
       { provide: Firestore, useValue: {} },],
       imports: [
@@ -17,7 +16,7 @@ describe('Service: Order', () => {
         AngularFireStorageModule,
         
       ]
-    });
+    }).compileComponents();
   });
 
   it('should ...', inject([OrderService], (service: OrderService) => {

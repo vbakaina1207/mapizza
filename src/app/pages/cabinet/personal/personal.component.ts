@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
 import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthAddressComponent } from 'src/app/components/auth-address/auth-address.component';
 
@@ -29,9 +27,7 @@ export class PersonalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
     private afs: Firestore,
-    private auth: Auth,
     private toastr: ToastService,
     private toast: ToastrService,
     public dialog: MatDialog,
@@ -39,11 +35,6 @@ export class PersonalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.loadUser();
-    // this.getUser();
-    // this.initAuthFormData();
-    // this.updateAddress();   
-    // this.updateCurrentUser();
     this.loadUser().then(() => {
     this.initAuthFormData();
     this.getUser();
@@ -69,17 +60,6 @@ export class PersonalComponent implements OnInit {
   });
 }
   
-
-  // loadUser(): void {
-  //   if(localStorage.length > 0 && localStorage.getItem('currentUser')){
-  //     this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
-  //     this.accountService.userAddress = this.currentUser['address'];    
-  //     this.dataUser = this.accountService.userAddress;      
-  //     if (this.isOpenAddressForm) {
-  //       this.updateAddress();
-  //   }
-  //   }
-  // }
 
   initAuthFormData(): void {
     if (this.currentUser) {
@@ -134,12 +114,11 @@ export class PersonalComponent implements OnInit {
 }
 
   updateUser():void{        
-    this.updateDoc().then(() => {
-      // this.toastr.success('User successfully changed');
-      this.toastr.showSuccess('', 'Дані змінено');
-      console.log('User update');
+    this.updateDoc().then(() => {      
+      this.toastr.showSuccess('', 'Дані змінено');      
     }).catch(e => {
       this.toast.error(e.message);
+      this.toastr.showError('', 'Дані не змінено'); 
     });
     
   }

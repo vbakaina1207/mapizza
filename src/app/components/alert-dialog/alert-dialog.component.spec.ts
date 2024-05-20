@@ -11,8 +11,8 @@ describe('AlertDialogComponent', () => {
   let component: AlertDialogComponent;
   let fixture: ComponentFixture<AlertDialogComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       declarations: [AlertDialogComponent],
       imports: [
         HttpClientTestingModule,       
@@ -24,7 +24,7 @@ describe('AlertDialogComponent', () => {
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AlertDialogComponent);

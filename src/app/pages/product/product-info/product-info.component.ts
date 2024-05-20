@@ -19,7 +19,7 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
   templateUrl: './product-info.component.html',
   styleUrls: ['./product-info.component.scss']
 })
-export class ProductInfoComponent implements OnInit, DoCheck, AfterContentInit {
+  export class ProductInfoComponent implements OnInit {
 
   public currentProduct = <IProductResponse>{} ||
     null || undefined;
@@ -64,25 +64,19 @@ export class ProductInfoComponent implements OnInit, DoCheck, AfterContentInit {
   }
 
   ngOnInit(): void {
-  }
-
-  ngDoCheck(): void {
-    // this.loadFavoriteProduct(); 
     
   }
 
-  ngAfterContentInit(): void {
-    // this.loadFavoriteProduct();    
-  }
-
+  
   loadFavoriteProduct(): void {
     if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
       if (this.favorite.length == 0) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
     };  
-        const PRODUCT_ID = (this.activatedRoute.snapshot.paramMap.get('id') as string);
-        let index = this.favorite?.findIndex(prod => prod.id === PRODUCT_ID);    
-        if (index > -1) 
-          this.isFavorite = true;
+      const PRODUCT_ID = (this.activatedRoute.snapshot.paramMap.get('id') as string);
+      let index = this.favorite?.findIndex(prod => prod.id === PRODUCT_ID);    
+      if (index > -1) 
+      this.isFavorite = true;
+    console.log(this.isFavorite, this.favorite, "loadFav");
   }
 
   loadProduct(): void {
@@ -224,19 +218,25 @@ export class ProductInfoComponent implements OnInit, DoCheck, AfterContentInit {
         panelClass: 'auth-addition-dialog',
         autoFocus: false
       }).afterClosed().subscribe(result => {
-        console.log(result);
-        const ind = this.favorite.findIndex(prod => prod.id === this.currentProduct.id);
+        if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
+          this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
+        };  
+        if (this.favorite.length == 0) this.isFavorite = false;
+        else {
+          const ind = this.favorite.findIndex(prod => prod.id === this.currentProduct.id);
         if (ind > -1) {
           this.isFavorite = true;         
-        } else this.isFavorite = false;    
+        } else this.isFavorite = false; 
+        }        
+        console.log(this.isFavorite);       
+        console.log(result);
       })    
   }
   
   buttonFavoriteClick(product: IProductResponse): void{
     this.isFavorite = !this.isFavorite;
       if (this.isFavorite) {
-        this.favorite.push(product);
-        localStorage.setItem('favorite', JSON.stringify(this.favorite));
+        this.favorite.push(product);        
       } else {
         if (this.favorite?.some(prod => prod.id === product.id)) {
           const index = this.favorite.findIndex(prod => prod.id === product.id);
@@ -247,13 +247,16 @@ export class ProductInfoComponent implements OnInit, DoCheck, AfterContentInit {
     this.accountService.changeFavorite.next(true);
     this.currentUser.favorite = this.favorite;
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    console.log(this.isFavorite, this.favorite, "loadFav");
+    this.updateFavorite();
   }
 
-  updateFavorite(): void {
+  updateFavorite(): void {    
     this.accountService.changeFavorite.subscribe(() => {
-      // this.loadProduct();      
+      this.loadFavoriteProduct;      
+    })
+    this.accountService.changeCurrentUser.subscribe(() => {      
       this.loadUser();
-      this.loadFavoriteProduct();
     })
   }
 

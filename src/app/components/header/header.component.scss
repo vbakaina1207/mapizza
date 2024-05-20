@@ -113,7 +113,6 @@ p{
         line-height: 1.4em;
         font-weight: 400;
         color: $clr-black;
-        // @include a;
     }
 }
 
@@ -326,10 +325,7 @@ h6, .h6 {
     background: $clr-secondary;
     transition: $transition;
     border: none;
-
-    // &:hover {
-    //     background: $clr-primary;
-    // }
+    
 }
 
 .menu-list a:hover {
@@ -1206,8 +1202,7 @@ header ul .menu-btn a {
     }
 
     .menu-list ul {
-        height: 32px;
-        // border-bottom: solid 3px $clr-primary;
+        height: 32px;      
     }
 
     .menu-list a {

@@ -1,17 +1,17 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { NewsDetailService } from './news-detail.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('Service: NewsDetail', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       providers: [NewsDetailService],
       imports: [
         HttpClientTestingModule
       ]
-    });
+    }).compileComponents();
   });
 
   it('should ...', inject([NewsDetailService], (service: NewsDetailService) => {

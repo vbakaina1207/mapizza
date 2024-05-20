@@ -81,7 +81,6 @@
                     <input formControlName="email" class="input" value="" type="email" name="email" placeholder="Email (для отримання копії замовлення)">
                   </div>
                 </div>
-                            
               </div>
 
               <div class="form-group">
@@ -185,7 +184,7 @@
 
               <div class="row wrapper_time_block" style="padding-bottom: 15px;"  *ngIf="(orderForm?.get('at_time')?.value)">
                 <div class="col-sm-6">
-                  <input formControlName="delivery_date" type="date" class="input calendar" name="delivert_date" placeholder="Дата доставки" value="" >
+                  <input formControlName="delivery_date" type="date" class="input calendar" name="delivery_date" placeholder="Дата доставки" value="" (change)="getOrderDay()" >
                 </div>
 
                 <div class="col-sm-6">
@@ -244,7 +243,6 @@
                   </div>
                 </div>
               </div>
-                <!-- <input type="hidden" name="organizationID">                             -->
             </div>
 
                         <!-- 3 step -->
@@ -302,8 +300,7 @@
                                 <span>ЗАСТОСУВАТИ</span>
                               </div>
                             </div>
-                          </div>
-                          <!-- <div class="bonuses_code_message"></div> -->
+                          </div>                        
                         </div>
 
                         <div class="toggle-block" data-block="4" data-rel="1">
@@ -325,6 +322,7 @@
                             <select formControlName="action" name="action" class="input" data-prev-change="2+1" tabindex="-1" (click)="actionClick()"> 
                               <option value="-1" selected="">Виберіть акцію</option>
                               <option value="2+1" [disabled]="!isPizzaCount" [selected]="isPizzaCount">Акція 2+1</option>
+                              <option value="3+1" [disabled]="!isPizzaCount2" [selected]="isPizzaCount2">Акція 3+1</option>
                               <option value="localPickup" [disabled]="orderForm?.get('delivery_method')?.value === 'courier'">-15% на самовивіз</option>                                
                             </select>
                         </div>
@@ -338,10 +336,16 @@
                           </div>
                           <div class="errorMsg lowOrder minimum-order" *ngIf="orderForm.get('delivery_method')?.value === 'courier' && total<300">
                               Мінімальна сума замовлення у вашу зону доставки складає 
-                            <b class="js-zone-min-price"></b>300 грн    
+                            <b class="js-zone-min-price">300 грн</b>    
                           </div>
                           <div class="errorMsg lowOrderDelivery" *ngIf="orderForm.get('delivery_method')?.value === 'courier' && total<500">
-                              Мінімальна сума замовлення для безкоштовної доставки у вашу зону складає <b class="js-zone-min-price"></b>500 грн    
+                              Мінімальна сума замовлення для безкоштовної доставки у вашу зону складає <b class="js-zone-min-price">500 грн</b>    
+                          </div>
+                          <div class="errorMsg lowOrderDelivery" *ngIf="orderForm.get('delivery_method')?.value === 'local_pickup' && !orderForm.get('self_delivery_address')?.value ">
+                              Введіть адресу для самовивозу<b class="js-zone-min-price"></b>    
+                          </div>
+                          <div class="errorMsg lowOrderDelivery" *ngIf="!orderForm.get('name')?.value || !orderForm.get('phone')?.value || !orderForm.get('email')?.value ">
+                              Введіть контактні дані<b class="js-zone-min-price"></b>    
                           </div>
                         </div>
 
@@ -362,7 +366,7 @@
 
                         <div class="thank-total-item last-item-border price-action" *ngIf="minPrice">
                           <div>Знижка:</div>
-                          <div>-<b id="all-products-discount-action">{{ minPrice }}</b> грн</div>
+                          <div>-<b id="all-products-discount-action">{{ minPrice * countActionProduct }}</b> грн</div>
                         </div>
 
                         <div class="thank-total-item  thank-total-cost not_visble_border">

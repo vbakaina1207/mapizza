@@ -82,8 +82,8 @@ import { BehaviorSubject, of } from 'rxjs';
 
 //     TestBed.configureTestingModule({      
   describe('Service: Vacancy', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({      
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({      
       providers: [
         NewsService,
         { provide: Firestore, useValue: {} },    
@@ -92,7 +92,7 @@ import { BehaviorSubject, of } from 'rxjs';
         HttpClientTestingModule,
         AngularFireModule.initializeApp(environment.firebase),
       ]
-    });
+    }).compileComponents();
   });
   
   it('should ...', inject([NewsService], (service: NewsService) => {

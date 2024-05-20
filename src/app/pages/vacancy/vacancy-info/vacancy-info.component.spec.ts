@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 
 import { VacancyInfoComponent } from './vacancy-info.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -18,8 +17,8 @@ describe('VacancyInfoComponent', () => {
   let component: VacancyInfoComponent;
   let fixture: ComponentFixture<VacancyInfoComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       declarations: [VacancyInfoComponent],
       imports: [
         HttpClientTestingModule,
@@ -36,7 +35,7 @@ describe('VacancyInfoComponent', () => {
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(VacancyInfoComponent);

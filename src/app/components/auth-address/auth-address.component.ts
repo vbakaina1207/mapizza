@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
-import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
-import {FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/shared/services/account/account.service';
 
@@ -24,9 +21,6 @@ export class AuthAddressComponent implements OnInit {
 
 
 constructor(
-    private auth: Auth,
-    private afs: Firestore,
-    private router: Router,
     private accountService: AccountService,
     private toastr: ToastrService,
     private fb: FormBuilder
@@ -42,7 +36,7 @@ constructor(
     this.i = this.accountService.index;
     this.isEdit = this.accountService.isEdit;
     this.dataUser = this.accountService.userAddress ;
-    if ( this.isEdit && this.i) {      
+    if ( this.isEdit && this.i>=0) {      
       this.authFormAddress = this.fb.group({        
         typeAddress: [this.dataUser[this.i].typeAddress, [Validators.required, Validators.required]],
         city: [this.dataUser[this.i].city, [Validators.required]],
@@ -74,21 +68,10 @@ constructor(
   }
 
   getAddress(): void {
-    this.getDataUser().then(() => {
-      this.toastr.success('Data user successfully');
-    }).catch(e => {
-      this.toastr.error(e.message);
-    })
+    this.dataUser = this.accountService.userAddress;
   }
-
-  async getDataUser(): Promise<any> {
-    getDoc(doc(this.afs, "users", this.currentUser.uid )).then((user_doc) => {
-      this.dataUser = user_doc.get('address');  
-    });
     
-    
-  }
-
+  
 
   addAddress():void{
     this.updateAddress().then(() => {
@@ -102,7 +85,7 @@ constructor(
 
   async updateAddress(): Promise<any> {    
     const { typeAddress, city, street, house, entrance, floor, flat } = this.authFormAddress.value;
-    let user = {
+    let userAddress = {
         typeAddress: typeAddress,
         city: city,
         street: street,
@@ -112,13 +95,12 @@ constructor(
         flat: flat
     };
     if (!this.isEdit) {
-      this.dataUser.push(user);
+      this.dataUser.push(userAddress);
       
     } else {
-      this.dataUser.splice(this.i, 1, user);
+      this.dataUser.splice(this.i, 1, userAddress);
     }    
     this.accountService.userAddress = this.dataUser;
-    
   }
 
 

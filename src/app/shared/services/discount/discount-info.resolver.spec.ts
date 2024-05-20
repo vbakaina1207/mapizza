@@ -5,13 +5,14 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('DiscountInfoResolver', () => {
   let resolver: DiscountInfoResolver;
+  type DiscountInfoResolver = /*unresolved*/ any;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule
       ]
-    });
+    }).compileComponents();
     resolver = TestBed.inject(DiscountInfoResolver);
   });
 

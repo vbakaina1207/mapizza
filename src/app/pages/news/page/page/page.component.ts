@@ -38,7 +38,6 @@ export class PageComponent implements OnInit {
     this.page = parseInt(this.activatedRoute.snapshot.paramMap.get('page') as string);
     console.log(this.page, 'page');
     this.newsService.getAllByPageFirebase(this.page).subscribe((data) => {
-    // this.newsService.getAllFirebase().subscribe(data => {
       this.newsPage = data as INewsResponse[];   
       this.currentPage = this.newsPage[0]?.page.page;
        console.log(this.newsPage, 'news', this.currentPage);

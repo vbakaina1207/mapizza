@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { CategoryService } from './category.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
@@ -13,10 +13,9 @@ describe('Service: Category', () => {
   let categoryService: CategoryService;
   let firestoreSpy: jasmine.SpyObj<AngularFirestore>;
   
-  beforeEach(() => {
-      // const spy = jasmine.createSpyObj('AngularFirestore', ['collection', 'doc']);
+  beforeEach(async() => {
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       providers: [CategoryService,
         { provide: Firestore, useValue:{} },
       ],
@@ -24,15 +23,9 @@ describe('Service: Category', () => {
         HttpClientTestingModule,
         AngularFireStorageModule,        
       ]
-    });
+    }).compileComponents();
     httpTestingController = TestBed.get( HttpTestingController );
     categoryService = TestBed.get(CategoryService);
-
-    // firestoreSpy = TestBed.inject(AngularFirestore) as jasmine.SpyObj<AngularFirestore>;
-    // firestoreSpy.collection.and.returnValue({
-    //   valueChanges: () => of([]),
-    //   add: () => Promise.resolve({})
-    // });
   });
 
 

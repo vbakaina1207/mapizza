@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 
 import { AuthDialogComponent } from './auth-dialog.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -16,8 +15,8 @@ describe('AuthDialogComponent', () => {
   let component: AuthDialogComponent;
   let fixture: ComponentFixture<AuthDialogComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       declarations: [AuthDialogComponent],
       imports: [
         HttpClientTestingModule,
@@ -33,7 +32,7 @@ describe('AuthDialogComponent', () => {
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AuthDialogComponent);

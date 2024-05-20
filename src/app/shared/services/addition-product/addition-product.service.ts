@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ITypeAdditionRequest } from '../../interfaces/type-addition/type-addition.interfaces';
 import {
@@ -43,7 +42,6 @@ private url = environment.BACKEND_URL;
   }
 
   getAllBySauceFirebase(isSauce: boolean) {
-    // let additionProductBySauce = query(this.additionProductCollection, where('isSauce', '==', `${isSauce}`));    
     let additionProductBySauce = query(this.additionProductCollection, where('isSauce', '==', isSauce)); 
       return collectionData(additionProductBySauce,  { idField: 'id' });
   }

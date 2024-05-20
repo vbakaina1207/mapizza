@@ -1,19 +1,13 @@
 import { AfterContentInit, Component, DoCheck, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { user } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IProductResponse } from 'src/app/shared/interfaces/product/product.interface';
 import { ITypeProductResponse } from 'src/app/shared/interfaces/type-product/type-product.interface';
 import { AccountService } from 'src/app/shared/services/account/account.service';
-import { CategoryService } from 'src/app/shared/services/category/category.service';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
-import { TypeProductService } from 'src/app/shared/services/type-product/type-product.service';
-import { CarouselModule } from 'primeng/carousel';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { EventListenerFocusTrapInertStrategy } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-slide-product',
@@ -35,8 +29,7 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
   public currentProductTypeName!: string;
   public productTypeName!: string;
   public basket: Array<IProductResponse> = [];
-  public isFavorite!: boolean;
-  // public favoriteProducts: Array<IProductResponse> = [];
+  public isFavorite!: boolean;  
   public currentUser: any;
   public favorite!: any;
   public btnName: string = 'замовити';
@@ -44,33 +37,10 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
   public countProduct: number = 0;
   public countSlide: number = 0;
   public responsiveOptions: any[] = [];
-//     [
-//     {
-//                 breakpoint: '1730px',
-//                 numVisible: 3,
-//                 numScroll: 3
-//             },
-//             {
-//                 breakpoint: '1200px',
-//                 numVisible: 3,
-//                 numScroll: 3
-//             },
-//             {
-//                 breakpoint: '991px',
-//                 numVisible: 2,
-//                 numScroll: 2
-//             },
-//             {
-//                 breakpoint: '769px',
-//                 numVisible: 1,
-//                 numScroll: 1
-//             }
-// ];
+
   
   constructor(
-    private productService: ProductService,
-    // private productTypeService: TypeProductService,
-    // private categoryService: CategoryService,
+    private productService: ProductService,    
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private orderService: OrderService,
@@ -80,9 +50,8 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
   ) { 
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {
-        this.loadProducts();
-        // this.loadFaviriteProducts();
-        this.loadUser();  
+        this.loadProducts();        
+        this.loadUser();          
         this.updateFavorite();
       }
     })
@@ -90,16 +59,15 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
   }
 
   ngOnInit() {
+    this.loadProducts();        
+    this.loadUser();         
+    this.updateFavorite();
   }
 
   ngAfterContentInit(): void {
-    this.loadFaviriteProducts();    
-    // this.loadProducts();
+    this.loadFavoriteProducts();        
   }
-
-  // ngDoCheck(): void {
-  //   this.loadFaviriteProducts();  
-  // } 
+  
 
   loadProducts(): void {
     this.categoryName = this.activatedRoute.snapshot.paramMap.get('category') as string;
@@ -139,9 +107,8 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
           numScroll: 1,
           showIndicator: false
         }
-      ];
-            
-      this.loadFaviriteProducts();
+      ];            
+      this.loadFavoriteProducts();
     });
     
   }
@@ -149,6 +116,7 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
   loadUser(): void {
     if(localStorage.length > 0 && localStorage.getItem('currentUser')){
       this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string); 
+      // this.favorite = this.currentUser.favorite;
     }
   }
 
@@ -203,7 +171,8 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
     product.count = 1;
     this.orderService.changeBasket.next(true);
   }
-
+  
+  
   buttonFavoriteClick(product: IProductResponse): void {    
     this.isFavorite = this.isProductFavorite(product);
     this.isFavorite = !this.isFavorite;
@@ -218,26 +187,29 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
     this.accountService.changeFavorite.next(true);
     this.currentUser.favorite = this.favorite;
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    console.log(this.isFavorite, this.favorite, "loadSlide");
+    
   }
 
   isProductFavorite(product: IProductResponse): boolean {
     return this.favorite?.some((favProduct: IProductResponse) => favProduct.id === product.id);
   }
 
-  loadFaviriteProducts(): void{
+  loadFavoriteProducts(): void{
       if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
         this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
       }
     for (let i = 0; i < this.userProducts.length; i++) {
       this.isFavorite = this.isProductFavorite(this.userProducts[i]);      
-    }         
+    }    
   }
 
   updateFavorite(): void {
     this.accountService.changeFavorite.subscribe(() => {
-      this.loadProducts();
-      this.loadFaviriteProducts();
-      this.loadUser();      
+      this.loadFavoriteProducts;      
+    })
+    this.accountService.changeCurrentUser.subscribe(() => {      
+      this.loadUser();
     })
   }
   

@@ -5,7 +5,6 @@ import { SharedModule } from '../../shared/sahared.module';
 import { HomeComponent } from './home.component';
 import { CarouselComponent } from '../carousel/carousel.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
-import { ProductModule } from '../product/product.module';
 
 
 

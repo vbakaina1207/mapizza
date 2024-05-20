@@ -1,10 +1,4 @@
-// export interface INewsInfoRequest {
-//     news: [INewsAddResponse]
-// }
 
-// export interface INewsInfoResponse extends INewsInfoRequest {
-//     id:  string;
-// }
 
 export interface INewsAddRequest { 
     title: string;
@@ -15,7 +9,7 @@ export interface INewsAddRequest {
 }
 
 export interface INewsAddResponse extends INewsAddRequest {
-    id:  string;
+    id:  string | number;
 }
 
 

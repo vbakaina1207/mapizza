@@ -7,9 +7,9 @@
     </div>
     <ng-container >     
           <div id="cart-popup-out" class="cart-popup-out">
-            <div class="cart_items" *ngIf="basket.length>0">
+            <div class="cart_items" *ngIf="basket.length">
   
-            <div class="prod_horiz js-product cart-product" *ngFor="let product of basket">              
+              <div class="prod_horiz js-product cart-product" *ngFor="let product of basket">              
               <a class="prod_horiz-img" [routerLink]="[ '/product/', product ? product.category.path : undefined ,  product ? (product.type_product? product.type_product.path : 'other') : undefined, product.id ]">
                 <img class="img" [src]="product ? product.imagePath : undefined">
               </a>
@@ -51,18 +51,19 @@
                 </div>
                 </div>
               </div>
-            </div>
+              </div>
 
             </div>
 
             <div class="cart_items" *ngIf="basket.length === 0">
               <div class="cart-empty-message">              
-              <div class="title">Кошик порожній</div>
-                <a  [routerLink]="[ '/' ]"class="butn btn-primar" mat-dialog-close>Перейти до каталогу</a>
+                <div class="title">Кошик порожній</div>
+                <a  [routerLink]="[ '/' ]" class="butn btn-primar" mat-dialog-close>
+                  Перейти до каталогу
+                </a>
               </div>
             </div>
           </div>  
-
     </ng-container> 
 
   <div class="cart_bottom">
@@ -72,11 +73,11 @@
             <b class="card-total-price">{{ total }}</b> грн        
         </div>        
         <a [routerLink]="[ '/checkout']" class="butn btn-primar" *ngIf="currentUser  && basket.length" [class.disabled]="!total && !basket.length" mat-dialog-close>
-          {{ currentUser ? 'ОФОРМИТИ ЗАМОВЛЕННЯ': 'АВТОРИЗУВАТИСЯ' }} 
+          ОФОРМИТИ ЗАМОВЛЕННЯ
         </a>
         
         <a (click)="openLoginDialog()" class="butn btn-primar" *ngIf="!currentUser"  mat-dialog-close>
-          {{ currentUser ? 'ОФОРМИТИ ЗАМОВЛЕННЯ' : 'АВТОРИЗУВАТИСЯ' }}
+          АВТОРИЗУВАТИСЯ
         </a>
     </div>
     <div class="cart_bonus-wrap">
@@ -85,3 +86,4 @@
     <button class="btn-close cart-close" mat-dialog-close></button>    
     
   </div>  
+</div>

@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { ILogin } from '../../account/account.interface';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 import { IProductResponse } from '../../interfaces/product/product.interface';
 
 @Injectable({

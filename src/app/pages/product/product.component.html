@@ -14,16 +14,14 @@
     </ng-container>
     
      <ng-container *ngIf="categoryName == 'pizza'">
-      <div class="spacer-sm"></div>
-      <!-- <h1 class="title title-decor h2">{{ !isProductType || isCategoryRolls ? currentCategoryName : currentProductTypeName | titlecase }} {{  categoryName == 'pizza' ? ' Львів' : ' від МА'}}</h1> -->
+      <div class="spacer-sm"></div>      
       <h1 class="title title-decor h1">{{  categoryName == 'pizza' ? currentCategoryName +' Львів' : ''}}</h1>
     </ng-container>
   </div>
   
  </div> 
 <div class="section" id="pizza">
-  <div class="container">  
-    <!-- <div class="" [ngClass]="{'spacer-sm': categoryName !== 'pizza'}"></div> -->
+  <div class="container">      
   <ng-container  *ngIf="isCategoryPizza">
   <div class="row">
     <div class="col-lg-8 p-0-mobile">

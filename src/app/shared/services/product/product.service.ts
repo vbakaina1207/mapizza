@@ -43,11 +43,6 @@ export class ProductService {
     return collectionData(productByTypeProduct,  { idField: 'id' });
   }
 
-  // getOneByProductTypeFirebase(id: string) {
-  //   const typeProductDocumentReference = doc(this.afs, `products/type_product/${id}`);
-  //   return docData(typeProductDocumentReference, { idField: 'id' });
-  // }
-
   getAllByCategoryFirebase(name: string) {
     let productByCategory  = query(this.productCollection, where('category.path','==', `${name}`));
       return collectionData(productByCategory,  { idField: 'id' });

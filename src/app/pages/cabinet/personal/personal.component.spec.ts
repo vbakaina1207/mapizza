@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+
 
 import { PersonalComponent } from './personal.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -18,8 +17,8 @@ describe('PersonalComponent', () => {
   let component: PersonalComponent;
   let fixture: ComponentFixture<PersonalComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       declarations: [PersonalComponent],
       imports: [
         HttpClientTestingModule,
@@ -37,7 +36,7 @@ describe('PersonalComponent', () => {
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PersonalComponent);

@@ -237,47 +237,6 @@ form .input:focus {
   margin-bottom: 15px;
 }
 
-// .contact-item:first-child {
-//     padding-top: 0;
-// }
-
-// .contact-item {
-//     padding: 15px 0;
-// }
-
-// .contact-link {
-//     display: flex;
-// }
-
-// .contact-link-img {
-//     margin-right: 15px;
-
-//     & img {
-//       display: block;
-//       width: 24px;
-//       height: 24px;
-//     }
-// }
-
-// .contact-link-info {
-//     font-size: 16px;
-//     line-height: 1.5em;
-//     color: $clr-grey;
-
-//     & a {
-//       white-space: pre-wrap;
-//       word-break: break-all;
-//     }
-
-//     &>* {
-//       display: block;
-//     }
-// }
-
-// .contact-link+.contact-link {
-//     margin-top: 15px;
-// }
-
 .contact-item+.contact-item {
     border-top: 1px solid $clr-border;
 }
@@ -345,32 +304,10 @@ form .input:focus {
 }
 
 @media screen and (max-width: 1730px) {
-  // .banner-align {
-  //   height: 400px;
-  // }
 
-  // .benefits-wrapper {
-  //   padding: 30px;
-  // }
-
-  // .benefits-row {
-  //   --bs-gutter-x: 30px;
-  //   margin-bottom: -30px;
-  // }
-
-  // .benefits-row > [class*="col"] {
-  //   margin-bottom: 30px;
-  // }
 }
 
 @media screen and (max-width: 1400px) {
-  // .banner-align {
-  //   height: 320px;
-  // }
-
-  // .benefits-info {
-  //   font-size: 16px;
-  // }
 
   .text.text-lg {
     font-size: 18px;
@@ -432,9 +369,6 @@ form .input:focus {
 }
 
 @media screen and (max-width: 1199px) {
-  // .benefits-wrapper .decor-img {
-  //   display: none;
-  // }
 
   .contacts-block {
     box-shadow: none;
@@ -520,72 +454,10 @@ form .input:focus {
   }
 }
 
-@media screen and (max-width: 991px) {
-  // .spacer-mobile-off {
-  //   display: none;
-  // }
 
-  // .banner-align {
-  //   height: auto;
-  //   padding: 15px 0;
-  // }
-
-  // .bg.desktop,
-  // .opacity {
-  //   display: none;
-  // }
-
-  // .bg.mobile {
-  //   display: block;
-  //   position: relative !important;
-  //   padding-top: 57%;
-  //   border-radius: 16px;
-  //   height: 188px;
-  // }
-
-  // .banner-info {
-  //   margin-top: 10px;
-  // }
-
-  // .block-wrapper {
-  //   flex-direction: column;
-  // }
-
-  // .block-info {
-  //   max-width: 100%;
-  //   padding: 10px 0 0;
-
-  //   & .title {
-  //     margin-bottom: 5px;
-  //   }
-  // }
-
-  // .block-img {
-  //   border-radius: 16px;
-  //   padding-top: 57%;
-  //   width: 100%;
-  //   order: -1;
-  // }
-}
-
-@media (min-width: 992px) {
-  // .banner-info > * {
-  //   color: $clr-white;
-  // }
-}
 
 @media (max-width: 767px) {
-  // .hide-on-desktop {
-  //   display: block;
-  // }
 
-  // .hide-on-mobile {
-  //   display: none;
-  // }
-
-  // .carousel-indicators {
-  //   bottom: -30px;
-  // }
   .b-shadow {
     box-shadow: none;
   }
@@ -606,9 +478,6 @@ form .input:focus {
 }
 
 @media (max-width: 575px) {
-  // .swiper-container {
-  //   overflow: visible;
-  // }
 
   .contacts-wrapper {
     padding: 15px;

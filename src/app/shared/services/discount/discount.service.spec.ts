@@ -129,20 +129,13 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { AngularFireModule } from '@angular/fire/compat';
 import { Firestore } from '@angular/fire/firestore';
 
-// import { IDiscountRequest, IDiscountResponse } from '../../interfaces/discount/discount.interface';
-// import { AngularFireModule } from '@angular/fire/compat';
-// import { environment } from 'src/environments/environment';
-// import { Firestore, FirestoreModule } from '@angular/fire/firestore';
-// import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-// import { PROVIDED_FIRESTORE_INSTANCES } from '@angular/fire/firestore/firestore.module';
-
 describe('Service: Discount', () => {
   let httpTestingController: HttpTestingController;
   let discountService: DiscountService;
   let angularFirestoreMock: any;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       providers: [
         DiscountService,       
         { provide: Firestore, useValue: { angularFirestoreMock } },

@@ -23,7 +23,6 @@ import { ImageModule } from 'primeng/image';
   exports: [
     ProductComponent,
     SlideAboutModule,
-    // SlideProductModule
   ],
   imports: [
     CommonModule,

@@ -7,10 +7,7 @@ import {
   deleteDoc,
   doc,
   docData,
-  orderBy,
-  query,
-  updateDoc,
-  where
+  updateDoc
 } from '@angular/fire/firestore';
 import { collection, DocumentData } from '@firebase/firestore';
 import { INewsAddRequest } from '../../interfaces/news/news-info.interface';

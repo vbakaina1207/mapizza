@@ -18,7 +18,7 @@ export interface IOrderRequest {
   cash: number;
   isWithoutRest: boolean;
   at_time: boolean;
-  delivery_date: string;
+  delivery_date: Date;
   delivery_time: string;
   self_delivery_address: string;
   city: string;

@@ -26,9 +26,7 @@
     border: 1px solid #d1d9ce;
     border-radius: 12px;
     font-size: 14px;
-    font-weight: 400;
-    // padding: 5px 15px;
-    // display: flex;
+    font-weight: 400;    
     align-items: center;
     transition: $transition;
 
@@ -157,19 +155,6 @@ img[data-i-src].imgLoaded, [data-bg].bgLoaded {
     right: -10px;
     position: absolute;
 }
-
-
-// .fav-btn {
-//     @include fav-btn;
-// }
-
-// .fav-btn .fill-anime {
-//     @include fill-anime;
-// }
-
-// .fill-anime {
-//     transition: $transition;
-// }
 
 .product_title-wrap {
     display: flex;
@@ -840,7 +825,6 @@ table {
         &::-webkit-scrollbar-thumb {
             border-radius: 2px;
             background-color: $clr-primary;
-            // width: 40%;
         }
     }
 

@@ -5,11 +5,12 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ProductInfoResolver', () => {
   let resolver: ProductInfoResolver;
+  type ProductInfoResolver = /*unresolved*/ any;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       imports:[ HttpClientTestingModule]
-    });
+    }).compileComponents();
     resolver = TestBed.inject(ProductInfoResolver);
   });
 

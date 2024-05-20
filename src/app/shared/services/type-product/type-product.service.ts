@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ITypeProductRequest } from '../../interfaces/type-product/type-product.interface';
 import {
@@ -10,9 +9,7 @@ import {
   doc,
   docData,
   Firestore,
-  query,
-  updateDoc,
-  where
+  updateDoc
 } from '@angular/fire/firestore';
 
 import { collection, DocumentData } from '@firebase/firestore';
@@ -40,10 +37,6 @@ export class TypeProductService {
     return collectionData(this.typeProductCollection, { idField: 'id' });
   }
 
-  // getAllByCategoryFirebase(nameCategory: string) {
-  //   let productByCategory  = query(this.typeProductCollection, (where ('category.path','==', `${nameCategory}`)));
-  //   return collectionData(productByCategory,  { idField: 'id' });
-  // }
 
   getOneFirebase(id: string) {
     const typeProductDocumentReference = doc(this.afs, `typesProduct/${id}`);

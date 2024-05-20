@@ -5,7 +5,7 @@ import { IMassageResponse } from 'src/app/shared/interfaces/massage/massage.inte
 import { ImageService } from 'src/app/shared/services/image/image.service';
 import { MassageService } from 'src/app/shared/services/massage/massage.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AboutComponent } from 'src/app/pages/about/about.component';
+
 
 @Component({
   selector: 'app-contact-form',

@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
-import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
-import {FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { IProductResponse } from 'src/app/shared/interfaces/product/product.interface';
 import { ITypeAdditionResponse } from 'src/app/shared/interfaces/type-addition/type-addition.interfaces';
@@ -48,6 +44,7 @@ export class AuthAdditionComponent implements OnInit {
     this.eventSubscription = this.router.events.subscribe(event => {
     if(event instanceof NavigationEnd ) {
       this.loadProduct();
+      this.loadUser();
       this.activatedRoute.data.subscribe(response => {
         this.currentProduct = response['productInfo'];        
       })
@@ -84,13 +81,10 @@ export class AuthAdditionComponent implements OnInit {
   }
 
   loadFavoriteProduct(): void {
-    const PRODUCT_ID = this.accountService.PRODUCT_ID;
-    if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
-      if (this.favorite.length == 0) this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
-    if (this.favorite.findIndex(prod => prod.id === PRODUCT_ID) !== -1)
-      this.isFavorite = true;
-    };
-    console.log(this.isFavorite, 'isFav', this.favorite);
+    const PRODUCT_ID = this.accountService.PRODUCT_ID;    
+    let index = this.favorite?.findIndex(prod => prod.id === PRODUCT_ID);    
+    if (index > -1) 
+      this.isFavorite = true;  
   }
 
   additionClick(additionName: any): void {
@@ -218,13 +212,10 @@ export class AuthAdditionComponent implements OnInit {
 
   buttonFavoriteClick(product: IProductResponse): void {
     this.isFavorite = !this.isFavorite;
-    if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
-      this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
-    }
       if (this.isFavorite) {
-        this.favorite.push(product);
-        localStorage.setItem('favorite', JSON.stringify(this.favorite));
-      } else {
+        this.favorite.push(product);        
+      }
+      else {
         if (this.favorite?.some(prod => prod.id === product.id)) {
           const index = this.favorite.findIndex(prod => prod.id === product.id);
           this.favorite.splice(index, 1);
@@ -234,15 +225,16 @@ export class AuthAdditionComponent implements OnInit {
       this.accountService.changeFavorite.next(true);
       this.currentUser.favorite = this.favorite;
       localStorage.setItem('currentUser', JSON.stringify(this.currentUser)); 
-      console.log(this.isFavorite, this.favorite, );
+      console.log(this.isFavorite, this.favorite, "favorite");
   }
 
 
   updateFavorite(): void {
     this.accountService.changeFavorite.subscribe(() => {
-      this.loadProduct();
+      this.loadFavoriteProduct;      
+    })
+    this.accountService.changeCurrentUser.subscribe(() => {      
       this.loadUser();
-      this.loadFavoriteProduct();
     })
   }
 

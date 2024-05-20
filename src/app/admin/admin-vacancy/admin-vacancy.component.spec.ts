@@ -13,8 +13,8 @@ describe('AdminVacancyComponent', () => {
   let component: AdminVacancyComponent;
   let fixture: ComponentFixture<AdminVacancyComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       declarations: [AdminVacancyComponent],
       imports: [
         ReactiveFormsModule,
@@ -26,7 +26,7 @@ describe('AdminVacancyComponent', () => {
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminVacancyComponent);

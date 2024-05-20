@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
@@ -16,8 +16,8 @@ describe('AuthAdditionComponent', () => {
   let component: AuthAdditionComponent;
   let fixture: ComponentFixture<AuthAdditionComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       declarations: [AuthAdditionComponent],
       imports: [
         HttpClientTestingModule,
@@ -32,7 +32,7 @@ describe('AuthAdditionComponent', () => {
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AuthAdditionComponent);

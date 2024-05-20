@@ -8,9 +8,8 @@ export interface INewsRequest {
     description: string;
     imagePath: string;
     detail:INewsAddResponse
-    // INewsInfoResponse;
 }
 
 export interface INewsResponse extends INewsRequest {
-    id:  string;
+    id:  string | number;
 }

@@ -3,13 +3,10 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IProductResponse} from 'src/app/shared/interfaces/product/product.interface';
 import { ITypeProductResponse } from 'src/app/shared/interfaces/type-product/type-product.interface';
-import { CategoryService } from 'src/app/shared/services/category/category.service';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { TypeProductService } from 'src/app/shared/services/type-product/type-product.service';
 import { ProductService } from './../../shared/services/product/product.service';
 import { AccountService } from 'src/app/shared/services/account/account.service';
-import { user } from '@angular/fire/auth';
-import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
 
 
@@ -18,7 +15,7 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDestroy {
+export class ProductComponent implements OnInit {
 
   public userProducts: Array<IProductResponse> = [];
   public userTypeProducts: Array<ITypeProductResponse> = [];
@@ -41,23 +38,21 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
 
   constructor(
     private productService: ProductService,
-    private productTypeService: TypeProductService,
-    private categoryService: CategoryService,
+    private productTypeService: TypeProductService,   
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private orderService: OrderService,
     private accountService: AccountService,
-    private afs: Firestore,
     private toastr: ToastService
   ) {
-    this.eventSubscription = this.router.events.subscribe(event => {
-      if(event instanceof NavigationEnd ) {
-        this.loadProducts();
-        this.getTypeProducts();   
-        this.loadFaviriteProducts();
-        this.loadUser();       
-      }
-    })
+    // this.eventSubscription = this.router.events.subscribe(event => {
+    //   if(event instanceof NavigationEnd ) {
+    //     this.loadProducts();
+    //     this.getTypeProducts();   
+    //     this.loadFaviriteProducts();
+    //     this.loadUser();       
+    //   }
+    // })
   }
 
   ngOnInit(): void {
@@ -67,15 +62,6 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
     this.loadUser();       
   }
 
-  ngDoCheck(): void {
-    this.loadFaviriteProducts();  
-  }
-
-  ngAfterContentInit(): void {
-    this.loadFaviriteProducts();    
-  }
-
-
 
   getTypeProducts(): void {
     this.productTypeService.getAllFirebase().subscribe(data => {   
@@ -84,8 +70,8 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
   }
 
   
-
   loadProducts(): void {
+    this.categoryName === 'pizza';
     this.categoryName = this.activatedRoute.snapshot.paramMap.get('category') as string  || 'pizza';
     this.productTypeName = this.activatedRoute.snapshot.paramMap.get('type_product') as string;
     let currentExtras = this.router.getCurrentNavigation()?.extras.skipLocationChange;
@@ -101,9 +87,9 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
         this.isProductType = true;           
       });
     }
-  if (this.categoryName === 'pizza'  ||  this.categoryName === 'salads' || this.router.url == '/' || this.router.url == '/#pizza' ) {
+  if (this.categoryName === 'pizza'  ||  this.categoryName === 'salads' || this.router.url == '/' ) {
       this.isCategoryPizza = true;
-      if(this.router.url == '/#pizza' || this.router.url == '/') {
+      if( this.router.url == '/') {
         this.categoryName = 'pizza';
         this.currentCategoryName = '';
         this.productService.getAllByCategoryFirebase(this.categoryName).subscribe((data) => {
@@ -121,11 +107,11 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
         this.isProductType = true;
       }
     }
-    if (this.router.url == '/' || this.router.url == '/#pizza' ) {
+    if (this.router.url == '/') {
       this.isCategoryPizza = true;    
     }
     if (this.isCategoryPizza) this.currentCategoryName = 'Піцца';
-    if (this.categoryName === 'pizza' || this.router.url === '/' || this.router.url === '/#pizza')
+    if (this.categoryName === 'pizza' || this.router.url === '/')
       this.isInfoBlock = true;
     else this.isInfoBlock = false;
   }
@@ -140,16 +126,16 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
   }
 
   loadUser(): void {
-    if(localStorage.length > 0 && localStorage.getItem('currentUser')){
-      this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string); 
+    if (localStorage.length > 0 && localStorage.getItem('currentUser')) {
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
       this.favorite = this.currentUser.favorite;
     }
   }
 
   
-  ngOnDestroy(): void {
-    this.eventSubscription.unsubscribe();
-  }
+  // ngOnDestroy(): void {
+  //   this.eventSubscription.unsubscribe();
+  // }
 
   productCount(product: IProductResponse, value: boolean): void {
     if(value){
@@ -177,10 +163,9 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
     
     this.toastr.showSuccess('',  product.name + ' успішно додано до кишику');
     e.target.innerText = '';
-    
     this.isOrder = true;
     if (this.isOrder) {
-      e.target.nextSibling.classList.add('hide');
+      e.target.nextSibling?.classList.add('hide');
       e.target.classList.add('primary');
     }
     if (this.isOrder) {      
@@ -209,15 +194,17 @@ export class ProductComponent implements OnInit, DoCheck, AfterContentInit, OnDe
       let index = this.favorite.findIndex(prod => prod.id === product.id);
       this.favorite.splice(index, 1);
     }
-        localStorage.setItem('favorite', JSON.stringify(this.favorite));
-        this.accountService.changeFavorite.next(true);
-        this.currentUser.favorite = this.favorite;
-        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    localStorage.setItem('favorite', JSON.stringify(this.favorite));
+    this.accountService.changeFavorite.next(true);
+    this.currentUser.favorite = this.favorite;
+    localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
   }
 
   updateFavorite(): void {
     this.accountService.changeFavorite.subscribe(() => {
-      this.loadFaviriteProducts;
+      this.loadFaviriteProducts;      
+    })
+    this.accountService.changeCurrentUser.subscribe(() => {      
       this.loadUser();
     })
   }

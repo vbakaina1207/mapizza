@@ -1,8 +1,6 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ContactFormComponent } from './contact-form.component';
 import { ImageService } from 'src/app/shared/services/image/image.service';
 import { Storage } from '@angular/fire/storage';
@@ -21,8 +19,8 @@ describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
   let fixture: ComponentFixture<ContactFormComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async() => {
+    await TestBed.configureTestingModule({
       declarations: [ContactFormComponent],
       imports: [
         HttpClientTestingModule,
@@ -46,7 +44,7 @@ describe('ContactFormComponent', () => {
         ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ContactFormComponent);

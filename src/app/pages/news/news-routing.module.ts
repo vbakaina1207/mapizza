@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NewsComponent } from './news.component';
 import { PageComponent } from './page/page/page.component';
-import { NewsInfoResolver } from 'src/app/app/services/news/news-info.resolver';
 import { NewsInfoComponent } from './news-info/news-info.component';
+import { NewsInfoResolver } from 'src/app/shared/services/news/news-info.resolver';
 
 
 const routes: Routes = [

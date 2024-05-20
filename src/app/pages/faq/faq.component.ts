@@ -20,7 +20,6 @@ export class FaqComponent implements OnInit {
   public isUploaded: boolean = false;
   public file!: any;
   public isLogin: boolean = false;
-  // public stars: number[] = [ 2, 3, 4, 5];
   public stars: any[] = [
     {star: 2, text: "Жахливо"}, 
     {star: 3, text: "Погано"}, 
@@ -57,7 +56,6 @@ export class FaqComponent implements OnInit {
   rate(star: any) {
     this.selectedStars = star.star;
     this.feedbackForm?.patchValue({ 'stars': this.selectedStars });
-    // this.feedbackForm.get('stars').setValue(star.star);
   }
 
   loadUser(): void {
@@ -101,23 +99,13 @@ valueByControl(control: string): string {
 }
   
   submitFeedback(): void {
-    // if (!this.currentUser) {
-    //   this.openLoginDialog();
-    //   this.loadUser();
-    // }
-    // else {
-      console.log(this.currentUser, "curUser");
-  
-      console.log(this.isLogin);
       if (this.feedbackForm.valid && this.isLogin) {
         this.faqService.createFirebase(this.feedbackForm.value).then(() => {
           this.toastr.success('Massage successfully created');
         })
         this.feedbackForm.reset();
-
         this.isUploaded = false;
       }
-    
   }
 
   openLoginDialog(): void {

@@ -1,22 +1,4 @@
-// import { IAddressResponse } from "../user/user.interface";
 
-
-// export interface IUserRequest {
-    
-//     address: [IAddressResponse];
-//     name: string;
-//     path: string;
-//     ingredients: string;
-//     weight: string;
-//     price: number;
-//     bonus:number;
-//     imagePath: string;
-//     count: number
-// }
-
-// export interface IUserResponse extends IUserRequest {
-//     id: string;
-// }
 
 export interface IAddressRequest {
     typeAddress: string;
