@@ -2,21 +2,51 @@ import { TestBed } from '@angular/core/testing';
 
 import { VacancyInfoResolver } from './vacancy-info.resolver';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { IVacancyResponse } from '../../interfaces/vacancy/vacancy.interface';
+import { Observable, of } from 'rxjs';
+import { VacancyService } from './vacancy.service';
 
 describe('VacancyInfoResolver', () => {
-  let resolver: VacancyInfoResolver;
-  type VacancyInfoResolver = /*unresolved*/ any;
+  let vacancyServiceMock: any;
+  let route: ActivatedRouteSnapshot;
+  let state: RouterStateSnapshot;
 
-  beforeEach(async() => {
+  beforeEach(async () => {
+    vacancyServiceMock = {
+      getOneFirebase: jasmine.createSpy('getOneFirebase').and.returnValue(of({} as IVacancyResponse))
+    };
+
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
+      imports: [HttpClientTestingModule],
+      providers: [
+        { provide: VacancyService, useValue: vacancyServiceMock }
       ]
     }).compileComponents();
-    resolver = TestBed.inject(VacancyInfoResolver);
+
+    route = new ActivatedRouteSnapshot();
+    state = {} as RouterStateSnapshot;
   });
 
   it('should be created', () => {
-    expect(resolver).toBeTruthy();
+    expect(VacancyInfoResolver).toBeTruthy();
   });
+
+  // it('should resolve vacancy data', (done) => {
+  //   route.paramMap.get = jasmine.createSpy('get').and.returnValue('123');
+  //   const result = VacancyInfoResolver(route, state);
+
+  //   (result as Observable<IVacancyResponse>).subscribe({
+  //     next: data => {
+  //       expect(vacancyServiceMock.getOneFirebase).toHaveBeenCalledWith('123');
+  //       expect(data).toEqual({} as IVacancyResponse);
+  //       done();
+  //     },
+  //     error: err => {
+  //       fail(err);
+  //       done();
+  //     }
+  //   });
+  // });
 });
+

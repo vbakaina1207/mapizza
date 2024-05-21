@@ -1,54 +1,50 @@
 import { TestBed } from '@angular/core/testing';
-// import { NewsInfoResolver } from './news-info.resolver';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ActivatedRouteSnapshot, ResolveFn } from '@angular/router';
-import * as NewsInfoResolver from './news-info.resolver';
-
-
-const mockRoute = { params: { id: 1 } } as unknown as ActivatedRouteSnapshot;
-// const mockNews: INewsResponse = {
-//   id: 1,
-//   page: {
-//     id: 1,
-//     page: 1
-//   },
-//     name: '',
-//     path: '',
-//     description: '',
-//     imagePath: '',
-//     detail: {
-//       id: 1, title: '', description: '', imagePath: '',
-//       detail: [{ id: '1', title: '', description: '', imagePath: '', detail: [{null}] }]
-//     }
-// };
-// const mockNewsService = {
-//   getNews: () => of(mockNews),
-// } as unknown as NewsService;
-
-
-// describe('NewsInfoResolver', () => {
-//   let resolverFn:Observable<INewsResponse>;
-
-//   beforeEach(() => {
-//     // resolverFn = ResolverUnderTest.NewsInfoResolver(mockRoute, mockNewsService);
-//   });
-
-//   });
+import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
+import { NewsInfoResolver } from './news-info.resolver';
+import { Observable, of } from 'rxjs';
+import { INewsResponse } from '../../interfaces/news/news.interface';
+import { NewsService } from './news.service';
 
 describe('NewsInfoResolver', () => {
-  let resolver: NewsInfoResolver;
-  type NewsInfoResolver = any;
+  let newsServiceMock: any;
+  let route: ActivatedRouteSnapshot;
+  let state: RouterStateSnapshot;
 
+  beforeEach(async () => {
+    newsServiceMock = {
+      getOneFirebase: jasmine.createSpy('getOneFirebase').and.returnValue(of({} as INewsResponse))
+    };
 
-  beforeEach(async() => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [NewsInfoResolver]
+      providers: [
+        { provide: NewsService, useValue: newsServiceMock }
+      ]
     }).compileComponents();
-    resolver = new TestBed(NewsInfoResolver);
-  })
+
+    route = new ActivatedRouteSnapshot();
+    state = {} as RouterStateSnapshot;
+  });
 
   it('should be created', () => {
-    expect(resolver).toBeTruthy();
+    expect(NewsInfoResolver).toBeTruthy();
   });
+
+  // it('should resolve news data', (done) => {
+  //   route.paramMap.get = jasmine.createSpy('get').and.returnValue('123');
+  //   const result = NewsInfoResolver(route, state);
+
+  //   (result as Observable<INewsResponse>).subscribe({
+  //     next: data => {
+  //       expect(newsServiceMock.getOneFirebase).toHaveBeenCalledWith('123');
+  //       expect(data).toEqual({} as INewsResponse);
+  //       done();
+  //     },
+  //     error: err => {
+  //       fail(err);
+  //       done();
+  //     }
+  //   });
+  // });
 });

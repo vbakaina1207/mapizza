@@ -31,7 +31,7 @@
                     {{ product.name }}
                     </a>                    
                     <button class="btn-close remove-product" (click)="removeFromBasket(product)"></button>
-                    <div class="added_ing-wrap">
+                    <div class="added_ing-wrap" *ngIf="product.selected_addition.length">
                       <div class="ing_output-inner">
                         <div class="ing_control" *ngFor="let addProduct of product.selected_addition; let id = index">
                             <div class="ing_control-title">
@@ -45,7 +45,7 @@
             
                   <div class="prod_horiz-controls">
                     <div class="price_default">
-                      <b>{{ product.price + product.addition_price}}</b> грн                
+                      <b>{{ product.price + (product.addition_price ? product.addition_price : 0)}}</b> грн                
                     </div>
 
                     <div class="thumb-input-number">
@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="price-wrap">
-                        <b class="price">{{ (product) ? (product.price*product.count + product.addition_price*product.count) :  0  }}</b> грн                    
+                        <b class="price">{{ (product) ? (product.price*product.count + (product.addition_price ? product.addition_price*product.count : 0 )) :  0  }}</b> грн                    
                     </div>
                   </div>
                 </div>

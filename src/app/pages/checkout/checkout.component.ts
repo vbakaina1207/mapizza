@@ -97,7 +97,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
         this.currentNumOrder = this.order[0]?.order_number ? this.order[0].order_number + 1 : 1;
         this.currentOrder = this.order[0]?.id;
         this.orderForm.patchValue({ order_number: this.currentNumOrder });
-      }
+      } else this.currentNumOrder = 1;
     })
   }
 
