@@ -68,8 +68,7 @@
               <div class="form-group">
                 <div class="form-title title h4">
                   Контактні дані
-                </div>
-                            
+                </div>            
                 <div class="row">
                   <div class="col-12 col-md-6">
                     <input formControlName="name" class="input" type="text" name="name" placeholder="*Вашe ім’я" value="">
@@ -102,30 +101,28 @@
 
               <ng-container *ngIf="isCourier"> 
                 <div class="toggle-block" data-block="2">
-                  <div class="row">                    
-                    <div class="col-12">
-                      <div class="sumoselect-wrap">
-                        <div class="SumoSelect sumo_select_city" tabindex="0">
-                          <select formControlName="addres" name="addres" class="input" tabindex="-1" (click)="getAddress()">
-                            <option value="Виберіть адресу доставки" selected="" disabled="">Виберіть адресу доставки</option>
-                            <option *ngFor="let addr of address" [value]="addr.city+'/'+addr.street+'/'+addr.house+'/'+addr.flat+'/'+addr.entrance+'/'+addr.floor"> {{ addr.city }} {{ addr.street }}, {{addr.house}}, {{ addr.flat }}</option> 
-                          </select>
-                        </div>
-                      </div>
-                    </div>  
-                  <div class="col-12">
-                    <div class="sumoselect-wrapp">
-                      <div class="SumoSelect sumo_select_city" tabindex="0" role="button" >                      
+                  <div class="row">  
+                    <div class="col-12">                                               
+                          <select formControlName="addres" name="addres" class="input" tabindex="-1"  (change)="onAddressChange($event)">
+                            <option [value]="defaultAddress" disabled selected>
+                              Виберіть адресу доставки ( default: {{ defaultAddress }} )
+                            </option>
+                            <option *ngFor="let addr of address" [value]="formatAddress(addr)"> 
+                              {{ addr.city }} {{ addr.street }}, {{addr.house}}, {{ addr.flat }}
+                            </option>
+                          </select>                       
+                    </div>                   
+                    
+                  <div class="col-12">                                                      
                         <select formControlName="city" name="city" class="input" >
                           <option value="" disabled selected>*Місто</option>                            
-                          <option [value]="select_address[0]" selected>{{select_address[0]}}</option>
+                          <!-- <option [value]="select_address[0]" selected>{{select_address[0]}}</option> -->
+                          <option *ngFor="let addr of address" [value]="addr.city" selected>{{ addr.city }}</option>
                           <option value="Львів">Львів</option>
                           <option value="Зубра">Зубра</option>
                           <option value="Сокільники">Сокільники</option>
                           <option value="Пасіки-Зубрицькі">Пасіки-Зубрицькі</option> 
-                        </select>                  
-                      </div>                                
-                    </div>
+                        </select>                                                                                     
                   </div>
 
                 <div class="col-12">
@@ -148,14 +145,13 @@
                 
                 </div>              
                 </div>
+                <app-map></app-map>
               </ng-container>
 
               <ng-container *ngIf="!isCourier">   
               <div class="toggle-block" data-block="2" >              
                 <div class="row">
-                  <div class="col-12">
-                    <div class="sumoselect-wrapp">
-                      <div class="SumoSelect sumo_self_delivery_address" tabindex="0" role="button" aria-expanded="false">
+                  <div class="col-12">                                       
                         <select formControlName="self_delivery_address" name="self_delivery_address" class="input" id="location_delivery" data-work-to="2023-11-13 20:59:00" tabindex="-1">
                         
                           <option value="" selected="" disabled="">*Виберіть адресу самовивозу                        </option>
@@ -167,9 +163,7 @@
                           <option value="Івана Франка, 71">Івана Франка, 71</option>
                           <option value="Червоної Калини, 60">Червоної Калини, 60</option>
                           <option value="Пасічна, 181">Пасічна, 181</option> 
-                        </select>
-                      </div>
-                    </div>
+                        </select>                                      
                   </div>
                 </div>
               </div>
@@ -188,9 +182,7 @@
                 </div>
 
                 <div class="col-sm-6">
-                  <div class="sumoselect-wrapp">
-                    <div class="SumoSelect sumo_at_time_time" tabindex="0" role="button" aria-expanded="false">
-                      <select formControlName="delivery_time" name="delivery_time" class="input" tabindex="-1">
+                  <select formControlName="delivery_time" name="delivery_time" class="input" tabindex="-1">
                         <option value="" selected="" disabled="">*Час</option>
                         <option value="10:00 - 10:15">10:00 - 10:15</option>
                         <option value="10:15 - 10:30">10:15 - 10:30</option>
@@ -238,9 +230,7 @@
                         <option value="20:45 - 21:00">20:45 - 21:00</option>
                         <option value="21:00 - 21:15">21:00 - 21:15</option>
                         <option value="21:15 - 21:30">21:15 - 21:30</option>            
-                      </select>              
-                    </div>
-                  </div>
+                      </select>                                 
                 </div>
               </div>
             </div>
@@ -317,15 +307,13 @@
                         </div>
                   </div>
                   <div class="select_action_use ">                                
-                        <div class="text">Вибір акції</div>
-                        <div class="SumoSelect sumo_select_action_use" tabindex="0" role="button" aria-expanded="false">
+                        <div class="text">Вибір акції</div>                        
                             <select formControlName="action" name="action" class="input" data-prev-change="2+1" tabindex="-1" (click)="actionClick()"> 
                               <option value="-1" selected="">Виберіть акцію</option>
                               <option value="2+1" [disabled]="!isPizzaCount" [selected]="isPizzaCount">Акція 2+1</option>
                               <option value="3+1" [disabled]="!isPizzaCount2" [selected]="isPizzaCount2">Акція 3+1</option>
                               <option value="localPickup" [disabled]="orderForm?.get('delivery_method')?.value === 'courier'">-15% на самовивіз</option>                                
-                            </select>
-                        </div>
+                            </select>                        
                   </div>             
             </div>
             

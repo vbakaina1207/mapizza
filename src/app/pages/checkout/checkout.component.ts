@@ -56,7 +56,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   public minPriceProduct!: IProductResponse;
   public dayOfWeek!: number;
   public countActionProduct!: number;
-  
+  public defaultAddress!: string;
 
 
   constructor(
@@ -140,6 +140,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
       addres: [this.address || null]
     });
     this.getOrderDay();
+    if (this.isCourier) this.setDefaultAddress();
   }
 
   loadBasket(): void {
@@ -161,7 +162,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
         .sort((a, b) => (a.price + a.addition_price) - (b.price + b.addition_price))
         .forEach(function (item) {
           for (let i = 0; i < item.count; i++) {
-            priceArr.push(item.price + item.addition_price);
+            priceArr.push(item.price + (item.addition_price ? item.addition_price : 0));
           }
         });
       this.priceArr = priceArr;
@@ -180,7 +181,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
 
   getTotalPrice(): void {
     this.total = this.basket
-      ?.reduce((total: number, prod: IProductResponse) => total + prod.count * (prod.price + prod.addition_price), 0);
+      ?.reduce((total: number, prod: IProductResponse) => total + prod.count * (prod.price + (prod.addition_price ? prod.addition_price : 0)), 0);
     this.count = this.basket
       ?.reduce((totalCount: number, prod: IProductResponse) => totalCount + prod.count, 0); 
     this.bonus = this.basket
@@ -340,7 +341,24 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     })
   }
 
-  getAddress(): void {
+  // getAddress(): void {
+  
+  //   let addr = this.orderForm.get('addres')?.value;    
+  //   this.select_address = addr?.toString().split("/");
+  //   this.select_address = this.select_address.filter(el => el != 'null')
+  //   this.orderForm.patchValue({
+  //     'city': this.select_address[0],
+  //     'street': this.select_address[1],
+  //     'house': this.select_address[2]
+  //   });
+  // }
+  // }
+
+  formatAddress(addr: any): string {
+    return `${addr.city}/${addr.street}/${addr.house}/${addr.flat}/${addr.entrance}/${addr.floor}`;
+  }
+
+  setDefaultAddress(): void {
     if (!this.currentUser) {
       this.dialog.open(AlertDialogComponent, {
         backdropClass: 'dialog-back',
@@ -352,16 +370,41 @@ export class CheckoutComponent implements OnInit, OnDestroy{
       });
       this.openLoginDialog();
     } else {
-    let addr = this.orderForm.get('addres')?.value;    
-    this.select_address = addr?.toString().split("/");
-    this.select_address = this.select_address.filter(el => el != 'null')
+      let addr = this.address[0];
+      this.orderForm.patchValue({
+        city: addr.city || '',
+        street: addr.street || '',
+        house: addr.house || '',
+        flat: addr.flat || '',
+        entrance: addr.entrance || '',
+        floor: addr.floor || ''
+      });
+    }
+  this.defaultAddress = this.select_address[0] + ' ' + this.select_address[1] + ' ' + this.select_address[2] + ' ' + this.select_address[3] + '' 
+  if (this.address && this.address.length > 0) {
+    let addr = this.address[0]; 
+    this.defaultAddress = `${addr.city} ${addr.street} ${addr.house} ${addr.flat}`;
+    this.orderForm.patchValue({ addres: this.defaultAddress });
+  }
+}
+
+  parseAddress(address: string): any[] {
+    return address.split('/');
+  }
+
+  onAddressChange(event: any) {
+    const selectedAddress = this.parseAddress(event.target.value);
     this.orderForm.patchValue({
-      'city': this.select_address[0],
-      'street': this.select_address[1],
-      'house': this.select_address[2]
+      address: event.target.value,
+      city: selectedAddress[0],
+      street: selectedAddress[1],
+      house: selectedAddress[2],
+      flat: selectedAddress[3] || '',
+      entrance: selectedAddress[4] || '',
+      floor: selectedAddress[5] || ''
     });
   }
-  }
+
 
   sumBonusClick(): void {
     let sumBonus = this.orderForm.get('summa_bonus')?.value;
@@ -408,9 +451,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
       orderDate = new Date();
       this.orderForm.patchValue({ 'delivery_date': orderDate });
     } 
-    this.dayOfWeek = orderDate.getDay();
-    console.log(this.dayOfWeek);
-    console.log(orderDate);
+    this.dayOfWeek = orderDate.getDay();  
     this.getAction();
   }
 
@@ -434,7 +475,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
       })
       console.log(this.countActionProduct, 'this.countActionProduct', this.minPrice);
     } else {
-      this.minPrice + 0;
+      this.sum_order = this.total;
       this.countActionProduct = 0;
       this.orderForm?.patchValue({
         'action' : null
@@ -459,7 +500,9 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     } else {
       this.sum_order = this.total;
       this.minPrice = 0;
+      this.countActionProduct = 0;
     }
+    console.log(actionValue, this.sum_order, this.minPrice, this.total, 'sum');
   }
 
   bonusUse(): void {

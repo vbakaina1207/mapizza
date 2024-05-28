@@ -140,9 +140,21 @@ td .btn{
             font-weight: bold;
         }
 
-input[type=date]::-webkit-calendar-picker-indicator{
-    display:none; 
+// input[type=date]::-webkit-calendar-picker-indicator{
+//     // display:none; 
+// }
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    cursor: pointer;
 }
+
 .link-icon:after {
     content: '';
     display: inline-block;

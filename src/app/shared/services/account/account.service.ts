@@ -15,6 +15,7 @@ export class AccountService {
     public changeAddress = new Subject<boolean>();
     public changeCurrentUser = new Subject<boolean>();  
     public changeFavorite = new Subject<boolean>();
+    public searchAddress = new Subject<boolean>();
     public index!: number;
     public isEdit!: boolean;
     public userAddress = [];

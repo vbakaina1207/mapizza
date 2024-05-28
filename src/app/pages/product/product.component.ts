@@ -15,7 +15,7 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnDestroy {
 
   public userProducts: Array<IProductResponse> = [];
   public userTypeProducts: Array<ITypeProductResponse> = [];
@@ -45,14 +45,14 @@ export class ProductComponent implements OnInit {
     private accountService: AccountService,
     private toastr: ToastService
   ) {
-    // this.eventSubscription = this.router.events.subscribe(event => {
-    //   if(event instanceof NavigationEnd ) {
-    //     this.loadProducts();
-    //     this.getTypeProducts();   
-    //     this.loadFaviriteProducts();
-    //     this.loadUser();       
-    //   }
-    // })
+    this.eventSubscription = this.router.events.subscribe(event => {
+      if(event instanceof NavigationEnd ) {
+        this.loadProducts();
+        this.getTypeProducts();   
+        this.loadFaviriteProducts();
+        this.loadUser();       
+      }
+    })
   }
 
   ngOnInit(): void {
@@ -133,9 +133,9 @@ export class ProductComponent implements OnInit {
   }
 
   
-  // ngOnDestroy(): void {
-  //   this.eventSubscription.unsubscribe();
-  // }
+  ngOnDestroy(): void {
+    this.eventSubscription.unsubscribe();
+  }
 
   productCount(product: IProductResponse, value: boolean): void {
     if(value){

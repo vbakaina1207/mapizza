@@ -40,7 +40,7 @@ public total = 0;
 
   getTotalPrice(): void {
     this.total = this.basket
-      ?.reduce((total: number, prod: IProductResponse) =>total + prod.count *(Number(prod.price) + Number(prod.addition_price)), 0);
+      ?.reduce((total: number, prod: IProductResponse) =>total + prod.count *(Number(prod.price) + Number(prod.addition_price ? prod.addition_price : 0)), 0);
     this.count = this.basket
       ?.reduce((totalCount: number, prod: IProductResponse) => totalCount + prod.count, 0); 
     this.bonus = this.basket
@@ -152,8 +152,6 @@ areSelectedAdditionsEqual(additions1: Array<ITypeAdditionResponse>, additions2: 
   additionDeleteClick(product: IProductResponse, additionName: any): void {
     if(localStorage?.length > 0 && localStorage.getItem('basket')){
       let basket = JSON.parse(localStorage.getItem('basket') as string);
-    
-    // Find the index of the product in the basket array
     const productIndex = this.findProductIndexInBasket(product);
     
     if (productIndex !== -1) {      

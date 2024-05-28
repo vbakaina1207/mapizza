@@ -115,6 +115,12 @@ export class ContactFormComponent implements OnInit {
 
   addMassage(): void {
     this.isValid = true;
+    Object.keys(this.massageForm.controls).forEach(field => {
+      const control = this.massageForm.get(field);
+      if (control && control.invalid) {
+        control.markAsTouched({ onlySelf: true });
+      }
+    });
     if (this.massageForm.valid) {
       this.massageService.createFirebase(this.massageForm.value).then(() => {
         this.toastr.success('Massage successfully created');

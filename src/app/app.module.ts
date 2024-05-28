@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { GoogleMapsModule } from '@angular/google-maps';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -61,7 +61,8 @@ import { left } from '@popperjs/core';
     SharedModule,
     HttpClientModule,
     NgbModule,
-    NgbCarouselModule
+    NgbCarouselModule,
+    GoogleMapsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

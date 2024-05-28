@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="price-wrap">
-                  <b class="price">{{ (product) ? (product.price*product.count + product.addition_price*product.count) :  0  }} </b> 
+                  <b class="price">{{ (product) ? (product.price*product.count + (product.addition_price ? product.addition_price : 0)*product.count) :  0  }} </b> 
                   грн                    
                 </div>
                 </div>
