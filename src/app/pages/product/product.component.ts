@@ -16,6 +16,12 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit, OnDestroy {
+  updateProduct(product: { id: string; name: string; }) {
+    throw new Error('Method not implemented.');
+  }
+  getProductById(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
 
   public userProducts: Array<IProductResponse> = [];
   public userTypeProducts: Array<ITypeProductResponse> = [];
@@ -46,22 +52,26 @@ export class ProductComponent implements OnInit, OnDestroy {
     private toastr: ToastService
   ) {
     this.eventSubscription = this.router.events.subscribe(event => {
-      if(event instanceof NavigationEnd ) {
-        this.loadProducts();
-        this.getTypeProducts();   
+      if(event instanceof NavigationEnd ) {          
         this.loadFaviriteProducts();
-        this.loadUser();       
+        this.loadUser();   
+        this.loadProducts();
+        this.getTypeProducts();  
       }
     })
   }
 
   ngOnInit(): void {
     this.loadProducts();
-    this.getTypeProducts();   
+    this.getTypeProducts();  
     this.loadFaviriteProducts();
     this.loadUser();       
   }
 
+  ngAfterContentInit(): void {
+    // this.loadProducts();
+    // this.getTypeProducts();   
+  }
 
   getTypeProducts(): void {
     this.productTypeService.getAllFirebase().subscribe(data => {   
@@ -70,7 +80,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   
-  loadProducts(): void {
+  private loadProducts(): void {
     this.categoryName === 'pizza';
     this.categoryName = this.activatedRoute.snapshot.paramMap.get('category') as string  || 'pizza';
     this.productTypeName = this.activatedRoute.snapshot.paramMap.get('type_product') as string;

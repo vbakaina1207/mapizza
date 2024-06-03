@@ -34,7 +34,9 @@
               <section class="rating-card">
                 <div class="card-block">
                     <h1 class="rating-card__title">Загальне враження*</h1>
-                    <!-- <p class="error-text"> Оберiть загальне враження </p> -->
+                    <ng-container *ngIf="!feedbackForm.get('stars')?.value && isValid">
+                          <span class="not-valid-tip">Оберiть загальне враження </span>
+                    </ng-container>                       
                     <ul class="rating-card__list">
                         <li class="rating-card__list__item star"  *ngFor="let star of stars" (click)="rate(star)"  [ngClass]="{'filled': star?.star <= selectedStars}">
                             <label>
@@ -50,8 +52,11 @@
                         </li>                      
                     </ul>                 
                   <section class="comment" id="comment-block">
-                    <textarea formControlName="comment" autosize="" class="textarea comment__field" id="comment" name="comment" rows="1" placeholder="Додати коментар*">  
-                    </textarea>                    
+                    <textarea formControlName="comment" autosize="" class="textarea comment__field" id="comment" name="comment" rows="1" placeholder="Додати коментар*" [class.input-empty]="feedbackForm.get('comment')?.invalid && isValid">  
+                    </textarea>  
+                     <ng-container *ngIf="feedbackForm.get('comment')?.invalid && isValid">
+                        <span class="not-valid-tip">Add a comment </span>
+                      </ng-container>                   
                   </section>
                   <section class="btns-block">
                     <ng-container *ngIf="!isUploaded">
@@ -70,16 +75,14 @@
                 </ng-container>
                   </section>
                   <div class="submit">
-                        <button class="btn btn-danger " type="submit" [disabled]="feedbackForm.invalid" > Відправити </button>
+                        <button class="btn btn-danger " type="submit" > Відправити </button>
                         <p class="submit__description"> Натискаючи кнопку «Відправити», Ви погоджуєтеся з  
-                            <a href="/terms">умовами угоди</a>
+                            <a class="terms" (click)="termsClick()">умовами угоди</a>
                         </p>
                     </div>
-                  </div>  
-                 
+                  </div>                   
                 
-              </section>  
-             
+              </section>               
             </form>
         </section>             
 </div>

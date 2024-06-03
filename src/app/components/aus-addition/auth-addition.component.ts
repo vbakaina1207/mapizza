@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IProductResponse } from 'src/app/shared/interfaces/product/product.interface';
@@ -14,7 +14,7 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
   templateUrl: './auth-addition.component.html',
   styleUrls: ['./auth-addition.component.scss']
 })
-export class AuthAdditionComponent implements OnInit {
+export class AuthAdditionComponent implements OnInit, AfterViewInit {
 
   public currentProduct = <IProductResponse>{} ||
     null || undefined;
@@ -45,6 +45,8 @@ export class AuthAdditionComponent implements OnInit {
     if(event instanceof NavigationEnd ) {
       this.loadProduct();
       this.loadUser();
+      this.loadTypeAddition();
+      this.loadProduct();
       this.activatedRoute.data.subscribe(response => {
         this.currentProduct = response['productInfo'];        
       })
@@ -54,10 +56,15 @@ export class AuthAdditionComponent implements OnInit {
 
   ngOnInit() {
     this.loadUser();
-    this.loadTypeAddition();
-    this.loadProduct();
+    // this.loadTypeAddition();
+    // this.loadProduct();
     this.loadFavoriteProduct();
     this.updateFavorite();
+  }
+
+  ngAfterViewInit() {
+    this.loadTypeAddition();
+      this.loadProduct();
   }
 
   loadUser(): void {

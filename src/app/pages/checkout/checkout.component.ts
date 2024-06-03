@@ -9,6 +9,7 @@ import { AuthDialogComponent } from 'src/app/components/auth-dialog/auth-dialog.
 import { IOrderResponse } from 'src/app/shared/interfaces/order/order.interface';
 import { IProductResponse } from 'src/app/shared/interfaces/product/product.interface';
 import { ITypeAdditionResponse } from 'src/app/shared/interfaces/type-addition/type-addition.interfaces';
+import { AccountService } from 'src/app/shared/services/account/account.service';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
 
@@ -57,6 +58,9 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   public dayOfWeek!: number;
   public countActionProduct!: number;
   public defaultAddress!: string;
+  public fullAddress: string = '';
+  public isInGreenZone: boolean = false;
+  public isInYellowZone: boolean = false;
 
 
   constructor(
@@ -65,7 +69,8 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     private toastr: ToastService,
     private router: Router,
     private afs: Firestore,
-    public dialog: MatDialog
+    private dialog: MatDialog,
+    private accountService: AccountService
     ) {
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {
@@ -154,7 +159,8 @@ export class CheckoutComponent implements OnInit, OnDestroy{
 
   getMinPrice(): void {
     this.sum_order = this.total;
-    this.sum_delivery = (this.total >= 500) ? 0 : 100;
+    // this.sum_delivery = (this.total >= 500) ? 0 : 100;
+    this.sum_delivery = ((this.total >= 500 && this.isInYellowZone) || (this.total >= 300 && this.isInGreenZone)) ? 0 : ((this.total < 500 && this.isInYellowZone) ? 150 : (this.total < 300 && this.isInGreenZone) ? 100 : 0);  
     this.pizzaCount = this.basket.filter(el => el.category.path === 'pizza')?.reduce((count: number, el: IProductResponse) => count + el.count, 0);   
     let priceArr: Array<number> = [];
     if (this.pizzaCount > 0) {
@@ -196,7 +202,20 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     } 
   }
 
+  onSubmitAddress() {    
+    this.fullAddress =  this.orderForm.get('street')?.value + ', '+ this.orderForm.get('house')?.value + ' Львiв';
+    this.accountService.updateAddress(this.fullAddress);
+    this.getZoneStatus();   
+  }
   
+  getZoneStatus():void {
+    this.accountService.zoneStatus$.subscribe(status => {
+      this.isInGreenZone = status.isGreenZone;
+      this.isInYellowZone = status.isYellowZone;
+    });
+  }
+
+
   updateBasket(): void {
     this.orderService.changeBasket.subscribe(() => {
       this.loadBasket();
@@ -273,42 +292,54 @@ export class CheckoutComponent implements OnInit, OnDestroy{
 
   
   addOrder(): void {
-    this.orderForm.patchValue({
+    if (!this.isInGreenZone && !this.isInYellowZone && this.orderForm.get('delivery_method')?.value =='courier') {
+      this.dialog.open(AlertDialogComponent, {
+        backdropClass: 'dialog-back',
+        panelClass: 'alert-dialog',
+        autoFocus: false,
+        data: {
+          message: " На вибрану адресу доставка неможлива! Змініть, будь ласка, адресу або вид доставки."
+        }
+      });
+    } else {
+      this.orderForm.patchValue({
         summa: this.sum_order,
         discount: this.minPrice
-    });
-    const products = JSON.parse(localStorage.getItem('basket') || '[]');
-    this.currentUser.bonus = this.bonus;
-    const order = {
-      ...this.orderForm.value,
-      total: this.sum_order,
-      product: products       
-    };
-    this.currentUser.orders.push(order);
-    localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-    if (this.currentUser) {        
-        this.orderService.createFirebase(order).then(() => {            
-            const userRef = doc(this.afs, 'users', this.currentUser.uid);
-            updateDoc(userRef, {
-                orders: arrayUnion(order) 
-            }).then(() => {                
-                this.dialog.open(AlertDialogComponent, {
-                    data: {
-                        icon: 'Замовлення успішно оформлено',
-                        message: `Замовлення #${this.currentNumOrder} буде доставлено за вказаною адресою`
-                    }
-                });
-                this.toastr.showSuccess('', 'Замовлення успішно створено');
-                this.removeAllFromBasket();
-                this.router.navigate(['/cabinet/history']);
-            }).catch((error) => {
-                console.error('Помилка при оновленні профілю користувача:', error);
-                this.toastr.showError('Неможливо оновити профіль користувача.', 'Помилка');
+      });
+      const products = JSON.parse(localStorage.getItem('basket') || '[]');
+      this.currentUser.bonus = this.bonus;
+      const order = {
+        ...this.orderForm.value,
+        total: this.sum_order,
+        product: products
+      };
+      
+      localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+      if (this.currentUser) {
+        this.currentUser.orders.push(order);
+        this.orderService.createFirebase(order).then(() => {
+          const userRef = doc(this.afs, 'users', this.currentUser.uid);
+          updateDoc(userRef, {
+            orders: arrayUnion(order)
+          }).then(() => {
+            this.dialog.open(AlertDialogComponent, {
+              data: {
+                icon: 'Замовлення успішно оформлено',
+                message: `Замовлення #${this.currentNumOrder} буде доставлено за вказаною адресою`
+              }
             });
+            this.toastr.showSuccess('', 'Замовлення успішно створено');
+            this.removeAllFromBasket();
+            this.router.navigate(['/cabinet/history']);
+          }).catch((error) => {
+            console.error('Помилка при оновленні профілю користувача:', error);
+            this.toastr.showError('Неможливо оновити профіль користувача.', 'Помилка');
+          });
         }).catch((error) => {
-            console.error('Помилка під час створення замовлення в Firebase:', error);
-            this.toastr.showError('Не вдалося створити замовлення.', 'Помилка');
+          console.error('Помилка під час створення замовлення в Firebase:', error);
+          this.toastr.showError('Не вдалося створити замовлення.', 'Помилка');
         });
+      }
     }
 }
 
@@ -532,7 +563,8 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     } else {
       console.log(delivery_method, "delivery")
       this.orderForm.patchValue({ 'action': '' });
-      this.sum_delivery = (this.total >= 500) ? 100 : 0;    
+      // this.sum_delivery = (this.total >= 500) ? 100 : 0;    
+      this.sum_delivery = ((this.total >= 500 && this.isInYellowZone) || (this.total >= 300 && this.isInGreenZone)) ? 0 : ((this.total < 500 && this.isInYellowZone) ? 150 : (this.total < 300 && this.isInGreenZone) ? 100 : 0);  
       this.isCourier = true;
     }
     this.actionClick();

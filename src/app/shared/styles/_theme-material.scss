@@ -68,11 +68,7 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 }
 
 .auth-dialog {
-    // widt;h: 600px;
-   
     width: 500px;
-    // max-width: 100vw;
-    // max-width: 300px;
     min-height: 400px;
     
 }
@@ -86,17 +82,26 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 .auth-dialog-basket{
     width: 540px;
     max-width: 100vw;
-    // height: 100%;
     margin:15px;
-    // min-height: 290px;
-    // max-height:  calc(100vh - 30px);    
 }
 
 .auth-addition-dialog {
     width: 75%;
     height: 95%;
-    // min-height: 400px;
     max-height:  calc(100vh - 30px);    
+}
+
+.terms-dialog{
+  background-color: #3b4256 !important;
+  color: $clr-white;
+  overflow: auto;
+  padding: 0;
+  margin: 0;
+
+  & .mat-mdc-dialog-container .mdc-dialog__surface {
+    
+    background-color: #3b4256 !important;
+}
 }
 
 .auth-dialog .mat-dialog-container,
@@ -116,18 +121,12 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 }
 .mat-mdc-dialog-surface  {
   max-width: 600px;
-  //width: 500px;
-  // padding: 0 20px;
   max-height: 350px;
 
     & .popup-container {
     overflow: hidden;
     }
-    // & .popup-container .size-2 {
-    // max-width: 600px;
-    // padding: 0 20px;
-    // position: relative;
-    // }
+    
 
     & .mat-dialog-container {
     padding: 0;
@@ -138,15 +137,6 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 
 }
 
-
-
-
-
-// .popup-container{
-//     width: 100%;
-//     position: relative;
-//     text-align: left;    
-// }
 
 .mat-mdc-dialog-content  > .btn-close {
     position: absolute;

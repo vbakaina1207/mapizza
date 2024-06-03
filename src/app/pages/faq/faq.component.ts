@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AlertDialogComponent } from 'src/app/components/alert-dialog/alert-dialog.component';
 import { AuthDialogComponent } from 'src/app/components/auth-dialog/auth-dialog.component';
+import { TermsDialogComponent } from 'src/app/components/terms-dialog/terms-dialog.component';
 import { FaqService } from 'src/app/shared/services/faq/faq.service';
 import { ImageService } from 'src/app/shared/services/image/image.service';
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
@@ -20,6 +22,7 @@ export class FaqComponent implements OnInit {
   public isUploaded: boolean = false;
   public file!: any;
   public isLogin: boolean = false;
+  public isValid: boolean = false;
   public stars: any[] = [
     {star: 2, text: "Жахливо"}, 
     {star: 3, text: "Погано"}, 
@@ -99,13 +102,41 @@ valueByControl(control: string): string {
 }
   
   submitFeedback(): void {
-      if (this.feedbackForm.valid && this.isLogin) {
-        this.faqService.createFirebase(this.feedbackForm.value).then(() => {
-          this.toastr.success('Massage successfully created');
-        })
-        this.feedbackForm.reset();
-        this.isUploaded = false;
+    this.isValid = true;
+    Object.keys(this.feedbackForm.controls).forEach(field => {
+      const control = this.feedbackForm.get(field);
+      if (control && control.invalid) {
+        control.markAsTouched({ onlySelf: true });
       }
+    });
+      if (this.feedbackForm.valid && this.isLogin) {        
+        this.faqService.createFirebase(this.feedbackForm.value).then(() => {
+          this.dialog.open(AlertDialogComponent, {
+              backdropClass: 'dialog-back',
+              panelClass: 'alert-dialog',
+              autoFocus: false,
+              data: {
+                message: 'Feedback successfully created ',
+                icon: '',
+                isError: false
+              }
+            });
+          this.toastr.success('Feedback successfully created');          
+          this.feedbackForm.reset();
+          this.selectedStars = 0;
+          this.isUploaded = false;
+          this.isValid = false;         
+        })            
+      } else {
+        this.dialog.open(AlertDialogComponent, {
+              backdropClass: 'dialog-back',
+              panelClass: 'alert-dialog',
+              autoFocus: false,
+              data: {
+                message: 'Ви не авторизувались',                
+              }
+            });
+    }
   }
 
   openLoginDialog(): void {
@@ -118,5 +149,15 @@ valueByControl(control: string): string {
     })
   }
 
+  termsClick(): void {
+    this.dialog.open(TermsDialogComponent, {
+      backdropClass: 'dialog-back',
+          panelClass: 'terms-dialog',
+          autoFocus: false,
+          maxWidth: '100vw',         
+        }).afterClosed().subscribe(result => {
+          console.log(result);          
+        })
+  }
   
 }

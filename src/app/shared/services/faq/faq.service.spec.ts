@@ -16,7 +16,7 @@ describe('Service: Faq', () => {
   let component: FaqService;
   let fixture: ComponentFixture<FaqService>;
   const serviceStub = {
-    getFaqById: (id: string) =>
+    getOneFirebase: (id: string) =>
       of({ id: id, name: '', email: '', phone:' ', stars: 4, comment: '', imagePath: '' , date_message: ''}),
   };
 
@@ -34,9 +34,8 @@ describe('Service: Faq', () => {
     };
     await TestBed.configureTestingModule({
       providers: [
-        FaqService,
-        { provide: Firestore, useValue: firestoreMock },    
-        // { provide: AngularFirestore, useValue: {} },        
+        { provide: FaqService, useValue: serviceStub },
+        { provide: Firestore, useValue: firestoreMock },           
       ],
       imports: [
         HttpClientTestingModule,

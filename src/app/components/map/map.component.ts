@@ -3,6 +3,8 @@ import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { ToastService } from '../../shared/services/toast/toast.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
+import { ActivatedRoute } from '@angular/router';
+import { AccountService } from 'src/app/shared/services/account/account.service';
 
 @Component({
   selector: 'app-map',
@@ -15,7 +17,9 @@ export class MapComponent implements OnInit{
 
   constructor(
     private dialog: MatDialog,
-    private toastr: ToastService
+    private toastr: ToastService,
+    private route: ActivatedRoute,
+    private accountService: AccountService
   ){}
   
   @ViewChild('mapContainer', { static: false }) mapContainer!: ElementRef;
@@ -28,6 +32,7 @@ export class MapComponent implements OnInit{
   lng!: any;
   searchMarker: google.maps.Marker | undefined;
   map!: google.maps.Map;
+  geocoder!: google.maps.Geocoder;
 //.AdvancedMarkerElement
 
 
@@ -40,16 +45,16 @@ export class MapComponent implements OnInit{
 
   searchAddress: string = '';
 
-  geocoder = new google.maps.Geocoder();
+  // geocoder = new google.maps.Geocoder();
 
-    loading = false;
-    mapCenter!: google.maps.LatLng;
-    markerInfoContent = '';
-    markerOptions: google.maps.MarkerOptions = {
-    draggable: false,
-    animation: google.maps.Animation.DROP,
-  };
-
+  //   loading = false;
+  //   mapCenter!: google.maps.LatLng;
+  //   markerInfoContent = '';
+  //   markerOptions: google.maps.MarkerOptions = {
+  //   draggable: false,
+  //   animation: google.maps.Animation.DROP,
+  // };
+  isCheckout: boolean = false;
 
       greenZoneCoords: google.maps.LatLngLiteral[] = [
         { lat: 49.854224088692504, lng: 23.9789482531578 },
@@ -167,7 +172,10 @@ export class MapComponent implements OnInit{
       ];
   
   ngOnInit(): void {
-    // this.getCurrentLocation();
+    this.initForm();    
+    this.accountService.address$.subscribe((address) => {
+      this.searchLocation(address);
+    })
   }
 
   async ngAfterViewInit(): Promise<void> {
@@ -223,6 +231,11 @@ export class MapComponent implements OnInit{
       paths: this.yellowZoneCoords3,
     }));
 
+    this.yellowZones.push(new google.maps.Polygon({
+      ...yellowZoneOptions,
+      paths: this.yellowZoneCoords4,
+    }));
+
     this.greenZone = new google.maps.Polygon({
       paths: this.greenZoneCoords,
       strokeColor: '#00FF00',
@@ -249,10 +262,16 @@ export class MapComponent implements OnInit{
     if (event.latLng != null) this.display = event.latLng.toJSON();
   }
 
+  initForm(): void{
+    console.log(this.route.component?.name);
+    if ( this.route.component?.name === 'DeliveryComponent') {
+      this.isCheckout = true;
+    }    
+  }
 
-  searchLocation() {
-    if (this.searchAddress) {
-      const addressString = this.searchAddress + ', Львів';
+  searchLocation(address: string) {
+    if (address) {
+      const addressString = address + ', Львів';
       const geocoderRequest: google.maps.GeocoderRequest = {
         address: addressString,
         region: 'uk'
@@ -290,11 +309,10 @@ export class MapComponent implements OnInit{
           this.checkDeliveryZone({ lat, lng });
         
         }
-        // else if (status === 'ZERO_RESULTS') {
-        //   console.error('No results found for the address:', this.searchAddress);
-        // } else {
-        //   console.error('Geocode was not successful for the following reason:', status);
-        // }
+        else {
+          this.showErrorDialog('No results found for the address.');
+          this.accountService.setZoneStatus(false, false);
+        }    
       });
     }
   }
@@ -308,59 +326,57 @@ export class MapComponent implements OnInit{
     let message = "";
     if (isInGreenZone) {
       message = 'Адреса в зеленій зоні доставки';
-     } else if (isInYellowZone) {
-       message = 'Адреса в жовтій зоні доставки';
-     } else {
-       message = 'Адреса не в зоні доставки';
+    } else if (isInYellowZone) {
+      message = 'Адреса в жовтій зоні доставки';
+    } else {
+      message = 'Адреса не в зоні доставки';
     }
     this.showErrorDialog(message);
-    
-    // this.addressFound.emit(isInGreenZone || isInYellowZone);
+    this.accountService.setZoneStatus(isInGreenZone, isInYellowZone);      
   }
 
-  getCurrentLocation() {
-    this.loading = true;
-
-    navigator.geolocation.getCurrentPosition(
-      (position: GeolocationPosition) => {
-        this.loading = false;
-
-        const point: google.maps.LatLngLiteral = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-
-        this.mapCenter = new google.maps.LatLng(point);
-        this.map.panTo(point);
-
-        this.markerInfoContent = "I'm here!";
-
-        this.markerOptions = {
-          draggable: false,
-          animation: google.maps.Animation.DROP,
-        };
-      },
-      (error) => {
-        this.loading = false;
-        console.error('Error getting location:', error);
-      }
-    );
-    }
-    
   showErrorDialog(message: string) {
     this.dialog.open(AlertDialogComponent, {
     backdropClass: 'dialog-back',
     panelClass: 'alert-dialog',
     autoFocus: false,
     data: {
-      message: message,
-      icon: '',
-      isError: true
+      message: message
     }
     });
 
     this.toastr.showError('', message);
   }
+  // getCurrentLocation() {
+  //   this.loading = true;
+
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position: GeolocationPosition) => {
+  //       this.loading = false;
+
+  //       const point: google.maps.LatLngLiteral = {
+  //         lat: position.coords.latitude,
+  //         lng: position.coords.longitude,
+  //       };
+
+  //       this.mapCenter = new google.maps.LatLng(point);
+  //       this.map.panTo(point);
+
+  //       this.markerInfoContent = "I'm here!";
+
+  //       this.markerOptions = {
+  //         draggable: false,
+  //         animation: google.maps.Animation.DROP,
+  //       };
+  //     },
+  //     (error) => {
+  //       this.loading = false;
+  //       console.error('Error getting location:', error);
+  //     }
+  //   );
+  //   }
+    
+  
   }
   
   /* 

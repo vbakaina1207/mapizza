@@ -130,7 +130,7 @@
                 </div>
 
                 <div class="col-6 col-sm-3">
-                  <input formControlName="house" id="houseNumber" maxlength="5" class="input" type="text" placeholder="Будинок" name="house" [value]="select_address[2]" >
+                  <input formControlName="house" id="houseNumber" maxlength="5" class="input" type="text" placeholder="Будинок" name="house" [value]="select_address[2]"  (input)="onSubmitAddress()">
                 </div>
 
                 <div class="col-6 col-sm-3">
@@ -145,7 +145,21 @@
                 
                 </div>              
                 </div>
-                <app-map></app-map>
+                <div *ngIf="isInGreenZone" class="mt-3">
+                  <p>Адреса в <strong style="color: green;">зеленій зоні доставки</strong></p>
+                  <p>Середній час доставки <strong>29 хв</strong></p>
+                  <p>Мінімальна сума замовлення <strong>300 грн</strong></p>
+                </div>
+                <div *ngIf="isInYellowZone && !isInGreenZone" class="mt-3">
+                  Адреса в <strong style="color: yellow;">жовтій зоні доставки</strong>
+                  <p>Середній час доставки <strong>59 хв</strong></p>
+                  <p>>Мінімальна сума замовлення <strong>500 грн</strong></p>
+                </div>
+                <div *ngIf="!isInGreenZone && !isInYellowZone" class="errorMsg mt-3">
+                  Вибачте, ваша адреса не в зоні доставки
+                </div>
+                <div class="mt-3"></div>
+                <app-map></app-map> 
               </ng-container>
 
               <ng-container *ngIf="!isCourier">   
@@ -318,15 +332,15 @@
             </div>
             
                       <div class="thank-total-wrap">
-                        <div class="deliveryWarning">
+                        <div class="deliveryWarning">                         
                           <div class="errorMsg empty-address" *ngIf="orderForm?.get('delivery_method')?.value === 'courier' && (!orderForm.get('house')?.value || !orderForm.get('street')?.value || !orderForm.get('city')?.value)">
                               Введіть Вашу адресу та номер будинку    
                           </div>
-                          <div class="errorMsg lowOrder minimum-order" *ngIf="orderForm.get('delivery_method')?.value === 'courier' && total<300">
+                          <div class="errorMsg lowOrder minimum-order" *ngIf="orderForm.get('delivery_method')?.value === 'courier' &&  isInGreenZone && total<300">
                               Мінімальна сума замовлення у вашу зону доставки складає 
                             <b class="js-zone-min-price">300 грн</b>    
                           </div>
-                          <div class="errorMsg lowOrderDelivery" *ngIf="orderForm.get('delivery_method')?.value === 'courier' && total<500">
+                          <div class="errorMsg lowOrderDelivery" *ngIf="orderForm.get('delivery_method')?.value === 'courier' &&  isInYellowZone && total<500">
                               Мінімальна сума замовлення для безкоштовної доставки у вашу зону складає <b class="js-zone-min-price">500 грн</b>    
                           </div>
                           <div class="errorMsg lowOrderDelivery" *ngIf="orderForm.get('delivery_method')?.value === 'local_pickup' && !orderForm.get('self_delivery_address')?.value ">

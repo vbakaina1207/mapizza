@@ -301,3 +301,13 @@ a {
     justify-content: space-around;
     align-items: center;
 }
+
+.terms{
+    font-style: italic;
+    text-decoration: underline !important;
+    font-weight: 600;
+
+    &:hover{
+        text-decoration: none !important;
+    }
+}

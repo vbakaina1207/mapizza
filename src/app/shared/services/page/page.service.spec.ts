@@ -5,6 +5,7 @@ import { PageService } from './page.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { CollectionReference, DocumentData, Firestore, deleteDoc, docData, updateDoc } from '@angular/fire/firestore';
+import { IPageResponse } from '../../interfaces/page/page.interface';
 
 
 const mockFirestore = {
@@ -31,6 +32,13 @@ collection: jasmine.createSpy('collection').and.callFake((path: string) => {
 describe('Service: Page', () => {
   let firestoreMock: any;
   
+  const pageServiceStub = {
+    getOneFirebase: (id: string) => of({ id: id, page: 1 }),
+    getAllFirebase: () => of([{ id: '1', page: 1 }]),
+    createFirebase: (page: IPageResponse) => of({ ...page }),
+    updateFirebase: (page: Partial<IPageResponse>, id: string) => of({ id: id, ...page }),
+    deleteFirebase: (id: string) => of({ id: id, page: 1 }),
+  };
   
   beforeEach(async () => {
     
@@ -45,7 +53,7 @@ describe('Service: Page', () => {
     
     await TestBed.configureTestingModule({
       providers: [
-        PageService,
+        { provide: PageService, useValue: pageServiceStub },   
         { provide: Firestore, useValue: firestoreMock }
       ],
       imports: [
@@ -58,7 +66,4 @@ describe('Service: Page', () => {
     expect(service).toBeTruthy();
   }));
 
-  // it('should ...', inject([PageService], (service: PageService) => {
-  //   expect(service).toBeTruthy();
-  // }));
 });
