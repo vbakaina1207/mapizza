@@ -14,10 +14,18 @@ import { Firestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { MassageService } from 'src/app/shared/services/massage/massage.service';
 import { AngularFireModule } from '@angular/fire/compat';
+import { of } from 'rxjs';
 
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
   let fixture: ComponentFixture<ContactFormComponent>;
+
+  const serviceMassageStub = {
+    getOneFirebase: (id: string) =>
+      of({ id: id, name: 'Ivan', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_message: ''}),
+    getAllFirebase: () =>
+      of([{ id: 1, name: 'Ivan', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_message: ''}]),
+  };
 
   beforeEach(async() => {
     await TestBed.configureTestingModule({
@@ -26,18 +34,16 @@ describe('ContactFormComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         ReactiveFormsModule,
-        MatDialogModule,
-        AngularFireModule,
-        AngularFireStorageModule
+        MatDialogModule,       
       ],
       providers: [
         ImageService,
         MassageService,
         { provide: Storage, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
-        { provide: Auth, useValue: {} },
-        { provide: Firestore, useValue: {} },
+        { provide: Auth, useValue: {} },       
         { provide: ToastrService, useValue: {} },
+        { provide: MassageService, useValue: serviceMassageStub }
       ],
       schemas: [
         NO_ERRORS_SCHEMA

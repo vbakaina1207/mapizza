@@ -269,7 +269,7 @@
                     <span>Оплата через термінал</span>
                   </label>
                 </div>
-                <div class="toggle-block" data-block="3"  *ngIf="(orderForm?.get('payment_method')?.value)==='cod'" >
+                <div class="toggle-block" data-block="3"  *ngIf="(orderForm.get('payment_method')?.value)==='cod'" >
                   <div class="moneychange-input">
                     <div class="text">Підготувати решту з:</div>
                       <input formControlName="cash" class="input" type="number" placeholder="Введіть суму" name="cash" [readonly]="orderForm.get('isWithoutRest')?.value" >
@@ -326,14 +326,14 @@
                               <option value="-1" selected="">Виберіть акцію</option>
                               <option value="2+1" [disabled]="!isPizzaCount" [selected]="isPizzaCount">Акція 2+1</option>
                               <option value="3+1" [disabled]="!isPizzaCount2" [selected]="isPizzaCount2">Акція 3+1</option>
-                              <option value="localPickup" [disabled]="orderForm?.get('delivery_method')?.value === 'courier'">-15% на самовивіз</option>                                
+                              <option value="localPickup" [disabled]="orderForm.get('delivery_method')?.value === 'courier'">-15% на самовивіз</option>                                
                             </select>                        
                   </div>             
             </div>
             
                       <div class="thank-total-wrap">
                         <div class="deliveryWarning">                         
-                          <div class="errorMsg empty-address" *ngIf="orderForm?.get('delivery_method')?.value === 'courier' && (!orderForm.get('house')?.value || !orderForm.get('street')?.value || !orderForm.get('city')?.value)">
+                          <div class="errorMsg empty-address" *ngIf="orderForm.get('delivery_method')?.value === 'courier' && (!orderForm.get('house')?.value || !orderForm.get('street')?.value || !orderForm.get('city')?.value)">
                               Введіть Вашу адресу та номер будинку    
                           </div>
                           <div class="errorMsg lowOrder minimum-order" *ngIf="orderForm.get('delivery_method')?.value === 'courier' &&  isInGreenZone && total<300">

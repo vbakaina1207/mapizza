@@ -10,16 +10,16 @@ describe('Service: Message', () => {
   let firestoreMock: any;
   let component: MassageService;
   let fixture: ComponentFixture<MassageService>;
+
   const serviceStub = {
-    getFaqById: (id: string) =>
+    getOneFirebase: (id: string) =>
       of({ id: id, name: 'Ivan', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_message: ''}),
   };
   
   beforeEach(async() => {
     await TestBed.configureTestingModule({
-      providers: [
-        MassageService,
-        { provide: Firestore, useValue: serviceStub },
+      providers: [       
+        { provide:  MassageService, useValue: serviceStub },
       ],
       imports: [
         HttpClientTestingModule

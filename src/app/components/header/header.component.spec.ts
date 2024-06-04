@@ -20,13 +20,11 @@ describe('HeaderComponent', () => {
       imports:[
         HttpClientTestingModule,
         MatDialogModule,
-        RouterTestingModule,
-        AngularFireModule
+        RouterTestingModule
       ],
       providers: [
         CategoryService,
-        { provide: MatDialogRef, useValue: {} },
-        { provide: Firestore, useValue: {} },
+        { provide: MatDialogRef, useValue: {} },    
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

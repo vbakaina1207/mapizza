@@ -8,21 +8,35 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ToastrService } from 'ngx-toastr';
 import { Storage } from '@angular/fire/storage';
+import { of } from 'rxjs';
+import { PageService } from 'src/app/shared/services/page/page.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('AdminPageComponent', () => {
   let component: AdminPageComponent;
   let fixture: ComponentFixture<AdminPageComponent>;
+
+  const servicePagetStub = {
+    getOneFirebase: (id: string) => of({      
+      id: 1, page: '1'
+    }),
+    getAllFirebase: () => of([
+      { id: 1, name: '1' }
+    ])
+  };
 
   beforeEach(async() => {
     await TestBed.configureTestingModule({
       declarations: [AdminPageComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatDialogModule
       ],
       providers: [
         { provide: Storage, useValue: {} },
         { provide: ToastrService, useValue: {} },
+        { provide: PageService, useValue: servicePagetStub }
       ]
     })
     .compileComponents();

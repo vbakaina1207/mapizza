@@ -14,7 +14,7 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
   templateUrl: './auth-addition.component.html',
   styleUrls: ['./auth-addition.component.scss']
 })
-export class AuthAdditionComponent implements OnInit, AfterViewInit {
+export class AuthAdditionComponent implements OnInit {
 
   public currentProduct = <IProductResponse>{} ||
     null || undefined;
@@ -56,17 +56,13 @@ export class AuthAdditionComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.loadUser();
-    // this.loadTypeAddition();
-    // this.loadProduct();
+    this.loadTypeAddition();
+    this.loadProduct();
     this.loadFavoriteProduct();
     this.updateFavorite();
   }
 
-  ngAfterViewInit() {
-    this.loadTypeAddition();
-      this.loadProduct();
-  }
-
+  
   loadUser(): void {
     if(localStorage.length > 0 && localStorage.getItem('currentUser')){
       this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string); 

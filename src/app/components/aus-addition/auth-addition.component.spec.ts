@@ -20,18 +20,35 @@ describe('AuthAdditionComponent', () => {
   let component: AuthAdditionComponent;
   let fixture: ComponentFixture<AuthAdditionComponent>;
 
-  const additionTypeServiceStub = {
-    getOneFirebase: (id: string) => of({
-      id: id,
-      name: 'test addition',
-      path: '',
+  
+  const serviceAdditionProductStub = {
+    getOneFirebase: (id: string) => of({      
+      id: id, 
+      name: 'test type',
       description: '',
-      weight: '',
-      price: 12,
+      weight: '25',
+      price: 5,
       imagePath: '',
       isSauce: false
-    }
-    )
+    }),
+    getAllFirebase: () => of([
+      { id: 1, 
+        name: 'test type', 
+        description: '',
+        weight: '25',
+        price: 5,
+        imagePath: '',
+        isSauce: false}
+    ]),
+    getAllBySauceFirebase: (isSauce: boolean) => of([
+      { id: 1, 
+        name: 'test type', 
+        description: '',
+        weight: '25',
+        price: 5,
+        imagePath: '',
+        isSauce: isSauce}
+    ])
   };
 
   const orderServiceStub = {
@@ -102,7 +119,7 @@ describe('AuthAdditionComponent', () => {
         { provide: Auth, useValue: {} },
         // { provide: Firestore, useValue: {} },
         { provide: ToastrService, useValue: {} },
-        { provide: AdditionProductService, useValue: additionTypeServiceStub },
+        { provide: AdditionProductService, useValue: serviceAdditionProductStub },
         { provide: OrderService, useValue: orderServiceStub },
         { provide: ProductService, useValue: productServiceStub }
       ]
