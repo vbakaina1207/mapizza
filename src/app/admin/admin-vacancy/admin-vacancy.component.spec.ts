@@ -8,21 +8,38 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ToastrService } from 'ngx-toastr';
 import { Storage } from '@angular/fire/storage';
+import { VacancyService } from 'src/app/shared/services/vacancy/vacancy.service';
+import { of } from 'rxjs';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('AdminVacancyComponent', () => {
   let component: AdminVacancyComponent;
   let fixture: ComponentFixture<AdminVacancyComponent>;
+
+  const vacancyServiceStub = {
+    getAllFirebase: () => of([
+      {
+        id: 1,
+        name: 'new vacancy',
+        path: '',
+        description: '',
+        imagePath: ''
+      }
+    ])
+  };
 
   beforeEach(async() => {
     await TestBed.configureTestingModule({
       declarations: [AdminVacancyComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatDialogModule
       ],
       providers: [
         { provide: Storage, useValue: {} },
         { provide: ToastrService, useValue: {} },
+        { provide: VacancyService, useValue: vacancyServiceStub }
       ]
     })
     .compileComponents();
