@@ -11,12 +11,22 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 describe('Service: Category', () => {
   let httpTestingController: HttpTestingController;
   let categoryService: CategoryService;
-  let firestoreSpy: jasmine.SpyObj<AngularFirestore>;
+  
+  const categoryServiceStub = {
+    getOneFirebase: (id: string) =>
+      of({
+        id: id,
+        name: 'test category',
+        path: '',
+        imagePath: '',
+      }),
+  };
   
   beforeEach(async() => {
 
     await TestBed.configureTestingModule({
-      providers: [CategoryService,
+      providers: [
+        { providers: CategoryService, useValue: categoryServiceStub },
         { provide: Firestore, useValue:{} },
       ],
       imports: [
@@ -24,8 +34,8 @@ describe('Service: Category', () => {
         AngularFireStorageModule,        
       ]
     }).compileComponents();
-    httpTestingController = TestBed.get( HttpTestingController );
-    categoryService = TestBed.get(CategoryService);
+    httpTestingController = TestBed.inject( HttpTestingController );
+    categoryService = TestBed.inject(CategoryService);
   });
 
 

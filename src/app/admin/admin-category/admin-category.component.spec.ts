@@ -1,31 +1,38 @@
 /* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
 import { AdminCategoryComponent } from './admin-category.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Storage } from '@angular/fire/storage';
+import { of } from 'rxjs';
+import { CategoryService } from 'src/app/shared/services/category/category.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('AdminCategoryComponent', () => {
   let component: AdminCategoryComponent;
   let fixture: ComponentFixture<AdminCategoryComponent>;
 
-  beforeEach(async() => {
+  const categoryServiceStub = {
+    getOneFirebase: (id: string) =>
+      of({
+        id: id,
+        name: 'test category',
+        path: '',
+        imagePath: '',
+      }),
+  };
+
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminCategoryComponent ],
-      imports: [
-        ReactiveFormsModule,
-        HttpClientTestingModule
-      ],
+      declarations: [AdminCategoryComponent],
+      imports: [ReactiveFormsModule, HttpClientTestingModule, MatDialogModule],
       providers: [
         { provide: Storage, useValue: {} },
         { provide: ToastrService, useValue: {} },
-      ]
-    })
-    .compileComponents();
+        { provide: CategoryService, useValue: categoryServiceStub },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
