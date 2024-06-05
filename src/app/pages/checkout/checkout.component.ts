@@ -75,10 +75,11 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {
         this.loadUser();    
-        this.initOrderForm(); 
+        
         this.loadBasket();
         this.getOrders();
         this.updateBasket();
+        this.initOrderForm(); 
           
       }
     })
@@ -372,19 +373,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     })
   }
 
-  // getAddress(): void {
   
-  //   let addr = this.orderForm.get('addres')?.value;    
-  //   this.select_address = addr?.toString().split("/");
-  //   this.select_address = this.select_address.filter(el => el != 'null')
-  //   this.orderForm.patchValue({
-  //     'city': this.select_address[0],
-  //     'street': this.select_address[1],
-  //     'house': this.select_address[2]
-  //   });
-  // }
-  // }
-
   formatAddress(addr: any): string {
     return `${addr.city}/${addr.street}/${addr.house}/${addr.flat}/${addr.entrance}/${addr.floor}`;
   }

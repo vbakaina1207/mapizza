@@ -1,16 +1,11 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HistoryComponent } from './history.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { SharedModule } from 'src/app/shared/sahared.module';
-import { FormatDatePipe } from 'src/app/shared/pipes/format-date.pipe';
-import { formatDate } from '@angular/common';
 
 describe('HistoryComponent', () => {
   let component: HistoryComponent;

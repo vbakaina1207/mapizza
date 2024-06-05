@@ -14,6 +14,7 @@ import { Firestore } from '@angular/fire/firestore';
 import { INewsDetailResponse } from 'src/app/shared/interfaces/news/news-info.interface';
 import { AccountService } from 'src/app/shared/services/account/account.service';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('AdminNewsDetailComponent', () => {
   let component: AdminNewsDetailComponent;
@@ -52,7 +53,7 @@ describe('AdminNewsDetailComponent', () => {
         }] 
         }]     
     }]),
-    createFirebase: (newsDetail: INewsDetailResponse) => of({ ...newsDetail }),
+    createFirebase: (news: INewsDetailResponse) => of({ ...news }),
     updateFirebase: (newsDetail: Partial<INewsDetailResponse>, id: string) => of({ id: id, ...newsDetail }),
     deleteFirebase: (id: string) => of({ 
       id: id, 
@@ -91,12 +92,13 @@ describe('AdminNewsDetailComponent', () => {
       declarations: [ AdminNewsDetailComponent ],
       imports: [
         ReactiveFormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatDialogModule
       ],
       providers: [
         { provide: Storage, useValue: {} },
         { provide: ToastrService, useValue: {} },
-         { provide: NewsDetailService, usevalue: newsDetailServiceStub },
+        { provide: NewsDetailService, usevalue: newsDetailServiceStub },
         { provide: AccountService, useValue: {} },
        /*  {
           provide: ActivatedRoute,

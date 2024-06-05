@@ -10,24 +10,67 @@ import { Firestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { environment } from 'src/environments/environment';
+import { of } from 'rxjs';
+import { NewsInfoService } from 'src/app/shared/services/news-info/news-info.service';
+import { VacancyService } from 'src/app/shared/services/vacancy/vacancy.service';
 
 
 describe('VacancyComponent', () => {
   let component: VacancyComponent;
   let fixture: ComponentFixture<VacancyComponent>;
 
+  const newsInfoServiceStub = {
+    getOneFirebase: (id: string) => of({
+      id: id,     
+      title: 'test',
+      description: 'test description',
+      imagePath: '',
+      detail:[{
+        id: 1,     
+      title: 'test',
+      description: 'test description',
+      imagePath: '',
+      detail:[null]
+      }]
+    }),
+    geAllFirebase: () => of([{
+      id: 1,     
+      title: 'test',
+      description: 'test description',
+      imagePath: '',
+      detail:[{
+        id: 1,     
+      title: 'test',
+      description: 'test description',
+      imagePath: '',
+      detail:[null]
+      }]
+    }]),
+  }
+
+  const vacancyServiceStub = {
+    getAllFirebase: () => of([
+      {
+        id: 1,
+        name: 'new vacancy',
+        path: '',
+        description: '',
+        imagePath: ''
+      }
+    ])
+  };
+
   beforeEach((async () => {
     await TestBed.configureTestingModule({
       declarations: [VacancyComponent],
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule,
-        AngularFireModule.initializeApp(environment.firebase),
+        RouterTestingModule,       
       ],
       providers: [
-        { provide: Firestore, useValue: {} }
+        { provide: NewsInfoService, useValue: newsInfoServiceStub },
+        { provide: VacancyService, useValue: vacancyServiceStub }
       ],
-      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -44,11 +87,4 @@ describe('VacancyComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-// function beforeEach(arg0: (done: any) => any) {
-//   throw new Error('Function not implemented.');
-// }
-
-// function expect(component: VacancyComponent) {
-//   throw new Error('Function not implemented.');
-// }
 

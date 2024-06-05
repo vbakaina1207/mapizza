@@ -14,16 +14,10 @@ export class VacancyService {
     private vacancyCollection!: CollectionReference<DocumentData>;
 
   constructor(private afs: Firestore) {
+    this.vacancyCollection = collection(this.afs, 'vacancies');
   }
-
-    private initializeCollection() {
-        if (!this.vacancyCollection) {
-            this.vacancyCollection = collection(this.afs, 'vacancies');
-        }
-  }  
   
-  getAllFirebase() {
-    this.initializeCollection();
+  getAllFirebase() {    
     return collectionData(this.vacancyCollection, { idField: 'id' });
   }
 

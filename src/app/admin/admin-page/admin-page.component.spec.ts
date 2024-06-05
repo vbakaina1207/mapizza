@@ -18,7 +18,7 @@ describe('AdminPageComponent', () => {
 
   const servicePagetStub = {
     getOneFirebase: (id: string) => of({      
-      id: 1, page: '1'
+      id: id, page: '1'
     }),
     getAllFirebase: () => of([
       { id: 1, name: '1' }

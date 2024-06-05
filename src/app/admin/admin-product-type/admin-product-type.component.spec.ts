@@ -18,7 +18,7 @@ describe('AdminProductTypeComponent', () => {
 
   const serviceTypeProductStub = {
     getOneFirebase: (id: string) => of({      
-      id: 1, name: 'test type', path: '', imgPath: '' 
+      id: id, name: 'test type', path: '', imgPath: '' 
     }),
     getAllFirebase: () => of([
       { id: 1, name: 'test type', path: '', imgPath: '' }
