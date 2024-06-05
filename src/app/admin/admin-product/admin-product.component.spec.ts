@@ -86,6 +86,22 @@ describe('AdminProductComponent', () => {
       { id: 1, name: 'test type', path: '', imgPath: '' }
     ])
   };
+  const categoryServiceStub = {
+    getOneFirebase: (id: string) =>
+      of({
+        id: id,
+        name: 'test category',
+        path: '',
+        imagePath: '',
+      }),
+      getAllFirebase: () =>
+        of([{
+          id: 1,
+          name: 'test category',
+          path: '',
+          imagePath: '',
+        }])
+  };
 
   beforeEach(async() => {
     await TestBed.configureTestingModule({
@@ -100,7 +116,7 @@ describe('AdminProductComponent', () => {
         { provide: Storage, useValue: {} },
         { provide: ToastrService, useValue: {} },
         { provide: ProductService, useValue: productServiceStub },
-        { provide: CategoryService, useValue: {}},
+        { provide: CategoryService, useValue: categoryServiceStub },
         { provide: AdditionProductService, useValue: serviceAdditionProductStub },
         { provide: TypeProductService, useValue: serviceTypeProductStub }
         //{ provide: Firestore, useValue: {} },

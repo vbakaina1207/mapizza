@@ -23,8 +23,7 @@ export class NewsComponent implements OnInit {
     private newsService: NewsService,
     private pageService: PageService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private afs: Firestore
+    private router: Router,    
   ) {
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {

@@ -12,10 +12,34 @@ import { Firestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { ImageService } from 'src/app/shared/services/image/image.service';
 import { Storage } from '@angular/fire/storage';
+import { of } from 'rxjs';
+import { MassageService } from 'src/app/shared/services/massage/massage.service';
+import { AccountService } from 'src/app/shared/services/account/account.service';
+import { ActivatedRoute } from '@angular/router';
 
 describe('VacancyInfoComponent', () => {
   let component: VacancyInfoComponent;
   let fixture: ComponentFixture<VacancyInfoComponent>;
+
+  const vacancyServiceStub = {
+    getAllFirebase: () => of([
+      {
+        id: 1,
+        name: 'new vacancy',
+        path: '',
+        description: '',
+        imagePath: ''
+      }
+    ])
+  };
+
+  
+  const massageServiceStub = {
+    getOneFirebase: (id: string) =>
+      of({ id: id, name: 'Ivan', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_message: ''}),
+    getAllFirebase: () =>
+      of([{ id: 1, name: 'Ivan', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_message: ''}]),
+  };
 
   beforeEach(async() => {
     await TestBed.configureTestingModule({
@@ -32,6 +56,13 @@ describe('VacancyInfoComponent', () => {
         { provide: Auth, useValue: {} },
         { provide: Firestore, useValue: {} },
         { provide: ToastrService, useValue: {} },
+        { provide: MassageService, useValue: massageServiceStub },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            data: of({ vacancyInfo: vacancyServiceStub })
+          }
+        }
       ]
     })
     .compileComponents();

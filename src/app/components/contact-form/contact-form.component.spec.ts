@@ -44,10 +44,7 @@ describe('ContactFormComponent', () => {
         { provide: Auth, useValue: {} },       
         { provide: ToastrService, useValue: {} },
         { provide: MassageService, useValue: serviceMassageStub }
-      ],
-      schemas: [
-        NO_ERRORS_SCHEMA
-        ]
+      ]
     })
     .compileComponents();
   });

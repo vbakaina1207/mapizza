@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DiscountService } from 'src/app/shared/services/discount/discount.service';
 import { ActivatedRoute } from '@angular/router';
 import { IDiscountResponse } from 'src/app/shared/interfaces/discount/discount.interface';
 
@@ -14,7 +13,6 @@ export class DiscountInfoComponent implements OnInit {
   public description: Array<string> = [];
   
   constructor(
-    private discountService: DiscountService,
     private activatedRoute: ActivatedRoute
   ) { }
 
@@ -27,11 +25,9 @@ export class DiscountInfoComponent implements OnInit {
   }
 
 
-getDescription(str:string):Array<string> {
-  //return  str.split(/(✅ )/);
-  return str.replace(/(✅)/gi, "<br>✅").replace(/❌/gi,"<br>❌").split("<br>");
-  // return str.split("<br>");
-}
+  getDescription(str:string):Array<string> {
+    return str.replace(/(✅)/gi, "<br>✅").replace(/❌/gi,"<br>❌").split("<br>");
+  }
 
 
 }

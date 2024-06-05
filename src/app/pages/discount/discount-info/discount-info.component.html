@@ -4,16 +4,16 @@
       <ul class="">
         <li>
           <a [routerLink]="[ '/' ]">
-          <span itemprop="name">Піца Львів</span>        
+          <span>Піца Львів</span>        
           </a>
         </li>
         <li>
           <a [routerLink]="[ '/discount/' ]">
-            <span itemprop="name">Акції</span>
+            <span>Акції</span>
           </a>
         </li>
         <li>
-          <span>{{discount.name | titlecase }}</span>
+          <span *ngIf="discount.name">{{discount.name | titlecase }}</span>
         </li>
       </ul>
     </ul>
@@ -28,7 +28,7 @@
       <div class="row justify-content-center ">
         <div class="col-lg-10 col-xl-8">
         <div class="banner-info">
-          <h1 class="h2 title text-center">
+          <h1 class="h2 title text-center" *ngIf="discount.name">
             {{discount.name | titlecase }}
           </h1>
         </div>

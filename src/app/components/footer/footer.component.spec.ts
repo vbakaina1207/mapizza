@@ -1,47 +1,42 @@
-/* tslint:disable:no-unused-variable */
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import {  NO_ERRORS_SCHEMA } from '@angular/core';
 
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FooterComponent } from './footer.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
+import { CategoryService } from 'src/app/shared/services/category/category.service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('FooterComponent', () => {
-//   let component: FooterComponent;
-//   let fixture: ComponentFixture<FooterComponent>;
-
-//   beforeEach(async() => {
-//     await TestBed.configureTestingModule({
-//       declarations: [FooterComponent],
-//       schemas: [
-//         NO_ERRORS_SCHEMA
-//         ]
-//     })
-//     .compileComponents();
-//   });
-
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(FooterComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
-
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
-let component: FooterComponent;
+  let component: FooterComponent;
   let fixture: ComponentFixture<FooterComponent>;
-  // const serviceStub = {
-  //   getBlogById: (id: string) =>
-  //     of({ id: id, title: '', description: '', imagePath: '' }),
-  // };
+  
+  const categoryServiceStub = {
+    getOneFirebase: (id: string) =>
+      of({
+        id: id,
+        name: 'test category',
+        path: '',
+        imagePath: '',
+      }),
+      getAllFirebase: () =>
+        of([{
+          id: 1,
+          name: 'test category',
+          path: '',
+          imagePath: '',
+        }])
+  };
+  
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [FooterComponent],
         imports: [RouterTestingModule],
-        // providers: [{ provide: BlogService, useValue: serviceStub }],
+        providers: [
+          { provide:CategoryService, useValue: categoryServiceStub}
+        ],
+        //schemas: [NO_ERRORS_SCHEMA]
       }).compileComponents();
     })
   );

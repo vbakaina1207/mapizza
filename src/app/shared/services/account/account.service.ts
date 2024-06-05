@@ -41,9 +41,6 @@ export class AccountService {
         this.searchAddress.next(address);
     }
     
-    // setAddress(address: string) {
-    //     this.searchAddress.next(address);
-    // }
 
     setZoneStatus(isGreenZone: boolean, isYellowZone: boolean) {
         this.zoneStatus.next({ isGreenZone, isYellowZone });

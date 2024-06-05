@@ -1,12 +1,12 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { NewsService } from './news.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
-import { CollectionReference, DocumentReference, Firestore} from '@angular/fire/firestore';
-import { BehaviorSubject, of } from 'rxjs';
+import {  Firestore} from '@angular/fire/firestore';
+
 
 
 // const FirestoreStub = {

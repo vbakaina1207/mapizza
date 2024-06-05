@@ -123,30 +123,34 @@
 // }
 
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { DiscountService } from './discount.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { AngularFireModule } from '@angular/fire/compat';
-import { Firestore } from '@angular/fire/firestore';
+import { of } from 'rxjs';
 
 describe('Service: Discount', () => {
   let httpTestingController: HttpTestingController;
   let discountService: DiscountService;
-  let angularFirestoreMock: any;
+
+  const discountServiceStub = {
+    getOneFirebase: (id: string) => of({
+      id: id,     
+      date: null,
+      name: 'test discount',
+      title: '',
+      description: '',
+      imagePath: ''
+    }),
+  }
 
   beforeEach(async() => {
     await TestBed.configureTestingModule({
-      providers: [
-        DiscountService,       
-        { provide: Firestore, useValue: { angularFirestoreMock } },
-        // PROVIDED_FIRESTORE_INSTANCES
-        // { provide: AngularFirestore, useValue: angularFirestoreMock }
+      providers: [             
+        { provide: DiscountService, useValue: discountServiceStub },
+        
       ],
       imports: [
         HttpClientTestingModule,
-        AngularFireModule,
-        // FirestoreModule,
-        
       ],
     }).compileComponents();
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -161,62 +165,5 @@ describe('Service: Discount', () => {
     expect(service).toBeTruthy();
   }));
 
-  // it('can test HttpClient.get', () => {
-  //   const data = [
-  //     {
-  //       id: 1,
-  //       date: '12-5-2023',
-  //       name: '1+1=3',
-  //       title: '1+1=3',
-  //       description: '',
-  //       imagePath: ''
-  //     },
-  //     {
-  //       id: 2,
-  //       date: '22-5-2023',
-  //       name: '50%',
-  //       title: '50%',
-  //       description: '',
-  //       imagePath: ''
-  //     }];
-  //   discountService.getAllFirebase().subscribe((response: any) => expect(response).toBe(data));
-  //   const req = httpTestingController.expectOne('http://localhost:3000/discounts');
-  //   expect(req.request.method).toBe('GET');
-  //   req.flush(data);
-  // });
-
-  // it('should send create request and return new discount', (done) => {
-  //   const discountRequest: IDiscountRequest = {
-  //     date:  Timestamp.fromDate(new Date()),
-  //     name: '1+1=3',
-  //     title: '1+1=3',
-  //     description: '',
-  //     imagePath:  ''
-  //   };
-
-  //   const expectedDiscount: IDiscountResponse = {
-  //     id: 3,
-  //     date:  Timestamp.now(),
-  //     name: '1+1=3',
-  //     title: '1+1=3',
-  //     description: '',
-  //     imagePath: ''
-  //   };
-
-  //   discountService.createFirebase(discountRequest).then((result: any) => {
-  //     expect(result).toEqual(expectedDiscount);
-  //     done();
-  //   }).catch(error => {
-  //     fail(error);  
-  //     done();
-  //   });
-
-  //   const expectedUrl = 'http://localhost:3000/discounts';
-  //   const testRequest = httpTestingController.expectOne(expectedUrl);
-
-  //   expect(testRequest.request.method).toEqual('POST');
-  //   expect(testRequest.request.body).toEqual(discountRequest);
-
-  //   testRequest.flush(expectedDiscount);
-  // });
+  
 });

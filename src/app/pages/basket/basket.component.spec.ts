@@ -2,7 +2,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { BasketComponent } from './basket.component';
 import { IProductResponse } from 'src/app/shared/interfaces/product/product.interface';
 import { ITypeAdditionResponse } from 'src/app/shared/interfaces/type-addition/type-addition.interfaces'; 
@@ -59,7 +59,8 @@ describe('BasketComponent', () => {
   comment: '',
   summa: 1155,
   address: []
-      })
+      }),
+      changeBasket: new Subject<boolean>() 
   };
 
   const serviceStub = {
