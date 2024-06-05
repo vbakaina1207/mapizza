@@ -20,6 +20,7 @@ describe('Service: Category', () => {
         path: '',
         imagePath: '',
       }),
+<<<<<<< HEAD
       getAllFirebase: () =>
         of([{
           id: 1,
@@ -27,20 +28,30 @@ describe('Service: Category', () => {
           path: '',
           imagePath: '',
         }]),
+=======
+>>>>>>> 449cca214dbcf9a6ea0a0be40342f1661a01bd35
   };
   
   beforeEach(async() => {
 
     await TestBed.configureTestingModule({
       providers: [
+<<<<<<< HEAD
         { provide: CategoryService, useValue: categoryServiceStub },
        
+=======
+        { providers: CategoryService, useValue: categoryServiceStub },
+        { provide: Firestore, useValue:{} },
+>>>>>>> 449cca214dbcf9a6ea0a0be40342f1661a01bd35
       ],
       imports: [
         HttpClientTestingModule             
       ]
     }).compileComponents();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 449cca214dbcf9a6ea0a0be40342f1661a01bd35
     httpTestingController = TestBed.inject( HttpTestingController );
     categoryService = TestBed.inject(CategoryService);
   });

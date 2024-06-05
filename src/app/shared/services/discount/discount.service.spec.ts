@@ -123,6 +123,10 @@
 // }
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 449cca214dbcf9a6ea0a0be40342f1661a01bd35
 import { TestBed, inject } from '@angular/core/testing';
 import { DiscountService } from './discount.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -166,4 +170,8 @@ describe('Service: Discount', () => {
   }));
 
   
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 449cca214dbcf9a6ea0a0be40342f1661a01bd35

@@ -8,7 +8,10 @@ import { Storage } from '@angular/fire/storage';
 import { DiscountService } from 'src/app/shared/services/discount/discount.service';
 import { of } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
+<<<<<<< HEAD
 import { SharedModule } from 'src/app/shared/sahared.module';
+=======
+>>>>>>> 449cca214dbcf9a6ea0a0be40342f1661a01bd35
 
 describe('AdminDiscountComponent', () => {
   let component: AdminDiscountComponent;
@@ -39,8 +42,12 @@ describe('AdminDiscountComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientTestingModule,
+<<<<<<< HEAD
         MatDialogModule,
         SharedModule   
+=======
+        MatDialogModule
+>>>>>>> 449cca214dbcf9a6ea0a0be40342f1661a01bd35
       ],
       providers: [
         { provide: Storage, useValue: {} },

@@ -21,6 +21,7 @@ describe('AdminCategoryComponent', () => {
         path: '',
         imagePath: '',
       }),
+<<<<<<< HEAD
       getAllFirebase: () =>
         of([{
           id: 1,
@@ -28,6 +29,8 @@ describe('AdminCategoryComponent', () => {
           path: '',
           imagePath: '',
         }])
+=======
+>>>>>>> 449cca214dbcf9a6ea0a0be40342f1661a01bd35
   };
 
   beforeEach(async () => {
