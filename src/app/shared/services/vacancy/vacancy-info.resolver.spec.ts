@@ -32,21 +32,6 @@ describe('VacancyInfoResolver', () => {
     expect(VacancyInfoResolver).toBeTruthy();
   });
 
-  // it('should resolve vacancy data', (done) => {
-  //   route.paramMap.get = jasmine.createSpy('get').and.returnValue('123');
-  //   const result = VacancyInfoResolver(route, state);
-
-  //   (result as Observable<IVacancyResponse>).subscribe({
-  //     next: data => {
-  //       expect(vacancyServiceMock.getOneFirebase).toHaveBeenCalledWith('123');
-  //       expect(data).toEqual({} as IVacancyResponse);
-  //       done();
-  //     },
-  //     error: err => {
-  //       fail(err);
-  //       done();
-  //     }
-  //   });
-  // });
+  
 });
 

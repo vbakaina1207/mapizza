@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ContactFormComponent } from './contact-form.component';
 import { ImageService } from 'src/app/shared/services/image/image.service';
 import { Storage } from '@angular/fire/storage';
@@ -44,7 +44,10 @@ describe('ContactFormComponent', () => {
         { provide: Auth, useValue: {} },       
         { provide: ToastrService, useValue: {} },
         { provide: MassageService, useValue: serviceMassageStub }
-      ]
+      ],  schemas: [
+         
+          CUSTOM_ELEMENTS_SCHEMA
+          ]
     })
     .compileComponents();
   });

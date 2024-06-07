@@ -4,6 +4,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { NewsDetailService } from './news-detail.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
+import { INewsDetailResponse } from '../../interfaces/news/news-info.interface';
 
 describe('Service: NewsDetail', () => {
 
@@ -22,6 +23,22 @@ describe('Service: NewsDetail', () => {
       imagePath: '',
       detail:[]
     }]),
+    createFirebase: (news: INewsDetailResponse) => of({ ...news }),
+    updateFirebase: (newsDetail: Partial<INewsDetailResponse>, id: string) => of({ id: id, ...newsDetail }),
+    deleteFirebase: (id: string) => of({ 
+      id: id, 
+      title: 'test', 
+      description: 'test description',
+      imagePath: '',
+      detail:[{
+        id: 1,     
+        title: 'test',      
+        description: 'test',
+        imagePath: '',
+        detail:[] 
+      }]
+    }
+    ),
   }
 
   beforeEach(async() => {

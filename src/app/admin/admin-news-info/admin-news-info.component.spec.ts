@@ -104,32 +104,14 @@ describe('AdminNewsInfoComponent', () => {
       title: 'test', 
       description: 'test description',
       imagePath: '',
-      detail:[{
-        id: 1,     
-        title: 'test',      
-        description: 'test',
-        imagePath: '',
-        detail:[] 
-      }]
+      detail:[]
     }),
     getAllFirebase: () => of([{     
         id: 1,     
         title: 'test',      
         description: 'test',
         imagePath: '',
-        detail:[{
-          id: 1,     
-        title: 'test',      
-        description: 'test',
-        imagePath: '',
-        detail:[{
-          id: 1,     
-        title: 'test',      
-        description: 'test',
-        imagePath: '',
-        detail:[] 
-        }] 
-        }]     
+        detail:[]     
     }]),
     createFirebase: (newsDetail: INewsDetailResponse) => of({ ...newsDetail }),
     updateFirebase: (newsDetail: Partial<INewsDetailResponse>, id: string) => of({ id: id, ...newsDetail }),
@@ -138,13 +120,7 @@ describe('AdminNewsInfoComponent', () => {
       title: 'test', 
       description: 'test description',
       imagePath: '',
-      detail:[{
-        id: 1,     
-        title: 'test',      
-        description: 'test',
-        imagePath: '',
-        detail:[] 
-      }]
+      detail:[]
     }
     ),
   }

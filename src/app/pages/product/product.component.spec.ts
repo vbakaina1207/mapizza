@@ -28,18 +28,17 @@ import { ITypeAdditionResponse } from 'src/app/shared/interfaces/type-addition/t
 import { IProductResponse } from 'src/app/shared/interfaces/product/product.interface';
 import { environment } from 'src/environments/environment';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { ToastrService } from 'ngx-toastr';
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
-import { Firestore } from '@angular/fire/firestore';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 
 
 describe('ProductComponent', () => {
   let component: ProductComponent;
   let fixture: ComponentFixture<ProductComponent>;
   let productService: ProductService;
-  toastr: ToastService;
 
   const serviceStub = {
     getOneFirebase: (id: string) => of({
@@ -195,11 +194,13 @@ docStub.get.and.returnValue(of({
       ],
       providers: [
         { provide: ProductService, useValue: serviceStub },
-        { provide: TypeProductService,useValue: serviceTypeProductStub  },
-        // { provide: AngularFirestore, useValue:  mockFirestore  },
+        { provide: TypeProductService,useValue: serviceTypeProductStub  },       
         { provide: OrderService, useValue: orderServiceStub },
         { provide: ToastrService, useValue: {} },
       ],
+      schemas:[
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     })
       .compileComponents();
   

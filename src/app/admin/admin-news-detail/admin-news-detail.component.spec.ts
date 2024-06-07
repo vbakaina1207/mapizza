@@ -1,8 +1,5 @@
 /* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
 import { AdminNewsDetailComponent } from './admin-news-detail.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -10,15 +7,16 @@ import { ToastrService } from 'ngx-toastr';
 import { Storage } from '@angular/fire/storage';
 import { of } from 'rxjs';
 import { NewsDetailService } from 'src/app/shared/services/news-detail/news-detail.service';
-import { Firestore } from '@angular/fire/firestore';
 import { INewsDetailResponse } from 'src/app/shared/interfaces/news/news-info.interface';
 import { AccountService } from 'src/app/shared/services/account/account.service';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialogModule } from '@angular/material/dialog';
+import { Firestore } from '@angular/fire/firestore';
 
 describe('AdminNewsDetailComponent', () => {
   let component: AdminNewsDetailComponent;
   let fixture: ComponentFixture<AdminNewsDetailComponent>;
+  let newsDetailService: NewsDetailService;
 
   const newsDetailServiceStub = {
     getOneFirebase: (id: string) => of({
@@ -31,7 +29,13 @@ describe('AdminNewsDetailComponent', () => {
         title: 'test',      
         description: 'test',
         imagePath: '',
+        detail:[{
+          id: 1,     
+        title: 'test',      
+        description: 'test',
+        imagePath: '',
         detail:[] 
+        }] 
       }]
     }),
     getAllFirebase: () => of([{     
@@ -65,17 +69,23 @@ describe('AdminNewsDetailComponent', () => {
         title: 'test',      
         description: 'test',
         imagePath: '',
+        detail:[{
+          id: 1,     
+        title: 'test',      
+        description: 'test',
+        imagePath: '',
         detail:[] 
+        }] 
       }]
     }
     ),
   }
 
   const firestoreStub = {
-    collection: () => ({
-      doc: () => ({
-        get: () => of({ id: '1', data: () => ({ 
-          id: '1',
+    collection: (path: string) => ({
+      doc: (id: string) => ({
+        get: () => of({ id, data: () => ({ 
+          id,
           page: {id: 1, page: '1'},
           name: 'test news',
           path: '',
@@ -87,26 +97,23 @@ describe('AdminNewsDetailComponent', () => {
     })
   };
   
+  
   beforeEach(async() => {
     await TestBed.configureTestingModule({
       declarations: [ AdminNewsDetailComponent ],
       imports: [
         ReactiveFormsModule,
         HttpClientTestingModule,
-        MatDialogModule
+        MatDialogModule,   
+        
       ],
       providers: [
+        { provide: MatDialogRef, useValue: {} },
         { provide: Storage, useValue: {} },
         { provide: ToastrService, useValue: {} },
-        { provide: NewsDetailService, usevalue: newsDetailServiceStub },
-        { provide: AccountService, useValue: {} },
-       /*  {
-          provide: ActivatedRoute,
-          useValue: {
-            data: of({ newsDetail: newsDetailServiceStub })
-          }
-        }, */
-        // { provide: Firestore, useValue: newsDetailServiceStub }
+        NewsDetailService,
+        // { provide: NewsDetailService, usevalue: newsDetailServiceStub },            
+          // { provide: Firestore, useValue: firestoreStub }
       ]
     })
     .compileComponents();
@@ -116,6 +123,8 @@ describe('AdminNewsDetailComponent', () => {
     fixture = TestBed.createComponent(AdminNewsDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    newsDetailService = TestBed.inject(NewsDetailService);
   });
 
   it('should create', () => {

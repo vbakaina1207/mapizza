@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { VacancyComponent } from './vacancy.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -19,35 +19,7 @@ describe('VacancyComponent', () => {
   let component: VacancyComponent;
   let fixture: ComponentFixture<VacancyComponent>;
 
-  const newsInfoServiceStub = {
-    getOneFirebase: (id: string) => of({
-      id: id,     
-      title: 'test',
-      description: 'test description',
-      imagePath: '',
-      detail:[{
-        id: 1,     
-      title: 'test',
-      description: 'test description',
-      imagePath: '',
-      detail:[null]
-      }]
-    }),
-    geAllFirebase: () => of([{
-      id: 1,     
-      title: 'test',
-      description: 'test description',
-      imagePath: '',
-      detail:[{
-        id: 1,     
-      title: 'test',
-      description: 'test description',
-      imagePath: '',
-      detail:[null]
-      }]
-    }]),
-  }
-
+  
   const vacancyServiceStub = {
     getAllFirebase: () => of([
       {
@@ -67,10 +39,12 @@ describe('VacancyComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,       
       ],
-      providers: [
-        { provide: NewsInfoService, useValue: newsInfoServiceStub },
+      providers: [       
         { provide: VacancyService, useValue: vacancyServiceStub }
       ],
+      schemas:[
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     })
     .compileComponents();
   }));

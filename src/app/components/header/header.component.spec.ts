@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HeaderComponent } from './header.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -137,7 +137,8 @@ describe('HeaderComponent', () => {
         { provide: CategoryService, useValue: categoryServiceStub },         
         { provide: OrderService, useValue: orderServiceStub},
         { provide: AccountService, useValue: accountServiceStub }
-      ]
+      ],
+      
     })
     .compileComponents();
   });

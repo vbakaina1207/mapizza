@@ -9,6 +9,7 @@ import { OrderService } from 'src/app/shared/services/order/order.service';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Firestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ProductInfoComponent', () => {
   let component: ProductInfoComponent;
@@ -101,7 +102,10 @@ docStub.get.and.returnValue(of({
         HttpClientTestingModule,
         RouterTestingModule,
         MatDialogModule
-      ]
+      ],
+      schemas: [
+          NO_ERRORS_SCHEMA
+          ]
     })
     .compileComponents();
   });

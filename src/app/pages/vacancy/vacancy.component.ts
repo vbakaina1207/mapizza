@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IVacancyResponse } from 'src/app/shared/interfaces/vacancy/vacancy.interface';
-import { VacancyService } from 'src/app/shared/services/vacancy/vacancy.service';
+import { VacancyService } from 'src/app/shared/services/vacancy/vacancy.service'; 
 
 @Component({
   selector: 'app-vacancy',
@@ -16,7 +16,6 @@ export class VacancyComponent implements OnInit {
   private eventSubscription!: Subscription;
 
   constructor( private vacancyService: VacancyService,
-    private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
     this.eventSubscription = this.router.events.subscribe(event => {

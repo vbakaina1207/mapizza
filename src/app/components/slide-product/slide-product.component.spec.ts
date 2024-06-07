@@ -12,6 +12,7 @@ import { ITypeAdditionResponse } from 'src/app/shared/interfaces/type-addition/t
 import { RouterTestingModule } from '@angular/router/testing';
 import { Firestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('SlideProductComponent', () => {
   let component: SlideProductComponent;
@@ -125,6 +126,9 @@ docStub.get.and.returnValue(of({
         { provide: ProductService, useValue: serviceStub },
         { provide: Firestore, useValue: mockFirestore },
         { provide: ToastrService, useValue: {} },
+      ],
+      schemas:[
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     })
     .compileComponents();

@@ -4,7 +4,7 @@ import { FooterComponent } from './footer.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { CategoryService } from 'src/app/shared/services/category/category.service';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -36,7 +36,7 @@ describe('FooterComponent', () => {
         providers: [
           { provide:CategoryService, useValue: categoryServiceStub}
         ],
-        //schemas: [NO_ERRORS_SCHEMA]
+        
       }).compileComponents();
     })
   );

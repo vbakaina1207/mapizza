@@ -38,8 +38,7 @@ export class VacancyInfoComponent implements OnInit {
     private massageService: MassageService,
     private imageService: ImageService,
     private toastr: ToastrService,
-    private route: ActivatedRoute,
-    private router: Router
+    
   ) { }
 
   ngOnInit(): void {

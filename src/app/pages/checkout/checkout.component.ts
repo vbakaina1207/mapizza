@@ -131,9 +131,9 @@ export class CheckoutComponent implements OnInit, OnDestroy{
       city: [this.select_address[0] || null],
       street: [this.select_address[1] || null],
       house: [this.select_address[2] || null],
-      entrance: [null],
-      floor: [null],
-      flat: [null],
+      entrance: [this.select_address[4] || null],
+      floor: [this.select_address[5] || null],
+      flat: [this.select_address[3] || null],
       use_bonus: [false],
       summa_bonus: [null],
       promocode: [null],      
@@ -390,22 +390,25 @@ export class CheckoutComponent implements OnInit, OnDestroy{
       });
       this.openLoginDialog();
     } else {
-      let addr = this.address[0];
-      this.orderForm.patchValue({
-        city: addr.city || '',
-        street: addr.street || '',
-        house: addr.house || '',
-        flat: addr.flat || '',
-        entrance: addr.entrance || '',
-        floor: addr.floor || ''
-      });
-    }
-  this.defaultAddress = this.select_address[0] + ' ' + this.select_address[1] + ' ' + this.select_address[2] + ' ' + this.select_address[3] + '' 
-  if (this.address && this.address.length > 0) {
-    let addr = this.address[0]; 
-    this.defaultAddress = `${addr.city} ${addr.street} ${addr.house} ${addr.flat}`;
-    this.orderForm.patchValue({ addres: this.defaultAddress });
+      // let addr = this.address[0];
+      // this.orderForm.patchValue({
+      //   city: addr.city || '',
+      //   street: addr.street || '',
+      //   house: addr.house || '',
+      //   flat: addr.flat || '',
+      //   entrance: addr.entrance || '',
+      //   floor: addr.floor || ''
+      // });
+    
+    this.defaultAddress = this.select_address[0] + ' ' + this.select_address[1] + ' ' + this.select_address[2] + ' ' + this.select_address[3] + '' 
+    if (this.address && this.address.length > 0) {
+      let addr = this.address[0]; 
+      this.defaultAddress = `${addr.city} ${addr.street} ${addr.house} ${addr.flat}`;
+      this.orderForm.patchValue({ addres: this.defaultAddress });
+    } else this.defaultAddress = '';
   }
+
+   
 }
 
   parseAddress(address: string): any[] {

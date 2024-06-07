@@ -47,14 +47,12 @@ describe('VacancyInfoComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        ReactiveFormsModule,     
-        AngularFireStorageModule
+        ReactiveFormsModule,             
       ],
       providers: [
         ImageService  ,
-        { provide: Storage, useValue: {} },       
-        { provide: Auth, useValue: {} },
-        { provide: Firestore, useValue: {} },
+        { provide: Storage, useValue: {} },               
+        // { provide: Firestore, useValue: {} },
         { provide: ToastrService, useValue: {} },
         { provide: MassageService, useValue: massageServiceStub },
         {

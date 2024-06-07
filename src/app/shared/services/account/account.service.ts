@@ -28,6 +28,11 @@ export class AccountService {
     public favoriteProducts: Array<IProductResponse> = [];
     private url = environment.BACKEND_URL;
     private api = { auth: `${this.url}/auth` };
+    
+
+//     private zoneStatus = new Subject<{ isGreenZone: boolean; isYellowZone: boolean }>();
+//   public zoneStatus$: Subject<{ isGreenZone: boolean; isYellowZone: boolean }> = this.zoneStatus; 
+
 
     constructor(
         private http: HttpClient
@@ -42,7 +47,7 @@ export class AccountService {
     }
     
 
-    setZoneStatus(isGreenZone: boolean, isYellowZone: boolean) {
+    setZoneStatus(isGreenZone: boolean, isYellowZone: boolean):void {
         this.zoneStatus.next({ isGreenZone, isYellowZone });
     }
 
