@@ -60,7 +60,7 @@ describe('BasketComponent', () => {
   summa: 1155,
   address: []
       }),
-      changeBasket: new Subject<boolean>() 
+  changeBasket: new Subject<boolean>() 
   };
 
   const serviceStub = {
@@ -114,6 +114,7 @@ docStub.get.and.returnValue(of({
   })
 }));
 
+const storage: Record<string, string> = {};
 
   beforeEach(async() => {
     await TestBed.configureTestingModule({
@@ -142,4 +143,129 @@ docStub.get.and.returnValue(of({
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('it should change total', () => {
+    const FAKE_BASKET = [
+      {
+        id: '1',
+      category: { id: 1, name: '', path: '', imagePath: '' },
+      type_product: { id: 1, name: '', path: '', imgPath: '' },
+      type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+      selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+      name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 2
+      }
+    ];
+    component.basket = FAKE_BASKET;
+    spyOn(component, 'getTotalPrice').and.callThrough();
+    component.getTotalPrice();
+    expect(component.getTotalPrice).toHaveBeenCalled();
+    expect(component.total).toBe(24);
+    component.basket = [];
+    component.getTotalPrice();
+    expect(component.getTotalPrice).toHaveBeenCalled();
+    expect(component.total).toBe(0);
+  });
+
+  it('add products to basket', () => {
+    const product = {
+      id: '1', 
+        category: { id: 1, name: '', path: '', imagePath: '' },
+        type_product: { id: 1, name: '', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: 'Product Name', path: '', ingredients: 'products', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+    };
+  spyOn(component, 'addToBasket').and.callThrough();
+  component.addToBasket(product, true);
+  expect(component.addToBasket).toHaveBeenCalled();
+  expect(component).toBeTruthy();
+});
+
+
+it('should add products to basket', () => {
+  const product = {
+    id: '1', 
+    category: { id: 1, name: '', path: '', imagePath: '' },
+    type_product: { id: 1, name: '', path: '', imgPath: '' },
+    type_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    name: 'Product Name', path: '', ingredients: 'products', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+  };
+  spyOn(component, 'addToBasket').and.callThrough();
+  component.addToBasket(product, true);
+  expect(component.addToBasket).toHaveBeenCalled();
+  expect(component).toBeTruthy();
+});
+
+it('should remove the product from basket', () => {
+  // Продукт, который будет удаляться из корзины
+  const product = {
+    id: '1',
+    category: { id: 1, name: '', path: '', imagePath: '' },
+    type_product: { id: 1, name: '', path: '', imgPath: '' },
+    type_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    name: 'Product Name', path: '', ingredients: 'products', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+  };
+  
+  // Фейковая корзина с одним продуктом
+  const FAKE_BASKET = [product];
+  localStorage.setItem('basket', JSON.stringify(FAKE_BASKET));
+
+  // Создание шпионов для проверки вызовов setItem и changeBasket
+  const spySetItem = spyOn(localStorage, 'setItem').and.callFake((key: string, value: string) => {
+    // Запись в localStorage эмулируется через переменную storage
+    if (key === 'basket') {
+      storage['basket'] = value;
+    }
+  });
+  const spyChangeBasket = spyOn(orderServiceStub.changeBasket, 'next').and.callThrough();
+
+  // Вызов метода удаления продукта из корзины
+  component.removeFromBasket(product as IProductResponse);
+
+  // Проверка содержимого корзины в localStorage
+  const updatedBasket = JSON.parse(storage['basket'] || '[]');
+  expect(updatedBasket.length).toBe(0); // Корзина должна быть пустой
+  expect(spySetItem).toHaveBeenCalledWith('basket', JSON.stringify([]));
+  expect(spyChangeBasket).toHaveBeenCalledWith(true);
+});
+
+
+
+it('should update the basket when orderService.changeBasket emits', () => {
+  const spyLoadBasket = spyOn(component, 'loadBasket').and.callThrough();
+  const spySubscribe = spyOn(orderServiceStub.changeBasket, 'subscribe').and.callThrough();
+
+  component.updateBasket();
+
+  expect(spySubscribe).toHaveBeenCalled();
+  orderServiceStub.changeBasket.next(true);
+  expect(spyLoadBasket).toHaveBeenCalled();
+});
+
+it('should update the product in the basket', () => {
+  const product = {
+    id: '1',
+    category: { id: 1, name: '', path: '', imagePath: '' },
+    type_product: { id: 1, name: '', path: '', imgPath: '' },
+    type_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    name: 'Product Name', path: '', ingredients: 'products', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+  };
+  const FAKE_BASKET = [product];
+  localStorage.setItem('basket', JSON.stringify(FAKE_BASKET));
+
+  const spySetItem = spyOn(localStorage, 'setItem');
+  const spyChangeBasket = spyOn(orderServiceStub.changeBasket, 'next').and.callThrough();
+
+  component.updateProductInBasket(product as any, 0);
+
+  const updatedBasket = JSON.parse(localStorage.getItem('basket') as string);
+  expect(updatedBasket[0]).toEqual(product);
+  expect(spySetItem).toHaveBeenCalledWith('basket', JSON.stringify([product]));
+  expect(spyChangeBasket).toHaveBeenCalledWith(true);
+});
+
+
 });

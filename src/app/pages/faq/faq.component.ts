@@ -32,10 +32,10 @@ export class FaqComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private toastr: ToastrService,
-    private dialog: MatDialog,
-    private faqService: FaqService,
-    private imageService: ImageService,
+    public toastr: ToastrService,
+    public dialog: MatDialog,
+    public faqService: FaqService,
+    public imageService: ImageService,
     private route: ActivatedRoute,
     ) { }
 

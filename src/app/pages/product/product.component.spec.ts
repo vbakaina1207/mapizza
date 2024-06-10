@@ -1,13 +1,10 @@
 
-//   it('should load products on init', () => {
-//     component.ngOnInit();
-//     expect(component.userProducts.length).toBeGreaterThan(0);
-//   });
+ 
 
-//   it('should get product by id', () => {
-//     component.getProductById('1');
-//     expect(component.userProducts[0].id).toBe('1');
-//   });
+  // it('should get product by id', () => {
+  //   component.getProductById('1');
+  //   expect(component.userProducts[0].id).toBe('1');
+  // });
 
 //   it('should update product', () => {
 //     const product = { id: '1', name: 'Updated Product' };
@@ -342,7 +339,10 @@ it('should update the count field when calling updateCount', () => {
  expect(product.count).toBe(newCount);
 })
 
-
+it('should load products on init', () => {
+  component.ngOnInit();
+  expect(component.userProducts.length).toBeGreaterThan(0);
+});
   
   
 

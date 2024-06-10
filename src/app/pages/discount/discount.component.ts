@@ -11,7 +11,7 @@ import { DiscountService } from 'src/app/shared/services/discount/discount.servi
 })
 export class DiscountComponent implements OnInit {
   public userDiscounts: Array<IDiscountResponse> = [];
-  private eventSubscription!: Subscription;
+  public eventSubscription!: Subscription;
 
   constructor(
     private discountService: DiscountService,

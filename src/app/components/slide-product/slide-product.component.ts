@@ -40,13 +40,13 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
 
   
   constructor(
-    private productService: ProductService,    
+    public productService: ProductService,    
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private orderService: OrderService,
     private accountService: AccountService,
     private afs: Firestore,
-    private toastr: ToastService
+    public toastr: ToastService
   ) { 
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {
@@ -142,7 +142,8 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
       if(this.basket?.some(prod => prod.id === product.id)){
         const index = this.basket.findIndex(prod => prod.id === product.id);
         
-        this.basket[index].count += product.count;      
+        this.basket[index].count += 1;
+        // product.count;      
       } else {
         this.basket?.push(product);        
       }
@@ -152,11 +153,13 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
     }
     
     this.toastr.showSuccess('',  product.name + ' успішно додано до кишику');
-    e.target.innerText = '';
+    if (e.target && e.target.innerText) e.target.innerText = '';
     
     this.isOrder = true;
     if (this.isOrder) {
-      e.target.nextSibling.classList.add('hide');
+      if (e.target.nextSibling) {
+        e.target.nextSibling.classList.add('hide');
+      }
       e.target.classList.add('primary');
     }
     if (this.isOrder) {      

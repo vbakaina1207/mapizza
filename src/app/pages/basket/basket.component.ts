@@ -68,24 +68,7 @@ public total = 0;
     this.addToBasket(product, value);
   }
 
-  // addToBasket(product: IProductResponse, value: boolean): void {
-  //   let basket: Array<IProductResponse> = [];
-  //   if(localStorage?.length > 0 && localStorage.getItem('basket')){
-  //     basket = JSON.parse(localStorage.getItem('basket') as string);
-  //     if(basket.some(prod => prod.id === product.id)){
-  //       const index = basket.findIndex(prod => prod.id === product.id);
-  //       if (value) basket[index].count += 1;
-  //       if (!value && basket[index].count > 1) basket[index].count -= 1;
-  //     } else {
-  //       basket.push(product);
-  //     }
-  //   } else {
-  //     basket.push(product);
-  //   }
-  //   localStorage.setItem('basket', JSON.stringify(basket));
-  //   product.count = 1;
-  //   this.orderService.changeBasket.next(true);
-  // }
+  
 
   addToBasket(product: IProductResponse, value: boolean): void {
     let basket: Array<IProductResponse> = [];
@@ -140,14 +123,7 @@ areSelectedAdditionsEqual(additions1: Array<ITypeAdditionResponse>, additions2: 
   }
 
 
-  // additionDeleteClick(product: IProductResponse, additionName: any): void {
-  //   for (let i = 0; i < product.selected_addition.length; i++) {
-  //     if (product.selected_addition[i].name == additionName) {
-  //       product.addition_price = product.addition_price - Number(product.selected_addition[i].price);
-  //       product.selected_addition.splice(i, 1);
-  //     }
-  //   }
-  // }
+  
 
   additionDeleteClick(product: IProductResponse, additionName: any): void {
     if(localStorage?.length > 0 && localStorage.getItem('basket')){

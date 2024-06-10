@@ -5,10 +5,16 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { DiscountService } from 'src/app/shared/services/discount/discount.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 
 describe('DiscountComponent', () => {
   let component: DiscountComponent;
   let fixture: ComponentFixture<DiscountComponent>;
+  let discountService: DiscountService;
+  let router: Router;
+  let toastrService: ToastrService;
 
   const discountServiceStub = {
     getOneFirebase: (id: string) => of({
@@ -29,6 +35,11 @@ describe('DiscountComponent', () => {
     }]),
   }
 
+  const toastrServiceStub = {
+    success: jasmine.createSpy(),
+    error: jasmine.createSpy()
+  };
+
   beforeEach(async() => {
     await TestBed.configureTestingModule({
       declarations: [DiscountComponent],
@@ -37,10 +48,14 @@ describe('DiscountComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        { provide: DiscountService, useValue: discountServiceStub }
+        { provide: DiscountService, useValue: discountServiceStub },
+        { provide: ToastrService, useValue: toastrServiceStub }
       ]
     })
     .compileComponents();
+
+    discountService = TestBed.inject(DiscountService);
+    router = TestBed.inject(Router);
   });
 
   beforeEach(() => {
@@ -63,4 +78,22 @@ describe('DiscountComponent', () => {
     app.getDiscounts();
     expect(app.userDiscounts).toEqual([]);
   });
+
+  
+
+
+  it('should unsubscribe from router events on component destroy', () => {
+    spyOn(component.eventSubscription, 'unsubscribe');
+    component.ngOnDestroy();
+    expect(component.eventSubscription.unsubscribe).toHaveBeenCalled();
+  });
+
+  
+
+  it('should handle loading no discounts', () => {
+    spyOn(discountService, 'getAllFirebase').and.returnValue(of([]));
+    component.getDiscounts();
+    expect(component.userDiscounts).toEqual([]);
+  }); 
+
 });

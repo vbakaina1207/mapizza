@@ -1,11 +1,11 @@
 /* tslint:disable:no-unused-variable */
-import {ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 
 import { SlideProductComponent } from './slide-product.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { OrderService } from 'src/app/shared/services/order/order.service';
-import { of } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { IProductResponse } from 'src/app/shared/interfaces/product/product.interface';
 import { ITypeAdditionResponse } from 'src/app/shared/interfaces/type-addition/type-addition.interfaces';
@@ -17,6 +17,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 describe('SlideProductComponent', () => {
   let component: SlideProductComponent;
   let fixture: ComponentFixture<SlideProductComponent>;
+  let productService: ProductService;
+  
 
   const orderServiceStub = {
     getAllFirebase: () => of({
@@ -59,7 +61,8 @@ describe('SlideProductComponent', () => {
   comment: '',
   summa: 1155,
   address: []
-      })
+      }),
+      changeBasket: new Subject<boolean>()   
   };
 
   const serviceStub = {
@@ -113,6 +116,11 @@ docStub.get.and.returnValue(of({
   })
 }));
 
+
+const toastrServiceStub = {
+  success: jasmine.createSpy(),
+  error: jasmine.createSpy()
+};
   
   beforeEach(async() => {
     await TestBed.configureTestingModule({
@@ -125,7 +133,7 @@ docStub.get.and.returnValue(of({
         { provide: OrderService, useValue: orderServiceStub },
         { provide: ProductService, useValue: serviceStub },
         { provide: Firestore, useValue: mockFirestore },
-        { provide: ToastrService, useValue: {} },
+        { provide: ToastrService, useValue: toastrServiceStub },
       ],
       schemas:[
         CUSTOM_ELEMENTS_SCHEMA
@@ -136,11 +144,114 @@ docStub.get.and.returnValue(of({
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SlideProductComponent);
-    component = fixture.componentInstance;
+    component = fixture.componentInstance;        
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('loading products', () => {
+    const data = [
+      {       
+        id: '1', 
+        category: { id: 1, name: 'pizza', path: '', imagePath: '' },
+        type_product: { id: 1, name: '', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: 'Product Name', path: '', ingredients: 'products', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+      }
+    ]
+    let categoryName = 'pizza';
+    const productTypeName = '';
+    component.categoryName = categoryName;
+    component.productTypeName = productTypeName;
+    component.loadProducts();
+    productService?.getAllByCategoryFirebase(categoryName).subscribe(result => {
+      expect(result).toEqual(data);
+    });
+    if (productTypeName){
+      productService?.getAllByProductTypeFirebase(productTypeName, categoryName).subscribe(result => {
+        expect(result).toEqual(data);
+      });
+    }
+    expect(component).toBeTruthy();
+  });
+
+  it('should decrease product count', () => {
+    const product: IProductResponse = {
+      id: '1',
+    category: { id: 1, name: '', path: '', imagePath: '' },
+    type_product: { id: 1, name: '', path: '', imgPath: '' },
+    type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '',
+    count: 2
+    };
+    component.productCount(product, false);
+    expect(product.count).toBe(1);
+  });
+
+  it('should increase product count', () => {
+    const product: IProductResponse = {
+      id: '1',
+      category: { id: 1, name: '', path: '', imagePath: '' },
+      type_product: { id: 1, name: '', path: '', imgPath: '' },
+      type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+      selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+      name: '', path: '', ingredients: 'products', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', 
+      count: 1
+    };
+    component.productCount(product, true);
+    expect(product.count).toBe(2);
+  });
+
+  it('should add product to basket and update basket', fakeAsync(() => {
+//     const component: SlideProductComponent = TestBed.createComponent(SlideProductComponent).componentInstance;
+// spyOn(component, 'addToBasket');
+
+    const product: IProductResponse = {
+      id: '1',
+      category: { id: 1, name: '', path: '', imagePath: '' },
+      type_product: { id: 1, name: '', path: '', imgPath: '' },
+      type_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+      selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+      name: 'Product Name', path: '', ingredients: 'products', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', 
+      count: 1
+    };
+    const event: any = {
+      target: { innerText: '', nextSibling: { classList: { add: () => {} } } , classList: { add: () => {} }}
+    };
+
+    
+  
+    spyOn(component.toastr, 'showSuccess'); 
+    spyOn(event.target.nextSibling.classList, 'add'); 
+    spyOn(event.target.classList, 'add'); 
+    spyOn(component.productService, 'getAllByCategoryFirebase').and.returnValue(of([{ 
+      id: '1', 
+      category: { id: 1, name: '', path: '', imagePath: '' },
+      type_product: { id: 1, name: '', path: '', imgPath: '' },
+      type_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+      selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+      name: 'Product Name', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', 
+      count: 1 }]));
+    
+    component.addToBasket(product, event);
+
+    tick();
+ 
+    expect(event.target.nextSibling.classList.add).toHaveBeenCalledWith('hide'); 
+    expect(event.target.classList.add).toHaveBeenCalledWith('primary'); 
+    expect(event.target.nextSibling.classList.add).toHaveBeenCalledWith('hide'); 
+  expect(event.target.classList.add).toHaveBeenCalledWith('primary'); 
+  expect(component.toastr.showSuccess).toHaveBeenCalled(); 
+  // expect(component.addToBasket).toHaveBeenCalled(); // Проверяем вызов функции addToBasket()
+  expect(component.basket.length).toEqual(1); // Проверяем, что продукт добавлен в корзину
+  expect(component.basket[0]).toEqual(product); // Проверяем, что добавленный продукт совпадает с ожидаемым
+  expect(product.count).toEqual(2)
+
+  }));
+
 });
