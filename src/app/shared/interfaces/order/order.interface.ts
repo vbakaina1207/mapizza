@@ -9,7 +9,7 @@ export interface IOrderRequest {
   date_order: Timestamp;
   total: number;
   status: boolean;
-  product: IProductResponse;
+  product: IProductResponse[];
   name: string;
   phone: string;
   email: string;

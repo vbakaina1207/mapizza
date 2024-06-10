@@ -52,4 +52,12 @@ describe('FaqComponent', () => {
   it('should compile', () => {
     expect(component).toBeTruthy();
   });
+
+  it('load user', () => {
+    let user = component.currentUser;
+    localStorage.getItem('currentUser');
+    component.loadUser();
+    expect(component).toBeTruthy();
+  });
+  
 });

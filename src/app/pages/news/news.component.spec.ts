@@ -12,6 +12,8 @@ import { PageService } from 'src/app/shared/services/page/page.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Firestore } from '@angular/fire/firestore';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { NewsInfoService } from 'src/app/shared/services/news-info/news-info.service';
+import { INewsResponse } from 'src/app/shared/interfaces/news/news.interface';
 
 describe('NewsComponent', () => {
   let component: NewsComponent;
@@ -36,6 +38,9 @@ describe('NewsComponent', () => {
       imagePath: '',
       detail:[]
     }]),
+    createFirebase: (news: INewsResponse) => of({ ...news }),
+    updateFirebase: (news: Partial<INewsResponse>, id: string) => of({ id: id, ...news }),
+    deleteFirebase: (id: string) => of({ id: id, page: 1 }),
   }
 
   const pageServiceStub = {
@@ -73,8 +78,7 @@ describe('NewsComponent', () => {
          { provide: ToastrService, useValue: {} },       
          { provide: NewsService, useValue: newsServiceStub },
          { provide: PageService, useValue: pageServiceStub },        
-         { provide: Firestore, useValue: {} }, 
-         { provide: AngularFirestore, useValue: {} }, 
+         { provide: Firestore, useValue: mockFirestore },         
        ], 
        imports: [
         RouterTestingModule,
@@ -92,4 +96,16 @@ describe('NewsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should get all news', () => {
+    const fixture = TestBed.createComponent(NewsComponent);
+    const app = fixture.componentInstance;
+    let service = fixture.debugElement.injector.get(NewsService);
+    spyOn(service,"getAllFirebase").and.callFake(() => {
+      return of([]);
+    });
+    app.loadNews();
+    expect(app.news).toEqual([]);
+  });
+
 });

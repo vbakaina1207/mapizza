@@ -15,10 +15,13 @@ import { Firestore } from '@angular/fire/firestore';
 import { INewsDetailResponse } from 'src/app/shared/interfaces/news/news-info.interface';
 import { NewsDetailService } from 'src/app/shared/services/news-detail/news-detail.service';
 import { AccountService } from 'src/app/shared/services/account/account.service';
+import { MatDialogContent, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('AdminNewsInfoComponent', () => {
   let component: AdminNewsInfoComponent;
   let fixture: ComponentFixture<AdminNewsInfoComponent>;
+  let newsInfoService: NewsInfoService;
+  let toastrService: ToastrService;
 
   const newsInfoServiceStub = {
     getOneFirebase: (id: string) => of({
@@ -34,7 +37,7 @@ describe('AdminNewsInfoComponent', () => {
       detail:[null]
       }]
     }),
-    geAllFirebase: () => of([{
+    getAllFirebase: () => of([{
       id: 1,     
       title: 'test',
       description: 'test description',
@@ -130,28 +133,44 @@ describe('AdminNewsInfoComponent', () => {
       declarations: [AdminNewsInfoComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatDialogModule
       ],
       providers: [
         { provide: Storage, useValue: {} },
         { provide: ToastrService, useValue: {} },
-        { provide: NewsInfoService, usValue: newsInfoServiceStub },
-        { provide: NewsService, usValue: newsServiceStub },
-        { provide: NewsDetailService, usevalue: newsDetailServiceStub },
-        //{ provide: AccountService, useValue: {} },
-       // { provide: Firestore, useValue: firestoreStub }
+        { provide: MatDialogRef, useValue: {} },
+        { provide: NewsInfoService, useValue: newsInfoServiceStub },
+        // { provide: NewsService, useValue: newsServiceStub },
+        { provide: NewsDetailService, useValue: newsDetailServiceStub },
+        { provide: AccountService, useValue: {} },
+        { provide: Firestore, useValue: firestoreStub }
       ]
     })
-    .compileComponents();
+    .compileComponents();    
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminNewsInfoComponent);
     component = fixture.componentInstance;
+    newsInfoService = TestBed.inject(NewsInfoService);
+    toastrService = TestBed.inject(ToastrService);
+    spyOn(console, 'log');
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should check if news data is loaded', () => {
+    spyOn(newsInfoService, 'getAllFirebase').and.returnValue(of([{ id: 1, title: 'Test News', description: 'Test Description' }]));
+    component.loadNews();
+    fixture.detectChanges(); 
+    expect(newsInfoService.getAllFirebase).toHaveBeenCalled(); // Verify method call
+   
+  });
+  
+  
+  
 });

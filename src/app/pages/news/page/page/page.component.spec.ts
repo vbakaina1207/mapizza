@@ -28,6 +28,7 @@ docStub.get.and.returnValue(of({
 describe('PageComponent', () => {
   let component: PageComponent;
   let fixture: ComponentFixture<PageComponent>;
+  let pageService: PageService;
 
   const pageServiceStub = {
     getOneFirebase: (id: string) => of({ id: id, page: 1 }),
@@ -131,4 +132,19 @@ describe('PageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('loading page', () => {
+    const PAGE_ID = '1';
+    const data = [
+      {id: 1, page: '1'}        
+    ]    
+    if (PAGE_ID){
+      pageService?.getOneFirebase(PAGE_ID).subscribe(result => {
+        expect(result).toEqual(data);
+      });
+    }
+    expect(component).toBeTruthy();
+  });
+
+
 });

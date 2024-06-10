@@ -51,6 +51,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private toastr: ToastService
   ) {
+   
     this.eventSubscription = this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd ) {          
         this.loadFaviriteProducts();
@@ -80,7 +81,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   
-  private loadProducts(): void {
+  public loadProducts(): void {
     this.categoryName === 'pizza';
     this.categoryName = this.activatedRoute.snapshot.paramMap.get('category') as string  || 'pizza';
     this.productTypeName = this.activatedRoute.snapshot.paramMap.get('type_product') as string;
@@ -172,6 +173,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
     
     this.toastr.showSuccess('',  product.name + ' успішно додано до кишику');
+    if (e && e.target) {
     e.target.innerText = '';
     this.isOrder = true;
     if (this.isOrder) {
@@ -186,6 +188,7 @@ export class ProductComponent implements OnInit, OnDestroy {
           e.target.classList.remove('primary')
       }, 2000);
     }
+  }
     localStorage.setItem('basket', JSON.stringify(this.basket));    
     product.count = 1;
     this.orderService.changeBasket.next(true);

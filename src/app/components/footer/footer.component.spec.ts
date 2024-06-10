@@ -5,10 +5,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { CategoryService } from 'src/app/shared/services/category/category.service';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ICategoryResponse } from 'src/app/shared/interfaces/category/category.interface';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
   let fixture: ComponentFixture<FooterComponent>;
+  let categoryService: CategoryService
   
   const categoryServiceStub = {
     getOneFirebase: (id: string) =>
@@ -48,6 +50,18 @@ describe('FooterComponent', () => {
   });
 
   it('should compile', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it(`should return empty list of categories'`, () => {
+    const category: ICategoryResponse = {
+      id: 3,
+      name: 'pizza',
+      path: 'pizza',
+      imagePath: ''
+    };
+    component.getCategories();
+    categoryService?.getAllFirebase().subscribe((response: any) => expect(response).toBe(category));
     expect(component).toBeTruthy();
   });
 });

@@ -6,10 +6,12 @@ import { ToastrService } from 'ngx-toastr';
 import { NewsService } from 'src/app/shared/services/news/news.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AccountService } from 'src/app/shared/services/account/account.service';
+import { NewsInfoService } from 'src/app/shared/services/news-info/news-info.service';
 
 describe('NewsInfoComponent', () => {
   let component: NewsInfoComponent;
   let fixture: ComponentFixture<NewsInfoComponent>;
+  let newsInfoService: NewsInfoService;
 
   const newsServiceStub = {
     getOneFirebase: (id: string) => of({
@@ -48,4 +50,26 @@ describe('NewsInfoComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('loading one new', () => {
+    const NEWS_ID = '1';
+    const data = [
+      {
+        id: 1, 
+        page: {id: 1, page: '1'},
+        name: 'test news',
+        path: '',
+        description: 'test description',
+        imagePath: '',
+        detail:[]
+      }
+    ]    
+    if (NEWS_ID){
+      newsInfoService?.getOneFirebase(NEWS_ID).subscribe(result => {
+        expect(result).toEqual(data);
+      });
+    }
+    expect(component).toBeTruthy();
+  });
+
 });

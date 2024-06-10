@@ -19,6 +19,14 @@ describe('DiscountComponent', () => {
       description: '',
       imagePath: ''
     }),
+    getAllFirebase: () => of([{
+      id: 1,     
+      date: null,
+      name: 'test discount',
+      title: '',
+      description: '',
+      imagePath: ''
+    }]),
   }
 
   beforeEach(async() => {
@@ -43,5 +51,16 @@ describe('DiscountComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should get all discount', () => {
+    const fixture = TestBed.createComponent(DiscountComponent);
+    const app = fixture.componentInstance;
+    let service = fixture.debugElement.injector.get(DiscountService);
+    spyOn(service,"getAllFirebase").and.callFake(() => {
+      return of([]);
+    });
+    app.getDiscounts();
+    expect(app.userDiscounts).toEqual([]);
   });
 });

@@ -30,9 +30,6 @@ export class AccountService {
     private api = { auth: `${this.url}/auth` };
     
 
-//     private zoneStatus = new Subject<{ isGreenZone: boolean; isYellowZone: boolean }>();
-//   public zoneStatus$: Subject<{ isGreenZone: boolean; isYellowZone: boolean }> = this.zoneStatus; 
-
 
     constructor(
         private http: HttpClient

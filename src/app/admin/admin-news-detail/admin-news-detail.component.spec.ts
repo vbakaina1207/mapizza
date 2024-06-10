@@ -104,16 +104,14 @@ describe('AdminNewsDetailComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientTestingModule,
-        MatDialogModule,   
-        
+        MatDialogModule,           
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: Storage, useValue: {} },
-        { provide: ToastrService, useValue: {} },
-        NewsDetailService,
-        // { provide: NewsDetailService, usevalue: newsDetailServiceStub },            
-          // { provide: Firestore, useValue: firestoreStub }
+        { provide: ToastrService, useValue: {} },    
+        { provide: NewsDetailService, useValue: newsDetailServiceStub },            
+        { provide: Firestore, useValue: firestoreStub }
       ]
     })
     .compileComponents();

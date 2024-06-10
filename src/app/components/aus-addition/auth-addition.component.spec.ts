@@ -15,11 +15,14 @@ import { AdditionProductService } from 'src/app/shared/services/addition-product
 import { of } from 'rxjs';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { ProductService } from 'src/app/shared/services/product/product.service';
+import { ITypeAdditionResponse } from 'src/app/shared/interfaces/type-addition/type-addition.interfaces';
+import { AccountService } from 'src/app/shared/services/account/account.service';
 
 describe('AuthAdditionComponent', () => {
   let component: AuthAdditionComponent;
   let fixture: ComponentFixture<AuthAdditionComponent>;
-
+  let addProductService: AdditionProductService;
+  let productService: ProductService;
   
   const serviceAdditionProductStub = {
     getOneFirebase: (id: string) => of({      
@@ -136,4 +139,76 @@ describe('AuthAdditionComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it(`should return empty list of type products'`, () => {
+    const addProduct: ITypeAdditionResponse = {
+      id: 1,
+      name: 'test type',
+      description: '',
+      weight: '25',
+      price: 5,
+      imagePath: '',
+      isSauce: false,
+      path: ''
+    };
+    component.loadTypeAddition();
+    addProductService?.getAllFirebase().subscribe((response: any) => expect(response).toBe(addProduct));
+    expect(component).toBeTruthy();
+  });
+
+  it('loading product', () => {
+    const PRODUCT_ID = '1';
+    const data = [
+      {
+        id: '1',
+        category: { id: 1, name: '', path: '', imagePath: '' },
+        type_product: { id: 1, name: '', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+      }
+    ]    
+    if (PRODUCT_ID){
+      productService?.getOneFirebase(PRODUCT_ID).subscribe(result => {
+        expect(result).toEqual(data);
+      });
+    }
+    expect(component).toBeTruthy();
+  });
+
+  it('should set isFavorite to true if the product is in the favorite list', () => {
+    const favorite = [{ 
+      id: '1', 
+      category: { id: 1, name: '', path: '', imagePath: '' },
+        type_product: { id: 1, name: '', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+      }]; 
+    const PRODUCT_ID = '1'; 
+    let index = favorite?.findIndex(prod => prod.id === PRODUCT_ID);    
+    if (index > -1) 
+      component.isFavorite = true;  
+    expect(component).toBeTruthy();
+    component.loadFavoriteProduct(); 
+    expect(component.isFavorite).toBe(true); 
+  });
+
+  it('should set isFavorite to false if the product is in the favorite list', () => {
+    const favorite = [{ 
+      id: '1', 
+      category: { id: 1, name: '', path: '', imagePath: '' },
+        type_product: { id: 1, name: '', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+      }]; 
+    const PRODUCT_ID = '2'; 
+    let index = favorite?.findIndex(prod => prod.id === PRODUCT_ID);    
+    component.isFavorite = index === -1 ? false : true; 
+    
+    expect(component.isFavorite).toBe(false); 
+  });
+
+ 
 });

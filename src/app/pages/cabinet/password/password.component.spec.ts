@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Storage } from '@angular/fire/storage';
@@ -48,4 +48,22 @@ describe('PasswordComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('load user', () => {
+    let user = component.currentUser;
+    localStorage.getItem('currentUser');
+    component.loadUser();
+    expect(component).toBeTruthy();
+  });
+
+  it('should check confirm password', () => {
+    component.password;
+    component.confirmed;
+    spyOn(component, 'checkConfirmPassword').and.callThrough();
+    component.checkConfirmPassword();
+    expect(component).toBeTruthy();
+  });
+
+  
+
 });

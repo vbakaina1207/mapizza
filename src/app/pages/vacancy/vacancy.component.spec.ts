@@ -60,5 +60,16 @@ describe('VacancyComponent', () => {
   it('should create',  () => {
     expect(component).toBeTruthy();
   });
+
+  it('should get all vacancies', () => {
+    const fixture = TestBed.createComponent(VacancyComponent);
+    const app = fixture.componentInstance;
+    let service = fixture.debugElement.injector.get(VacancyService);
+    spyOn(service,"getAllFirebase").and.callFake(() => {
+      return of([]);
+    });
+    app.getVacancy();
+    expect(app.userVacancy).toEqual([]);
+  });
 });
 

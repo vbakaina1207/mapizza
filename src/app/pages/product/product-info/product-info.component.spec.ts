@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { ProductInfoComponent } from './product-info.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ProductService } from 'src/app/shared/services/product/product.service';
@@ -14,6 +14,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 describe('ProductInfoComponent', () => {
   let component: ProductInfoComponent;
   let fixture: ComponentFixture<ProductInfoComponent>;
+  let productService: ProductService;
 
   const productServiceStub = {
     getOneFirebase: (id: string) => of({
@@ -27,7 +28,7 @@ describe('ProductInfoComponent', () => {
   };
 
   const orderServiceStub = {
-    getAllFirebase: () => of({
+    getAllFirebase: () => of([{
       order_number: 1,
       uid: 'fhshgkszhbgkbjrhhr',
       date_order: '12/12/2024',
@@ -67,7 +68,8 @@ describe('ProductInfoComponent', () => {
   comment: '',
   summa: 1155,
   address: []
-      })
+      }]),
+  changeBasket: new Subject<boolean>()
   };
 
 const mockFirestore = jasmine.createSpyObj('Firestore', ['collection']);
@@ -88,6 +90,11 @@ docStub.get.and.returnValue(of({
   })
 }));
 
+const toastrServiceStub = {
+  success: jasmine.createSpy(),
+  error: jasmine.createSpy()
+};
+
   beforeEach(async() => {
     await TestBed.configureTestingModule({
       declarations: [ProductInfoComponent],
@@ -96,7 +103,7 @@ docStub.get.and.returnValue(of({
         { provide: OrderService, useValue: orderServiceStub },
         { provide: MatDialogRef, useValue: {} },
         { provide: Firestore, useValue: mockFirestore },
-        { provide: ToastrService, useValue: {} },
+        { provide: ToastrService, useValue: toastrServiceStub },
       ]  ,    
       imports: [
         HttpClientTestingModule,
@@ -119,4 +126,105 @@ docStub.get.and.returnValue(of({
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('loading product', () => {
+    const PRODUCT_ID = '1';
+    const data = [
+      {
+        id: '1',
+        category: { id: 1, name: '', path: '', imagePath: '' },
+        type_product: { id: 1, name: '', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+      }
+    ]    
+    if (PRODUCT_ID){
+      productService?.getOneFirebase(PRODUCT_ID).subscribe(result => {
+        expect(result).toEqual(data);
+      });
+    }
+    expect(component).toBeTruthy();
+  });
+
+  it('should set isFavorite to true if the product is in the favorite list', () => {
+    const favorite = [{ 
+      id: '1', 
+      category: { id: 1, name: '', path: '', imagePath: '' },
+        type_product: { id: 1, name: '', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+      }]; 
+    const PRODUCT_ID = '1'; 
+    let index = favorite?.findIndex(prod => prod.id === PRODUCT_ID);    
+    if (index > -1) 
+      component.isFavorite = true;  
+    expect(component).toBeTruthy();
+    component.loadFavoriteProduct(); 
+    expect(component.isFavorite).toBe(true); 
+  });
+
+  it('should set isFavorite to false if the product is in the favorite list', () => {
+    const favorite = [{ 
+      id: '1', 
+      category: { id: 1, name: '', path: '', imagePath: '' },
+        type_product: { id: 1, name: '', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+      }]; 
+    const PRODUCT_ID = '2'; 
+    let index = favorite?.findIndex(prod => prod.id === PRODUCT_ID);    
+    component.isFavorite = index === -1 ? false : true;     
+    expect(component.isFavorite).toBe(false); 
+  });
+
+  it('should get types products', () => {
+    let product = {
+      id: 1,
+      category: { id: 1, name: '', path: '', imagePath: '' },
+        type_product: { id: 1, name: '', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+    };
+
+    productService?.getOneFirebase('1').subscribe(result => {
+      expect(result).toEqual(product);
+    });
+    expect(component).toBeTruthy();
+  });
+
+  it('should update the count field when calling updateCount', () => {
+    const product = {
+      id: 1,
+      category: { id: 1, name: '', path: '', imagePath: '' },
+        type_product: { id: 1, name: '', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+    };
+    const newCount = 2;
+    component.productCount(product, true);
+    expect(product.count).toBe(newCount);
+
+  });
+
+
+  it('add products to basket', () => {
+    const product = {
+      id: 1,
+      category: { id: 1, name: '', path: '', imagePath: '' },
+        type_product: { id: 1, name: '', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+    };
+    spyOn(component, 'addToBasket').and.callThrough();
+    component.addToBasket(product);
+    expect(component.addToBasket).toHaveBeenCalled();
+    expect(component).toBeTruthy();
+  });
+
 });

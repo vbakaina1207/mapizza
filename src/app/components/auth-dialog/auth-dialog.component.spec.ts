@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 
 import { AuthDialogComponent } from './auth-dialog.component';
@@ -41,6 +41,34 @@ describe('AuthDialogComponent', () => {
   });
 
   it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('test login  #testIt()', fakeAsync (() => {
+    const spy = spyOn(component,'login').and.callThrough();
+    spy.and.returnValue(Promise.resolve({
+      credential: null,
+      user: null,
+    }));
+    component.login('admin@gmail.com','qwerty123');
+    tick();
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalled();
+    expect(component).toBeTruthy();
+  }));
+
+  it('should check confirm password', () => {
+    spyOn(component, 'checkVisibilityError').and.callThrough();
+    component.checkVisibilityError('123123', '123123');
+    expect(component).toBeTruthy();
+  });
+
+
+  it('should check confirm password', () => {
+    component.password;
+    component.confirmed;
+    spyOn(component, 'checkConfirmPassword').and.callThrough();
+    component.checkConfirmPassword();
     expect(component).toBeTruthy();
   });
 });

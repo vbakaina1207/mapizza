@@ -7,6 +7,7 @@ import { DiscountService } from 'src/app/shared/services/discount/discount.servi
 import { of } from 'rxjs';
 import { Timestamp } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { IDiscountResponse } from 'src/app/shared/interfaces/discount/discount.interface';
 
 
 
@@ -14,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 describe('DiscountInfoComponent', () => {
   let component: DiscountInfoComponent;
   let fixture: ComponentFixture<DiscountInfoComponent>;
+  let discountService : DiscountService;
 
   const mockTimestamp = Timestamp.fromDate(new Date('2024-12-12T10:45:00Z'));
   const mockTimestampString = mockTimestamp.toDate().toString(); 
@@ -55,6 +57,29 @@ describe('DiscountInfoComponent', () => {
   });
 
   it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  
+  
+
+  it('loading discount', () => {
+    const PRODUCT_ID = '1';
+    const data = [
+      {
+        id: 1,     
+      date:  mockTimestamp, 
+      name: 'test discount',
+      title: '',
+      description: '',
+      imagePath: ''
+      }
+    ]    
+    if (PRODUCT_ID){
+      discountService?.getOneFirebase(PRODUCT_ID).subscribe(result => {
+        expect(result).toEqual(data);
+      });
+    }
     expect(component).toBeTruthy();
   });
 

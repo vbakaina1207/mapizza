@@ -1,18 +1,24 @@
 /* tslint:disable:no-unused-variable */
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HeaderComponent } from './header.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CategoryService } from 'src/app/shared/services/category/category.service';
 import { Subject, of } from 'rxjs';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { AccountService } from 'src/app/shared/services/account/account.service';
+import { ROLE } from 'src/app/shared/constants/role.constant';
+import { ICategoryResponse } from 'src/app/shared/interfaces/category/category.interface';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
+  let dialog: MatDialog;
+  let categoryService: CategoryService;
+  let orderService: OrderService;
+  let accountService: AccountService;
 
   const categoryServiceStub = {
     getOneFirebase: (id: string) =>
@@ -146,10 +152,96 @@ describe('HeaderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
+    dialog = TestBed.inject(MatDialog);
+    categoryService = TestBed.inject(CategoryService);
+    orderService = TestBed.inject(OrderService);
+    accountService = TestBed.inject(AccountService);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should load categories on initialization', () => {
+    spyOn(categoryService, 'getAllFirebase').and.callThrough();
+    component.ngOnInit();
+    expect(categoryService.getAllFirebase).toHaveBeenCalled();
+    expect(component.userCategories.length).toBeGreaterThan(0);
+  });
+
+  
+
+  it('should update basket on change', fakeAsync(() => {
+    spyOn(component, 'loadBasket').and.callThrough();
+    orderService.changeBasket.next(true);
+    tick(); // Wait for the observable to emit
+    expect(component.loadBasket).toHaveBeenCalled();
+  }));
+
+  
+  
+
+  it('it should change total', () => {
+    const FAKE_BASKET = [
+      {
+        id: 1,
+        category: { id: 1, name: 'pizza', path: '', imagePath: '' },
+        type_product: { id: 1, name: 'meat', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: 'pizza', path: '', ingredients: ' ', weight: '250', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+      }
+    ];
+    component.basket = FAKE_BASKET;
+    spyOn(component, 'getTotalPrice').and.callThrough();
+    component.getTotalPrice();
+    expect(component.getTotalPrice).toHaveBeenCalled();
+    expect(component.total).toBe(12);
+    component.basket = [];
+    component.getTotalPrice();
+    expect(component.getTotalPrice).toHaveBeenCalled();
+    expect(component.total).toBe(0);
+  });
+
+  it('should change total categories', () => {
+    const FAKE_userCategories = [
+      {
+        id: 1, name: 'pizza', path: '', imagePath: ''
+      }
+      ]
+    component.userCategories = FAKE_userCategories;
+    spyOn(component, 'getCategories').and.callThrough();
+    component.getCategories();
+    expect(component.getCategories).toHaveBeenCalled();
+    expect(component).toBeTruthy();
+  });
+
+  
+  it ('check user login', () => {
+    const currentUser = {"orders":[],"email":"qwerty@gmail.com","lastName":"qwerty","address":["job","Kirchschlag","12",31],"phoneNumber":"+43661549621","role":"USER","firstName":"qwerty","uid":"0JHaDJvqWPeVXwxWeXZrOkdBuWx1"};
+    currentUser.role = ROLE.USER;
+    component.currentUser = currentUser;
+    spyOn(component, 'checkUserLogin').and.callThrough();
+    component.checkUserLogin();
+    expect(component.checkUserLogin).toHaveBeenCalled();
+    expect(component).toBeTruthy();
+  });
+
+  it(`should return empty list of categories'`, () => {
+    const FAKE_CATEGORIES = [
+      {
+        id: 1,
+        name: 'test category',
+        path: '',
+        imagePath: ''
+      }
+    ];
+    component.getCategories();
+    categoryService.getAllFirebase().subscribe((response: any) => {
+      expect(response).toEqual(FAKE_CATEGORIES); 
+    });
+  });
+  
+
 });

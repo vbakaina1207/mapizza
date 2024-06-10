@@ -15,9 +15,8 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 
-fdescribe('CheckoutComponent', () => {
-  let component: CheckoutComponent;
-  let fixture: ComponentFixture<CheckoutComponent>;
+
+
 
   const productServiceStub = {
     getOneFirebase: (id: string) => of({
@@ -53,146 +52,135 @@ fdescribe('CheckoutComponent', () => {
   };
   
 
+
+xdescribe('CheckoutComponent', () => {
+  let component: CheckoutComponent;
+  let fixture: ComponentFixture<CheckoutComponent>;
+
+  const orderData = [{
+    id: '1',  
+    order_number: 1,
+    uid: 'user1',
+    date_order: '12/12/2024',
+    total: 589,
+    status: false,
+    product: [{
+      id: 1,
+      category: { id: 1, name: 'test category', path: '', imagePath: '' },
+      type_product: { id: 1, name: '', path: '', imgPath: '' },
+      type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+      selected_addition: [{}],
+      name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+    }],
+    name: "Ivan",
+    phone: '+380667894561',
+    email: 'ivan@gmail.com',
+    delivery_method: '',
+    payment_method: '',
+    cash: 0,
+    isWithoutRest: false,
+    at_time: false,
+    delivery_date: '',
+    delivery_time: '',
+    self_delivery_address: '',
+    city: 'Lviv',
+    street: 'school',
+    house: '25',
+    entrance: '',
+    flor: 4,
+    flat: '5',
+    use_bonus: false,
+    summa_bonus: 0,
+    promocode: '',
+    action: '',
+    isCall: false,
+    isComment: false,
+    comment: '',
+    summa: 1155,
+    address: []
+},
+{
+  id: '2',  
+  order_number: 1,
+  uid: 'user2',
+  date_order: '12/12/2024',
+  total: 589,
+  status: false,
+  product: [{
+    id: 1,
+    category: { id: 1, name: 'test category', path: '', imagePath: '' },
+    type_product: { id: 1, name: '', path: '', imgPath: '' },
+    type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    selected_addition: [{}],
+    name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+  }],
+  name: "Ivan",
+  phone: '+380667894561',
+  email: 'ivan@gmail.com',
+  delivery_method: '',
+  payment_method: '',
+  cash: 0,
+  isWithoutRest: false,
+  at_time: false,
+  delivery_date: '',
+  delivery_time: '',
+  self_delivery_address: '',
+  city: 'Lviv',
+  street: 'school',
+  house: '25',
+  entrance: '',
+  flor: 4,
+  flat: '5',
+  use_bonus: false,
+  summa_bonus: 0,
+  promocode: '',
+  action: '',
+  isCall: false,
+  isComment: false,
+  comment: '',
+  summa: 1155,
+  address: []
+}];
+
+
+const docSpy = jasmine.createSpyObj('DocumentReference', ['get', 'update', 'delete', 'set']);
+docSpy.get.and.returnValue(of(orderData));
+docSpy.update.and.returnValue(Promise.resolve());
+docSpy.delete.and.returnValue(Promise.resolve());
+docSpy.set.and.returnValue(Promise.resolve());
+
+
+const collectionSpy = jasmine.createSpyObj('CollectionReference', ['get', 'add', 'doc', 'where']);
+collectionSpy.get.and.returnValue(of([orderData]));
+collectionSpy.add.and.returnValue(Promise.resolve({ id: '2' }));
+collectionSpy.doc.and.returnValue(docSpy);
+collectionSpy.where.and.returnValue(collectionSpy); 
+
+
+const mockFirestore = {
+  collection: jasmine.createSpy('collection').and.returnValue(collectionSpy),
+  doc: jasmine.createSpy('doc').and.returnValue(docSpy),
+};
+
+
   const orderServiceStub = {
-    getAllFirebase: () => of([
-      {
-        id: 1,
-        order_number: 1,
-        uid: 'fhshgkszhbgkbjrhhr',
-        date_order: '12/12/2024',
-        total: 589,
-        status: false,
-        product: [{
-          id: 1,
-          category: { id: 1, name: 'test category', path: '', imagePath: '' },
-          type_product: { id: 1, name: '', path: '', imgPath: '' },
-          type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
-          selected_addition: [{}],
-          name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
-        }],
-        name: "Ivan",
-        phone: '+380667894561',
-        email: 'ivan@gmail.com',
-        delivery_method: '',
-        payment_method: '',
-        cash: 0,
-        isWithoutRest: false,
-        at_time: false,
-        delivery_date: '',
-        delivery_time: '',
-        self_delivery_address: '',
-        city: 'Lviv',
-        street: 'school',
-        house: '25',
-        entrance: '',
-        flor: 4,
-        flat: '5',
-        use_bonus: false,
-        summa_bonus: 0,
-        promocode: '',
-        action: '',
-        isCall: false,
-        isComment: false,
-        comment: '',
-        summa: 1155,
-        address: []
-      }]),
-    createFirebase: (order: IOrderRequest) => of([
-      {
-        id: 1, ...order        
-      }]),
-     
-    changeBasket: /* new Subject<boolean>() */jasmine.createSpy('changeBasket').and.returnValue(of([]))
+    getAllFirebase: () => of(orderData),
+    getUserFirebase: (uid: string) => {     
+      const filteredOrders = orderData.filter(order => order.uid === uid);
+      const sortedOrders = filteredOrders.sort((a, b) => {
+        return new Date(b.date_order).getTime() - new Date(a.date_order).getTime();
+      });
+      return of(sortedOrders);
+    },
+    createFirebase: (order: IOrderRequest) => of([{ id: '1', ...order }]),
+    changeBasket: new Subject<boolean>()
   };
+  
 
   const toastrServiceStub = {
     success: jasmine.createSpy(),
     error: jasmine.createSpy()
   };
-  
-  /* const mockFirestore = {
-    collection: jasmine.createSpy('collection').and.callFake(() => ({
-      doc: jasmine.createSpy('doc').and.callFake(() => ({
-        set: jasmine.createSpy('set').and.returnValue(Promise.resolve()),
-        get: jasmine.createSpy('get').and.returnValue(Promise.resolve({ data: () => ({}) })),
-        update: jasmine.createSpy('update').and.returnValue(Promise.resolve()),
-        delete: jasmine.createSpy('delete').and.returnValue(Promise.resolve())
-      })),
-      add: jasmine.createSpy('add').and.returnValue(Promise.resolve()),
-      get: jasmine.createSpy('get').and.returnValue(of([]))
-    }))
-  }; */
-
-  // const getSpy = jasmine.createSpy('get').and.returnValue(of([]));
-  // const collectionSpy = jasmine.createSpyObj('CollectionReference', ['get']);
-  // collectionSpy.get.and.returnValue(getSpy);
-
-  // const mockFirestore = {
-  //   collection: jasmine.createSpy('collection').and.returnValue(collectionSpy),
-  //   // ... other Firestore methods you might need
-  // };
-
- 
-
-  // const firestoreStub = {
-  //   collection: jasmine.createSpy('collection').and.returnValue({
-  //     doc: jasmine.createSpy('doc').and.returnValue({
-  //       get: jasmine.createSpy('get').and.returnValue(of({
-  //         id: '1', 
-  //         data: () => ({            
-  //           order_number: 1,
-  //           uid: 'fhshgkszhbgkbjrhhr',
-  //           date_order: '12/12/2024',
-  //           total: 589,
-  //           status: false,
-  //           product: [{
-  //             id: 1,
-  //             category: { id: 1, name: 'test category', path: '', imagePath: '' },
-  //             type_product: { id: 1, name: '', path: '', imgPath: '' },
-  //             type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
-  //             selected_addition: [{}],
-  //             name: '', path: '', ingredients: ' ', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
-  //           }],
-  //           name: "Ivan",
-  //           phone: '+380667894561',
-  //           email: 'ivan@gmail.com',
-  //           delivery_method: '',
-  //           payment_method: '',
-  //           cash: 0,
-  //           isWithoutRest: false,
-  //           at_time: false,
-  //           delivery_date: '',
-  //           delivery_time: '',
-  //           self_delivery_address: '',
-  //           city: 'Lviv',
-  //           street: 'school',
-  //           house: '25',
-  //           entrance: '',
-  //           flor: 4,
-  //           flat: '5',
-  //           use_bonus: false,
-  //           summa_bonus: 0,
-  //           promocode: '',
-  //           action: '',
-  //           isCall: false,
-  //           isComment: false,
-  //           comment: '',
-  //           summa: 1155,
-  //           address: []
-  //         })
-  //       }))
-  //     })
-  //   })
-  // };
-  
-  
- 
-  // const accountServiceStub = {   
-  //   // updateAddress: (address: string) => { },
-  //   // zoneStatus$:(isGreenZone: boolean, isYellowZone: boolean) => {},
-  //   updateAddress: jasmine.createSpy('updateAddress'),
-  //   zoneStatus$: jasmine.createSpy('zoneStatus$')
-  // };
 
   const accountServiceStub = {
     isUserLogin$: new Subject<boolean>(),
@@ -201,26 +189,20 @@ fdescribe('CheckoutComponent', () => {
     changeFavorite: new Subject<boolean>(),
     searchAddress: new Subject<string>(),
     address$: new Subject<string>().asObservable(),
-    // zoneStatus$: new Subject<{ isGreenZone: boolean; isYellowZone: boolean }>().asObservable(),
     updateAddress: jasmine.createSpy('updateAddress').and.callFake((address: string) => {
-      accountServiceStub.searchAddress.next(address); // Emit a value directly on the Subject instance
+      accountServiceStub.searchAddress.next(address);
     }),
-    // setZoneStatus: jasmine.createSpy('setZoneStatus').and.callFake((isGreenZone: boolean, isYellowZone: boolean) => {
-    //   // accountServiceStub.zoneStatus$.next({ isGreenZone, isYellowZone }); // Emit a value directly on the Subject instance
-    // })
-    zoneStatus$: new Subject<{ isGreenZone: boolean; isYellowZone: boolean }>(), 
-  setZoneStatus: jasmine.createSpy('setZoneStatus').and.callFake((isGreenZone: boolean, isYellowZone: boolean) => {
-    accountServiceStub.zoneStatus$.next({ isGreenZone, isYellowZone });
-  })
+    zoneStatus$: new Subject<{ isGreenZone: boolean; isYellowZone: boolean }>(),
+    setZoneStatus: jasmine.createSpy('setZoneStatus').and.callFake((isGreenZone: boolean, isYellowZone: boolean) => {
+      accountServiceStub.zoneStatus$.next({ isGreenZone, isYellowZone });
+    })
   };
-  
-  const firestoreStub = jasmine.createSpyObj('Firestore', ['collection']);
-  
-  beforeEach(async() => {
+
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CheckoutComponent ],
+      declarations: [CheckoutComponent],
       imports: [
-        HttpClientTestingModule,       
+        HttpClientTestingModule,
         MatDialogModule,
         AngularFireModule,
         AngularFirestoreModule
@@ -228,16 +210,12 @@ fdescribe('CheckoutComponent', () => {
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: OrderService, useValue: orderServiceStub },
-        // { provide: ProductService, useValue: productServiceStub },
-        { provide: Firestore, useValue: {} },
+        { provide: Firestore, useValue: mockFirestore },
         { provide: ToastrService, useValue: toastrServiceStub },
-        { provide: AccountService, useValue: accountServiceStub },     
-        AngularFirestore   
-      ],  
-      schemas: [
-        NO_ERRORS_SCHEMA,
-        CUSTOM_ELEMENTS_SCHEMA
-      ]    
+        { provide: AccountService, useValue: accountServiceStub },
+      
+      ],
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   });
@@ -252,6 +230,17 @@ fdescribe('CheckoutComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  
+});
+
+ 
+ 
+
+  
+  
+
+  
+ 
   // it('should initialize the form with user data', () => {
   //   expect(component.orderForm).toBeDefined();
   //   expect(component.orderForm.value.name).toBe('John');
@@ -299,4 +288,4 @@ fdescribe('CheckoutComponent', () => {
   //   expect(orderServiceStub.createFirebase).toHaveBeenCalled();
   // });
 
-});
+

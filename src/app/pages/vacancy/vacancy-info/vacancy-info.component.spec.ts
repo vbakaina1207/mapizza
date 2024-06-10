@@ -16,10 +16,12 @@ import { of } from 'rxjs';
 import { MassageService } from 'src/app/shared/services/massage/massage.service';
 import { AccountService } from 'src/app/shared/services/account/account.service';
 import { ActivatedRoute } from '@angular/router';
+import { VacancyService } from 'src/app/shared/services/vacancy/vacancy.service';
 
 describe('VacancyInfoComponent', () => {
   let component: VacancyInfoComponent;
   let fixture: ComponentFixture<VacancyInfoComponent>;
+  let vacancyService: VacancyService;
 
   const vacancyServiceStub = {
     getAllFirebase: () => of([
@@ -73,6 +75,21 @@ describe('VacancyInfoComponent', () => {
   });
 
   it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('loading vacancy', () => {
+    const VACANCY_ID = '1';
+    const data = [
+      {
+        id: 1, name: 'Ivan', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_message: ''
+      }
+    ]    
+    if (VACANCY_ID){
+      vacancyService?.getOneFirebase(VACANCY_ID).subscribe(result => {
+        expect(result).toEqual(data);
+      });
+    }
     expect(component).toBeTruthy();
   });
 });
