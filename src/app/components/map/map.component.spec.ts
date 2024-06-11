@@ -10,12 +10,44 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GoogleMapsModule } from '@angular/google-maps';
 
+
 export const GOOGLE = new InjectionToken('google');
 export const googleFactory = () => google;
+
+const mockGoogle: {
+  maps: {
+    Map: jasmine.Spy<(mapDiv: Element, opts?: google.maps.MapOptions) => google.maps.Map>;
+    LatLng: jasmine.Spy<(lat: number, lng: number) => google.maps.LatLng>;
+    LatLngLiteral: jasmine.Spy<() => google.maps.LatLngLiteral>;
+    Geocoder: jasmine.Spy<() => google.maps.Geocoder>;
+    Polygon: jasmine.Spy<(options?: google.maps.PolygonOptions) => google.maps.Polygon>;
+    geometry: {
+      poly: {
+        containsLocation: jasmine.Spy<(point: google.maps.LatLng, polygon: google.maps.Polygon) => boolean>;
+      };
+    };
+  };
+} = {
+  maps: {
+    Map: jasmine.createSpy('Map'),
+    LatLng: jasmine.createSpy('LatLng'),
+    LatLngLiteral: jasmine.createSpy('LatLngLiteral'),
+    Geocoder: jasmine.createSpy('Geocoder'),
+    Polygon: jasmine.createSpy('Polygon'),
+    geometry: {
+      poly: {
+        containsLocation: jasmine.createSpy('containsLocation')
+      }
+    }
+  }
+};
+
+
 
 describe('MapComponent', () => {
   let component: MapComponent;
   let fixture: ComponentFixture<MapComponent>;
+
 
   beforeEach(waitForAsync(() => {
   const mockGoogle = jasmine.createSpyObj('google', ['maps']);
@@ -49,4 +81,13 @@ describe('MapComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // it('should initialize zones on the map', () => {
+  //   component.map = new mockGoogle.maps.Map(document.createElement('div')); // Mock Map
+  //   component.initializeZones();
+
+  //   expect(component.yellowZones.length).toBe(5);
+  //   expect(component.greenZone).toBeTruthy();
+  // });
+
 });

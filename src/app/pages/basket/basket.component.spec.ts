@@ -198,7 +198,7 @@ it('should add products to basket', () => {
 });
 
 it('should remove the product from basket', () => {
-  // Продукт, который будет удаляться из корзины
+
   const product = {
     id: '1',
     category: { id: 1, name: '', path: '', imagePath: '' },
@@ -208,25 +208,20 @@ it('should remove the product from basket', () => {
     name: 'Product Name', path: '', ingredients: 'products', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
   };
   
-  // Фейковая корзина с одним продуктом
   const FAKE_BASKET = [product];
   localStorage.setItem('basket', JSON.stringify(FAKE_BASKET));
 
-  // Создание шпионов для проверки вызовов setItem и changeBasket
   const spySetItem = spyOn(localStorage, 'setItem').and.callFake((key: string, value: string) => {
-    // Запись в localStorage эмулируется через переменную storage
     if (key === 'basket') {
       storage['basket'] = value;
     }
   });
   const spyChangeBasket = spyOn(orderServiceStub.changeBasket, 'next').and.callThrough();
 
-  // Вызов метода удаления продукта из корзины
   component.removeFromBasket(product as IProductResponse);
 
-  // Проверка содержимого корзины в localStorage
   const updatedBasket = JSON.parse(storage['basket'] || '[]');
-  expect(updatedBasket.length).toBe(0); // Корзина должна быть пустой
+  expect(updatedBasket.length).toBe(0); 
   expect(spySetItem).toHaveBeenCalledWith('basket', JSON.stringify([]));
   expect(spyChangeBasket).toHaveBeenCalledWith(true);
 });

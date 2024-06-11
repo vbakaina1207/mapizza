@@ -31,9 +31,9 @@ export class ContactFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private massageService: MassageService,
-    private imageService: ImageService,
-    private toastr: ToastrService,
+    public massageService: MassageService,
+    public imageService: ImageService,
+    public toastr: ToastrService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -122,12 +122,15 @@ export class ContactFormComponent implements OnInit {
       }
     });
     if (this.massageForm.valid) {
-      this.massageService.createFirebase(this.massageForm.value).then(() => {
-        this.toastr.success('Massage successfully created');
-      })
-      this.massageForm.reset();
-      this.isUploaded = false;
-      this.uploadPercent = 0;
+        this.massageService.createFirebase(this.massageForm.value).then(() => {
+        this.toastr.success('Massage successfully created');      
+        this.massageForm.reset();
+        this.isUploaded = false;
+        this.uploadPercent = 0;
+    })
+      .catch((error) => {        
+        console.error('Error creating massage:', error);
+      });
     }
   }
 }

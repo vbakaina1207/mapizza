@@ -141,9 +141,8 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
       this.basket = JSON.parse(localStorage.getItem('basket') as string);      
       if(this.basket?.some(prod => prod.id === product.id)){
         const index = this.basket.findIndex(prod => prod.id === product.id);
-        
-        this.basket[index].count += 1;
-        // product.count;      
+        if(index > -1)
+          this.basket[index].count += 1;        
       } else {
         this.basket?.push(product);        
       }

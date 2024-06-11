@@ -7,6 +7,7 @@ import {
   deleteDoc,
   doc,
   docData,
+  DocumentReference,
   Firestore,
   updateDoc
 } from '@angular/fire/firestore';
@@ -39,7 +40,7 @@ export class DiscountService {
     return docData(discountDocumentReference, { idField: 'id' });
   }
 
-  createFirebase(discount: IDiscountRequest) {
+  createFirebase(discount: IDiscountRequest)  {
     return addDoc(this.discountCollection, discount);
   }
 
