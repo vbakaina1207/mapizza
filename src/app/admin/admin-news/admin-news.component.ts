@@ -26,7 +26,7 @@ export class AdminNewsComponent implements OnInit {
   public editStatus = false;
   public uploadPercent!: number;
   public isUploaded = false;
-  private currentNewsId!: number | string;
+  public currentNewsId!: number | string;
 
   constructor(
     private fb: FormBuilder,

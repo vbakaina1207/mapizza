@@ -16,9 +16,7 @@ describe('AdminDiscountComponent', () => {
   let component: AdminDiscountComponent;
   let fixture: ComponentFixture<AdminDiscountComponent>;
   let discountService: DiscountService;
-
   
-
   const toastrServiceStub = {
     success: jasmine.createSpy(),
     error: jasmine.createSpy()
@@ -163,15 +161,17 @@ describe('AdminDiscountComponent', () => {
     component.currentDiscountId = '5';
     spyOn(discountService, 'createFirebase');
     component.addDiscount();
-    
     if (component.editStatus) {
-      await discountService.createFirebase(discountRequest);
+      await discountService.createFirebase(discountRequest).then((result: any) => {      
+        expect(result.data()).toEqual(expectedDiscount);
+      })
     }
 
-    component.editStatus = false;
+    component.editStatus = false;    
     spyOn(discountService, 'updateFirebase');
+    
     if (!component.editStatus) {
-      await discountService.updateFirebase(discountRequest, '5');
+      await discountService.updateFirebase(discountRequest, '5');        
     }
 
     expect(component).toBeTruthy();

@@ -80,7 +80,7 @@ describe('ContactFormComponent', () => {
 
   it('should upload file and update form', () => {
     const testFile = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
-    const imageData = 'http://example.com/test.jpg'; // Simulated uploaded image URL
+    const imageData = 'http://example.com/test.jpg'; 
     spyOn(component.imageService, 'uploadFile').and.returnValue(Promise.resolve(imageData));
   
     const input = fixture.nativeElement.querySelector('input[type="file"]');
@@ -91,7 +91,7 @@ describe('ContactFormComponent', () => {
     });
     input.dispatchEvent(new Event('change'));
   
-    fixture.detectChanges(); // Update the form after change event
+    fixture.detectChanges(); 
   
     expect(component.file).toBe(testFile);
     // expect(component.isUploaded).toBeTrue();

@@ -27,7 +27,7 @@ export class AdminDiscountComponent implements OnInit {
     private fb: FormBuilder,
     private discountService: DiscountService,
     private imageService: ImageService,
-    private toastr: ToastService,
+    public toastr: ToastService,
     public dialog: MatDialog
   ) { }
 
