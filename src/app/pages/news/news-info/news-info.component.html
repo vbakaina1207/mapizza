@@ -41,15 +41,15 @@
       <div class="row justify-content-center">
         <div class="col-lg-10 col-xl-8">
           <div class="text text-lg">
-            <p  [innerHTML]="currentNews?.description">
+            <p  [innerHTML]="currentNews ? (currentNews?.description ? currentNews.description : '') : ''">
             </p>
             <p>
-              <img class="alignnone" [src]="currentNews?.detail ? currentNews.detail?.imagePath : undefined">
+              <img class="alignnone" [src]="currentNews ? (currentNews.detail ? currentNews.detail.imagePath : undefined) : undefined">
             </p>
             <h2><span style="font-weight: 400;">{{ currentNews?.detail?.title }}</span></h2>
             <p class="text" [innerHTML]="currentNews?.detail?.description"></p>
             <div class="text" *ngFor="let detail of currentNews?.detail?.detail">
-              <h2>{{detail.title}}</h2>
+              <h2>{{detail?.title}}</h2>
               <p>
                 <img class="" [src]="detail ? detail?.imagePath : undefined">
               </p>

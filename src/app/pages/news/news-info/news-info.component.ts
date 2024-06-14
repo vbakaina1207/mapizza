@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { INewsAddResponse } from 'src/app/shared/interfaces/news/news-info.interface';
 import { INewsResponse } from 'src/app/shared/interfaces/news/news.interface';
 import { AccountService } from 'src/app/shared/services/account/account.service';
+import { NewsInfoService } from 'src/app/shared/services/news-info/news-info.service';
 import { NewsService } from 'src/app/shared/services/news/news.service';
 
 
@@ -21,14 +22,13 @@ export class NewsInfoComponent implements OnInit {
     null || undefined;
 
   constructor(
-    private newsService: NewsService,
+    private newsService: NewsInfoService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
   ) { 
     this.eventSubscription = this.router.events.subscribe(event => {
-    if(event instanceof NavigationEnd ) {
-      this.loadNews();
+    if(event instanceof NavigationEnd ) {     
       this.activatedRoute.data.subscribe(response => {
         this.currentNews = response['newsInfo'];
       })
@@ -39,12 +39,5 @@ export class NewsInfoComponent implements OnInit {
   ngOnInit() { 
   }
 
-  loadNews(): void {
-    const NEWS_ID = (this.activatedRoute.snapshot.paramMap.get('id') as string);
-    this.accountService.NEWS_ID = NEWS_ID;
-    this.newsService.getOneFirebase(NEWS_ID).subscribe(data => {
-      this.currentNews = data as INewsResponse;
-    });
-  }
 
 }

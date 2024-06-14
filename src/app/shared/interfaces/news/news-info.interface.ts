@@ -17,7 +17,7 @@ export interface INewsDetailRequest {
     title: string;
     description: string;
     imagePath: string;
-    detail: INewsAddResponse
+    detail: INewsAddResponse[]
 }
 
 export interface INewsDetailResponse extends INewsDetailRequest {

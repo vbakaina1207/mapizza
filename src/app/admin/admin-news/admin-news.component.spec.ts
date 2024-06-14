@@ -28,7 +28,7 @@ describe('AdminNewsComponent', () => {
       path: '',
       description: 'test description',
       imagePath: '',
-      detail:[]
+      detail:{}
     }),
     getAllFirebase: () => of([{
       id: 1,     
@@ -37,7 +37,7 @@ describe('AdminNewsComponent', () => {
       path: '',
       description: 'test description',
       imagePath: '',
-      detail:[]
+      detail:{}
     }]),
     createFirebase: (news: INewsRequest) => {
       return Promise.resolve({ id: '5' } as DocumentReference<DocumentData>);
@@ -52,7 +52,7 @@ describe('AdminNewsComponent', () => {
       path: '',
       description: 'test description',
       imagePath: '',
-      detail:[]
+      detail:{}
     }]),
   }
   const newsInfoServiceStub = {
@@ -136,13 +136,13 @@ describe('AdminNewsComponent', () => {
       path: '',
       description: 'test description',
       imagePath: '',
-      detail: [{
+      detail: {
         id: '1',
         title: '',
         description: 'test description',
         imagePath: '',
         detail: []
-      }],
+      },
       id: ''
     });
     expect(component.editNews).toHaveBeenCalled();
@@ -165,13 +165,13 @@ describe('AdminNewsComponent', () => {
       path: '',
       description: 'test description',
       imagePath: '',
-      detail: [{
+      detail: {
         id: '1',
         title: '',
         description: 'test description',
         imagePath: '',
         detail: []
-      }]    
+      }   
     }])
   });
     app.loadNews();
@@ -186,13 +186,13 @@ describe('AdminNewsComponent', () => {
       path: '',
       description: 'test description',
       imagePath: '',
-      detail: [{
+      detail: {
         id: '1',
         title: '',
         description: 'test description',
         imagePath: '',
         detail: []
-      }]    
+      }   
     };
 
     const expectedNews: INewsResponse = {
@@ -202,13 +202,13 @@ describe('AdminNewsComponent', () => {
       path: '',
       description: 'test description',
       imagePath: '',
-      detail: [{
+      detail: {
         id: '1',
         title: '',
         description: 'test description',
         imagePath: '',
         detail: []
-      }]    
+      }    
     };    
     component.editStatus = true;
     component.currentNewsId = '5';

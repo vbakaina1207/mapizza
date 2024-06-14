@@ -39,14 +39,6 @@ describe('AdminDiscountComponent', () => {
       description: '',
       imagePath: ''
     }]),
-    // createFirebase: (discount: IDiscountRequest) => Promise.resolve({
-    //   id: 5,
-    //   ...discount
-    // }),
-    // updateFirebase: (discount: IDiscountRequest, id: string) => Promise.resolve({
-    //   id: id,
-    //   ...discount
-    // }),
     createFirebase: (discount: IDiscountRequest) => {
       return Promise.resolve({ id: '5' } as DocumentReference<DocumentData>);
     },
@@ -155,8 +147,6 @@ describe('AdminDiscountComponent', () => {
       description: '',
       imagePath: ''
     };
-    
-
     component.editStatus = true;
     component.currentDiscountId = '5';
     spyOn(discountService, 'createFirebase');
@@ -166,14 +156,11 @@ describe('AdminDiscountComponent', () => {
         expect(result.data()).toEqual(expectedDiscount);
       })
     }
-
     component.editStatus = false;    
-    spyOn(discountService, 'updateFirebase');
-    
+    spyOn(discountService, 'updateFirebase');    
     if (!component.editStatus) {
       await discountService.updateFirebase(discountRequest, '5');        
     }
-
     expect(component).toBeTruthy();
   });
 
@@ -190,7 +177,5 @@ describe('AdminDiscountComponent', () => {
     spyOn(discountService, 'deleteFirebase');
     expect(component).toBeTruthy();
   });
-
-
 
 });

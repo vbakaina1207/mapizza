@@ -33,14 +33,14 @@ export class AdminProductComponent implements OnInit {
 
   public currentCategoryId!: number | string;
   public currentCategoryName = '';
-  private currentProductId!: string | number;
+  public currentProductId!: string | number;
 
   
 
   constructor(
     private fb: FormBuilder,
     private categoryService: CategoryService,
-    private productService: ProductService,
+    public productService: ProductService,
     private additionService: AdditionProductService,
     private typeProductService: TypeProductService,
     private imageService: ImageService,
@@ -110,8 +110,7 @@ export class AdminProductComponent implements OnInit {
     if(this.editStatus){
       this.productService.updateFirebase(this.productForm.value, this.currentProductId as string).then(() => {
         this.loadProduct();
-        this.toastr.showSuccess('','Продукт змінено');
-        // this.toastr.success('Product successfully updated');
+        this.toastr.showSuccess('','Продукт змінено');      
       })
     } else {
       this.productService.createFirebase(this.productForm.value).then(() => {

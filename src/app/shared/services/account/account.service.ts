@@ -24,7 +24,7 @@ export class AccountService {
     public userAddress = [];
     public datauser = {};
     public PRODUCT_ID: string = '';
-    public NEWS_ID: string = '';
+   
     public favoriteProducts: Array<IProductResponse> = [];
     private url = environment.BACKEND_URL;
     private api = { auth: `${this.url}/auth` };

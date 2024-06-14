@@ -14,14 +14,18 @@ describe('NewsInfoComponent', () => {
   let newsInfoService: NewsInfoService;
 
   const newsServiceStub = {
-    getOneFirebase: (id: string) => of({
+    getOneFirebase: (id: string) => of({    
       id: id,     
-      page: {id: 1, page: '1'},
-      name: 'test news',
-      path: '',
+      title: 'test',
       description: 'test description',
       imagePath: '',
-      detail:[]
+      detail:[{
+        id: 1,     
+      title: 'test',
+      description: 'test description',
+      imagePath: '',
+      detail:[null]
+      }]
     }),
   }
 
@@ -31,7 +35,7 @@ describe('NewsInfoComponent', () => {
       providers: [
        // { provide: Storage, useValue: {} },
         { provide: ToastrService, useValue: {} },       
-        { provide: NewsService, useValue: newsServiceStub },
+        { provide: NewsInfoService, useValue: newsServiceStub },
         { provide: AccountService, useValue: {} }
       ], 
       imports: [
@@ -56,12 +60,16 @@ describe('NewsInfoComponent', () => {
     const data = [
       {
         id: 1, 
-        page: {id: 1, page: '1'},
-        name: 'test news',
-        path: '',
-        description: 'test description',
-        imagePath: '',
-        detail:[]
+        title: 'test',
+      description: 'test description',
+      imagePath: '',
+      detail:[{
+        id: 1,     
+      title: 'test',
+      description: 'test description',
+      imagePath: '',
+      detail:[null]
+      }]
       }
     ]    
     if (NEWS_ID){

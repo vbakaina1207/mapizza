@@ -48,6 +48,10 @@
 }
 
 
+.news-row .news-item {
+    margin-bottom: 50px;
+}
+
 .no-reverse .news-item:nth-child(even) .news-img {   
     order: unset;
     margin-left: 0;

@@ -154,13 +154,13 @@ describe('AdminNewsDetailComponent', () => {
       title: 'test', 
       description: 'test description',
       imagePath: '',
-      detail:{
+      detail:[{
         id: 1,     
         title: 'test',      
         description: 'test',
         imagePath: '',
         detail:[]
-      },
+      }],
       id: '1'
     });
     expect(component.editNews).toHaveBeenCalled();
@@ -178,13 +178,13 @@ describe('AdminNewsDetailComponent', () => {
           title: 'test', 
       description: 'test description',
       imagePath: '',
-      detail:{
+      detail:[{
         id: 1,     
         title: 'test',      
         description: 'test',
         imagePath: '',
         detail:[]
-      },
+      }],
     }])
   });
     app.loadNews();
@@ -197,13 +197,13 @@ describe('AdminNewsDetailComponent', () => {
       title: 'test', 
       description: 'test description',
       imagePath: '',
-      detail:{
+      detail:[{
         id: 1,     
         title: 'test',      
         description: 'test',
         imagePath: '',
         detail:[]
-      }
+      }]
     };
 
     const expectedNews: INewsDetailResponse = {
@@ -211,13 +211,13 @@ describe('AdminNewsDetailComponent', () => {
       title: 'test', 
       description: 'test description',
       imagePath: '',
-      detail:{
+      detail:[{
         id: 1,     
         title: 'test',      
         description: 'test',
         imagePath: '',
         detail:[]
-      },
+      }],
     };    
     component.editStatus = true;
     component.currentNewsId = '5';
@@ -269,13 +269,13 @@ describe('AdminNewsDetailComponent', () => {
       title: 'test', 
       description: 'test description',
       imagePath: '',
-      detail: {
+      detail: [{
         id: 1,     
         title: 'test',      
         description: 'test',
         imagePath: '',
         detail:[]
-      }
+      }]
     });
     spyOn(newsDetailService, 'deleteFirebase');
     expect(component).toBeTruthy();
