@@ -24,60 +24,16 @@ describe('AdminAdditionTypeComponent', () => {
   let dialog: MatDialog;
   let additionProductService: AdditionProductService;
 
-  const serviceAdditionProductStub = {
-    // getOneFirebase: (id: string) => of({      
-    //   id: id, 
-    //   name: 'test type',
-    //   description: '',
-    //   weight: '25',
-    //   price: 5,
-    //   imagePath: '',
-    //   isSauce: false
-    // }),
-    // getAllFirebase: () => of([
-    //   { id: 1, 
-    //     name: 'test type', 
-    //     description: '',
-    //     weight: '25',
-    //     price: 5,
-    //     imagePath: '',
-    //     isSauce: false}
-    // ]),
-    // getAllBySauceFirebase: (isSauce: boolean) => of([
-    //   { id: 1, 
-    //     name: 'test type', 
-    //     description: '',
-    //     weight: '25',
-    //     price: 5,
-    //     imagePath: '',
-    //     isSauce: isSauce}
-    // ]),
-    // // createFirebase: (data: ITypeAdditionRequest) => of({  ...data}),
-    // // updateFirebase: (data: ITypeAdditionRequest, id: string) => of({ id, ...data}),
-    
-    // createFirebase: (discount: ITypeAdditionRequest) => {
-    //   return Promise.resolve({ id: '1' } as DocumentReference<DocumentData>);
-    // },// createFirebase: jasmine.createSpy('createFirebase').and.returnValue(Promise.resolve(true)),
-    // updateFirebase: jasmine.createSpy('updateFirebase').and.returnValue(Promise.resolve(true)),
-    // deleteFirebase: jasmine.createSpy('deleteFirebase').and.returnValue(Promise.resolve(true))
+  const serviceAdditionProductStub = {     
     getAllFirebase: jasmine.createSpy('getAllFirebase').and.returnValue(of([
       { id: '1', name: 'test type', description: '', weight: '25', price: 5, imagePath: '', isSauce: false }
-    ])),
-    // createFirebase(additionProduct: ITypeAdditionRequest): Promise<ITypeAdditionResponse> {
-    //   return new Promise((resolve, reject) => {
-    //     setTimeout(() => {
-    //       resolve({ id: '1', ...additionProduct });
-    //     }, 1000);
-    //   });
-    // },
+    ])),    
     createFirebase: (news: ITypeAdditionResponse) => {
       return Promise.resolve({ id: '5' } as DocumentReference<DocumentData>);
     },
     updateFirebase: (news: ITypeAdditionResponse, id: string) => {
       return Promise.resolve({ id: id } as DocumentReference<DocumentData>);
     },   
-    // createFirebase: jasmine.createSpy('createFirebase').and.returnValue(Promise.resolve({})),
-    // updateFirebase: jasmine.createSpy('updateFirebase').and.returnValue(Promise.resolve(true)),
     deleteFirebase: jasmine.createSpy('deleteFirebase').and.returnValue(Promise.resolve({}))
   };
   

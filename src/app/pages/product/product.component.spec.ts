@@ -343,34 +343,8 @@ it('should load products on init', () => {
   component.ngOnInit();
   expect(component.userProducts.length).toBeGreaterThan(0);
 });
-  
-  
 
-  // it('should get product by id', () => {
-  //   const productId = '1';
-  //   const productData: IProductResponse = { id: productId, category: {id: 1, name: '', path: '', imagePath: ''},
-  //     type_product: {id: 1, name: '', path: '', imgPath: ''},
-  //     type_addition: [{id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false} ] as ITypeAdditionResponse[],     
-  //     selected_addition: [{id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false}] as ITypeAdditionResponse[],
-  //     name: 'Product Name', path: '', ingredients: 'products', weight: '', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
-  //   };
 
-  //   // Mock ProductService behavior
-  //   spyOn(productService, 'getOneFirebase').and.returnValue(of(productData));
-
-  //   component.getProductById(productId);
-  //   expect(component.userProducts[0].id).toBe(productId);
-  // });
-
-  // it('should update product', () => {
-  //   const product: IProductResponse = { id: '1', name: 'Updated Product' };
-
-  //   // Mock ProductService behavior (assuming updateProduct calls ProductService)
-  //   spyOn(productService, 'updateFirebase').and.returnValue(of({}));
-
-  //   component.updateProduct(product);
-  //   // You might need to assert on specific behavior depending on your implementation
-  // });
 
   
 });

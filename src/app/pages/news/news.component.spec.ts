@@ -1,8 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NewsComponent } from './news.component';
 import { of } from 'rxjs/internal/observable/of';
 import { ToastrService } from 'ngx-toastr';
@@ -11,8 +8,6 @@ import { IPageResponse } from 'src/app/shared/interfaces/page/page.interface';
 import { PageService } from 'src/app/shared/services/page/page.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Firestore } from '@angular/fire/firestore';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { NewsInfoService } from 'src/app/shared/services/news-info/news-info.service';
 import { INewsResponse } from 'src/app/shared/interfaces/news/news.interface';
 
 describe('NewsComponent', () => {

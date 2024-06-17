@@ -25,9 +25,6 @@ describe('AdminPageComponent', () => {
     getAllFirebase: () => of([
       { id: '1', page: 1 }
     ]),
-    // createFirebase: (page: IPageRequest) => {
-    //   return Promise.resolve({ id: '1' } as DocumentReference<DocumentData>);
-    // },
     createFirebase: (data: IPageRequest) => Promise.resolve({
       id: '2',
       ...data
@@ -169,7 +166,7 @@ describe('AdminPageComponent', () => {
   expect(component).toBeTruthy();
   }));
 
-  it('delete values discount', () => {
+  it('delete values page', () => {
     spyOn(component, 'deletePage').and.callThrough();
     component.deletePage({
       id: '2',

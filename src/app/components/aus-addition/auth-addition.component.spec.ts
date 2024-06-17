@@ -1,22 +1,17 @@
 /* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
 import { AuthAdditionComponent } from './auth-addition.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { Auth } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { AdditionProductService } from 'src/app/shared/services/addition-product/addition-product.service';
 import { of } from 'rxjs';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { ProductService } from 'src/app/shared/services/product/product.service';
 import { ITypeAdditionResponse } from 'src/app/shared/interfaces/type-addition/type-addition.interfaces';
-import { AccountService } from 'src/app/shared/services/account/account.service';
 
 describe('AuthAdditionComponent', () => {
   let component: AuthAdditionComponent;
@@ -120,7 +115,6 @@ describe('AuthAdditionComponent', () => {
       ],
       providers: [
         { provide: Auth, useValue: {} },
-        // { provide: Firestore, useValue: {} },
         { provide: ToastrService, useValue: {} },
         { provide: AdditionProductService, useValue: serviceAdditionProductStub },
         { provide: OrderService, useValue: orderServiceStub },

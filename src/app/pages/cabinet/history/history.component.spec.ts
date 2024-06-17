@@ -6,7 +6,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { SharedModule } from 'src/app/shared/sahared.module';
-import { ITypeAdditionResponse } from 'src/app/shared/interfaces/type-addition/type-addition.interfaces';
 import { Timestamp } from '@angular/fire/firestore';
 
 describe('HistoryComponent', () => {

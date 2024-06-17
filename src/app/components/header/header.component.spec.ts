@@ -1,6 +1,5 @@
 /* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HeaderComponent } from './header.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -10,7 +9,6 @@ import { Subject, of } from 'rxjs';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { AccountService } from 'src/app/shared/services/account/account.service';
 import { ROLE } from 'src/app/shared/constants/role.constant';
-import { ICategoryResponse } from 'src/app/shared/interfaces/category/category.interface';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -175,7 +173,7 @@ describe('HeaderComponent', () => {
   it('should update basket on change', fakeAsync(() => {
     spyOn(component, 'loadBasket').and.callThrough();
     orderService.changeBasket.next(true);
-    tick(); // Wait for the observable to emit
+    tick(); 
     expect(component.loadBasket).toHaveBeenCalled();
   }));
 

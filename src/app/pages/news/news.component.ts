@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { INewsResponse } from 'src/app/shared/interfaces/news/news.interface';
 import { IPageResponse } from 'src/app/shared/interfaces/page/page.interface';

@@ -1,7 +1,5 @@
 /* tslint:disable:no-unused-variable */
 import {ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
-
 import { SlideProductComponent } from './slide-product.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { OrderService } from 'src/app/shared/services/order/order.service';

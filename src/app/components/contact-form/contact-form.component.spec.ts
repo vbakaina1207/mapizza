@@ -12,8 +12,8 @@ import { Auth } from '@angular/fire/auth';;
 import { ToastrService } from 'ngx-toastr';
 import { MassageService } from 'src/app/shared/services/massage/massage.service';
 import { of } from 'rxjs';
-import { IMassageRequest, IMassageResponse } from 'src/app/shared/interfaces/massage/massage.interface';
-import { Timestamp } from '@angular/fire/firestore';
+import { IMassageResponse } from 'src/app/shared/interfaces/massage/massage.interface';
+
 
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
@@ -26,9 +26,7 @@ describe('ContactFormComponent', () => {
     getAllFirebase: () =>
       of([{ id: 1, name: 'Ivan', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_message: ''}]),
     createFirebase: 
-    // spyOn(component.massageService, 'createFirebase').and.returnValue(of({}));
-    //  jasmine.createSpy('createFirebase').and.returnValue(Promise.resolve(of([{ id: 1, name: 'Ivan', email: 'ivan@gmail.com', description:' ', imagePath: '' , date_message: ''}])))
-    (massage: IMassageResponse) =>      of({ ...massage }),
+     (massage: IMassageResponse) =>      of({ ...massage }),
   };
 
   beforeEach(async() => {
@@ -94,8 +92,6 @@ describe('ContactFormComponent', () => {
     fixture.detectChanges(); 
   
     expect(component.file).toBe(testFile);
-    // expect(component.isUploaded).toBeTrue();
-    // expect(component.massageForm.get('imagePath')?.value).toBe(imageData);
   });
   
   it('should delete uploaded image', async () => {

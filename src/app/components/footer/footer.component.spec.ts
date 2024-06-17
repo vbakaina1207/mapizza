@@ -4,7 +4,6 @@ import { FooterComponent } from './footer.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { CategoryService } from 'src/app/shared/services/category/category.service';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ICategoryResponse } from 'src/app/shared/interfaces/category/category.interface';
 
 describe('FooterComponent', () => {

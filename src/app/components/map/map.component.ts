@@ -263,7 +263,7 @@ export class MapComponent implements OnInit{
   }
 
   initForm(): void{
-    console.log(this.route.component?.name);
+    
     if ( this.route.component?.name === 'DeliveryComponent') {
       this.isCheckout = true;
     }    

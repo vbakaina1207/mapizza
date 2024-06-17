@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import {  ComponentFixture, TestBed, waitForAsync, inject} from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, InjectionToken, NO_ERRORS_SCHEMA } from '@angular/core';
+import {  InjectionToken } from '@angular/core';
 
 import { MapComponent } from './map.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -64,10 +63,7 @@ describe('MapComponent', () => {
         { provide: ToastrService, useValue: {} },
         { provide: GOOGLE, useFactory: googleFactory}
       ],
-      // schemas:[
-      //   CUSTOM_ELEMENTS_SCHEMA,
-      //   NO_ERRORS_SCHEMA
-      // ]
+     
     })
       .compileComponents();
   }));

@@ -20,7 +20,7 @@ export class AdminVacancyComponent implements OnInit {
   public editStatus = false;
   public uploadPercent!: number;
   public isUploaded = false;
-  private currentVacancyId!: number | string;
+  public currentVacancyId!: number | string;
 
   constructor(private fb: FormBuilder,
     private vacancyService: VacancyService,
@@ -80,7 +80,7 @@ export class AdminVacancyComponent implements OnInit {
     this.isUploaded = true;
   }
 
-  deleteDiscount(vacancy: IVacancyResponse): void {
+  deleteVacancy(vacancy: IVacancyResponse): void {
     this.dialog.open(AlertDialogComponent, {
       backdropClass: 'dialog-back',
       panelClass: 'alert-dialog',

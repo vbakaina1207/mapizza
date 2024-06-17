@@ -28,10 +28,10 @@ export class PersonalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private afs: Firestore,
-    private toastr: ToastService,
+    public toastr: ToastService,
     private toast: ToastrService,
     public dialog: MatDialog,
-    private accountService: AccountService
+    public accountService: AccountService
   ) { }
 
   ngOnInit() {
