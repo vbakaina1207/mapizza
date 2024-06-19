@@ -2,7 +2,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CheckoutComponent } from './checkout.component';
 import { OrderService } from 'src/app/shared/services/order/order.service';
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore, collection, getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { IProductResponse } from 'src/app/shared/interfaces/product/product.interface';
 import { ITypeAdditionResponse } from 'src/app/shared/interfaces/type-addition/type-addition.interfaces';
 import { ToastrService } from 'ngx-toastr';
@@ -12,8 +12,8 @@ import { AccountService } from 'src/app/shared/services/account/account.service'
 import { IOrderRequest } from 'src/app/shared/interfaces/order/order.interface';
 import { Subject, of } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { AngularFireModule } from '@angular/fire/compat';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -50,12 +50,16 @@ import { AngularFireModule } from '@angular/fire/compat';
       ...product
     })
   };
+
+  
+
   
 
 
 xdescribe('CheckoutComponent', () => {
   let component: CheckoutComponent;
   let fixture: ComponentFixture<CheckoutComponent>;
+  let firestore: Firestore;
 
   const orderData = [{
     id: '1',  
@@ -143,24 +147,61 @@ xdescribe('CheckoutComponent', () => {
 }];
 
 
-const docSpy = jasmine.createSpyObj('DocumentReference', ['get', 'update', 'delete', 'set']);
-docSpy.get.and.returnValue(of(orderData));
-docSpy.update.and.returnValue(Promise.resolve());
-docSpy.delete.and.returnValue(Promise.resolve());
-docSpy.set.and.returnValue(Promise.resolve());
+// const docSpy = jasmine.createSpyObj('DocumentReference', ['get', 'update', 'delete', 'set']);
+// docSpy.get.and.returnValue(of(orderData));
+// docSpy.update.and.returnValue(Promise.resolve());
+// docSpy.delete.and.returnValue(Promise.resolve());
+// docSpy.set.and.returnValue(Promise.resolve());
 
 
-const collectionSpy = jasmine.createSpyObj('CollectionReference', ['get', 'add', 'doc', 'where']);
-collectionSpy.get.and.returnValue(of([orderData]));
-collectionSpy.add.and.returnValue(Promise.resolve({ id: '2' }));
-collectionSpy.doc.and.returnValue(docSpy);
-collectionSpy.where.and.returnValue(collectionSpy); 
+// const collectionSpy = jasmine.createSpyObj('CollectionReference', ['get', 'add', 'doc', 'where']);
+// collectionSpy.get.and.returnValue(of([orderData]));
+// collectionSpy.add.and.returnValue(Promise.resolve({ id: '2' }));
+// collectionSpy.doc.and.returnValue(docSpy);
+// collectionSpy.where.and.returnValue(collectionSpy); 
 
+// const firestoreStub = {
+//   doc: (path: string) => docSpy,
+//   collection: (path: string) => collectionSpy
+// }
 
-const mockFirestore = {
-  collection: jasmine.createSpy('collection').and.returnValue(collectionSpy),
-  doc: jasmine.createSpy('doc').and.returnValue(docSpy),
-};
+// const mockFirestore = {
+//   collection: jasmine.createSpy('collection').and.returnValue(collectionSpy),
+//   doc: jasmine.createSpy('doc').and.returnValue(docSpy),
+// };
+
+// const docRefSpy = jasmine.createSpyObj('DocumentReference', ['get', 'update', 'delete', 'set']);
+// docRefSpy.get.and.returnValue(Promise.resolve({ exists: true, data: () => orderData }));
+// docRefSpy.update.and.returnValue(Promise.resolve());
+// docRefSpy.delete.and.returnValue(Promise.resolve());
+// docRefSpy.set.and.returnValue(Promise.resolve());
+
+// // Mock CollectionReference
+// const collectionRefSpy = jasmine.createSpyObj('CollectionReference', ['get', 'add', 'doc', 'where']);
+// collectionRefSpy.get.and.returnValue(Promise.resolve({ docs: [{ id: '1', data: () => orderData }] }));
+// collectionRefSpy.add.and.returnValue(Promise.resolve({ id: '2' }));
+// collectionRefSpy.doc.and.returnValue(docRefSpy);
+// collectionRefSpy.where.and.returnValue(collectionRefSpy);
+
+// // Mock Firestore
+// const mockFirestore = {
+//   collection: jasmine.createSpy('collection').and.returnValue(collectionRefSpy),
+//   doc: jasmine.createSpy('doc').and.returnValue(docRefSpy),
+// };
+
+const docRefSpy = jasmine.createSpyObj('DocumentReference', ['get', 'update', 'delete', 'set']);
+  docRefSpy.get.and.returnValue(of({ exists: true, data: () => orderData }));
+
+  // Mock CollectionReference with a proper `doc` method
+  const collectionRefSpy = jasmine.createSpyObj('CollectionReference', ['get', 'add', 'doc', 'where']);
+  collectionRefSpy.doc.and.returnValue(docRefSpy);
+
+  const docSnapshotStub = jasmine.createSpyObj('DocumentSnapshot', ['data']);
+
+  // Mock Firestore
+  const mockFirestore = jasmine.createSpyObj('Firestore', ['collection']);
+  mockFirestore.collection.and.returnValue(collectionRefSpy);
+
 
 
   const orderServiceStub = {
@@ -177,10 +218,17 @@ const mockFirestore = {
   };
   
 
-  const toastrServiceStub = {
-    success: jasmine.createSpy(),
-    error: jasmine.createSpy()
+  const toastServiceStub = {
+    showSuccess: jasmine.createSpy(),
+    showError: jasmine.createSpy()
   };
+
+  const toastrServiceStub = {
+    success: (message: string) => { console.log('success', message); },
+    error: (message: string) => { console.log('error', message); },
+    // info: (message: string) => { console.log('info', message); },
+    // warning: (message: string) => { console.log('warning', message); }
+}
 
   const accountServiceStub = {
     isUserLogin$: new Subject<boolean>(),
@@ -203,17 +251,16 @@ const mockFirestore = {
       declarations: [CheckoutComponent],
       imports: [
         HttpClientTestingModule,
-        MatDialogModule,
-        AngularFireModule,
-        AngularFirestoreModule
+        MatDialogModule,       
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: OrderService, useValue: orderServiceStub },
         { provide: Firestore, useValue: mockFirestore },
         { provide: ToastrService, useValue: toastrServiceStub },
+        { provide: ToastService, useValue: {}},
         { provide: AccountService, useValue: accountServiceStub },
-      
+        
       ],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
     })
@@ -223,6 +270,12 @@ const mockFirestore = {
   beforeEach(() => {
     fixture = TestBed.createComponent(CheckoutComponent);
     component = fixture.componentInstance;
+    firestore = TestBed.inject(Firestore); 
+
+    // Set up mocks (assuming collection name is 'orders')
+    mockFirestore.collection.and.returnValue(collectionRefSpy);
+    collectionRefSpy.get.and.returnValue(of([docSnapshotStub]));
+    docSnapshotStub.data.and.returnValue(orderData); 
     fixture.detectChanges();
   });
 
@@ -230,7 +283,38 @@ const mockFirestore = {
     expect(component).toBeTruthy();
   });
 
+  // it('should initialize component data on ngOnInit', () => {
+  //   // Call ngOnInit
+  //   component.ngOnInit();
   
+  //   // Expect total, basket, and order data to be populated
+  //   expect(component.total).toBeDefined();
+  //   expect(component.basket.length).toBeGreaterThan(0); // Assuming some products in basket
+  //   expect(component.order.length).toBeGreaterThan(0); // Assuming some past orders
+  // });
+  
+  
+  // it('should initialize component data on ngOnInit (success)', () => {
+  //   (firestore.collection as jasmine.Spy).and.returnValue(collectionSpy);
+  //   collectionSpy.get.and.returnValue(of(orderData));
+
+  //   component.ngOnInit();
+
+  //   expect(component.total).toBeDefined();
+  //   expect(component.basket.length).toBeGreaterThan(0);
+  //   expect(component.order.length).toBeGreaterThan(0);
+  // });
+
+  // it('should handle errors during ngOnInit', () => {
+  //   (firestore.collection as jasmine.Spy).and.returnValue(collectionSpy);
+  //   collectionSpy.get.and.returnValue(throwError('Firestore error'));
+
+  //   spyOn(component, 'handleError').and.callFake(); // Spy on error handling
+
+  //   component.ngOnInit();
+
+  //   expect(component.handleError).toHaveBeenCalled();
+  // });
 });
 
  

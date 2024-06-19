@@ -9,6 +9,9 @@ import { Subject, of } from 'rxjs';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 import { AccountService } from 'src/app/shared/services/account/account.service';
 import { ROLE } from 'src/app/shared/constants/role.constant';
+import { Auth } from '@angular/fire/auth';
+import { Firestore } from '@angular/fire/firestore';
+import { ToastrService } from 'ngx-toastr';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -140,7 +143,10 @@ describe('HeaderComponent', () => {
       providers: [
         { provide: CategoryService, useValue: categoryServiceStub },         
         { provide: OrderService, useValue: orderServiceStub},
-        { provide: AccountService, useValue: accountServiceStub }
+        { provide: AccountService, useValue: accountServiceStub },
+        { provide: Auth, useValue: {} },
+        { provide: Firestore, useValue: {}},
+        { provide: ToastrService, useValue: {} }
       ],
       
     })
@@ -241,5 +247,114 @@ describe('HeaderComponent', () => {
     });
   });
   
+  it('should load basket from localStorage', () => {
+   
+    const mockBasket = [
+      { id: 1, 
+        category: { id: 1, name: 'pizza', path: '', imagePath: '' },
+        type_product: { id: 1, name: 'meat', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: 'pizza', path: '', ingredients: ' ', weight: '250', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+       },
+      { id: 2, 
+        category: { id: 1, name: 'pizza', path: '', imagePath: '' },
+        type_product: { id: 1, name: 'meat', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: 'pizza', path: '', ingredients: ' ', weight: '250', price: 23, addition_price: 0, bonus: 0, imagePath: '', count: 1
+       }
+    ];
+    localStorage.setItem('basket', JSON.stringify(mockBasket));
+    
+    component.loadBasket();
+      
+    expect(component.basket.length).toBe(2);
+    expect(component.total).toBe(35); 
+  });
 
+  it('should load current user from localStorage', () => {
+    const mockUser = {
+      firstName: 'John',
+      lastName: 'Doe'     
+    };
+    localStorage.setItem('currentUser', JSON.stringify(mockUser));
+  
+    component.loadUser();
+  
+    expect(component.currentUser).toEqual(mockUser);
+    expect(component.userName).toBe('John Doe');
+  });
+  
+  it('should load favorite products from localStorage', () => {
+    const mockFavorite = [
+      { id: 1,       
+        category: { id: 1, name: 'pizza', path: '', imagePath: '' },
+        type_product: { id: 1, name: 'meat', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: 'pizza', path: '', ingredients: ' ', weight: '250', price: 12, addition_price: 0, bonus: 0, imagePath: '', count: 1
+       },
+      { id: 2,         
+        category: { id: 1, name: 'pizza', path: '', imagePath: '' },
+        type_product: { id: 1, name: 'meat', path: '', imgPath: '' },
+        type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+        name: 'pizza', path: '', ingredients: ' ', weight: '250', price: 23, addition_price: 0, bonus: 0, imagePath: '', count: 1
+       }
+    ];
+    localStorage.setItem('favorite', JSON.stringify(mockFavorite));
+  
+    component.loadFavorite();
+  
+    expect(component.favorite.length).toBe(2);
+    expect(component.countFavorite).toBe(2);
+  });
+  
+
+  it('should correctly determine user login status and role', () => {
+    const mockAdminUser = {
+      firstName: 'Admin',
+      lastName: 'User',
+      role: ROLE.ADMIN 
+    };
+    localStorage.setItem('currentUser', JSON.stringify(mockAdminUser));
+  
+    component.checkUserLogin();
+      
+    expect(component.isLogin).toBe(true);
+    expect(component.loginPage).toBe('Admin');
+    expect(component.loginUrl).toBe('admin');
+  });
+
+  it('should open login dialog', () => {
+    spyOn(dialog, 'open').and.callThrough();
+    component.openLoginDialog();
+    expect(dialog.open).toHaveBeenCalled();
+  });
+  
+  it('should open basket dialog and set isCheckout to true', () => {
+    spyOn(dialog, 'open').and.callThrough();
+    component.openBasketDialog();
+    expect(dialog.open).toHaveBeenCalled();
+    expect(component.isCheckout).toBe(true);
+  });
+  
+  it('should logout user', () => {
+    const routerSpy = spyOn(component.router, 'navigate').and.stub();
+    spyOn(localStorage, 'removeItem').and.stub();
+    const isUserLoginSpy = spyOn(component.accountService.isUserLogin$, 'next').and.callThrough();
+
+    component.logout();
+
+    expect(routerSpy).toHaveBeenCalledWith(['/']);
+    expect(localStorage.removeItem).toHaveBeenCalledWith('currentUser');
+    expect(localStorage.removeItem).toHaveBeenCalledWith('basket');
+    expect(localStorage.removeItem).toHaveBeenCalledWith('favorite');
+    expect(isUserLoginSpy).toHaveBeenCalledWith(true);
+   
+    
+    expect(accountService.isUserLogin$.next).toHaveBeenCalledWith(true);
+  });
+  
 });

@@ -27,4 +27,32 @@ describe('AboutComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render block-img-1 image', () => {
+    const compiled = fixture.nativeElement;
+    const imgElement = compiled.querySelector('.block-img img[src="assets/about_us/block-img-1.webp"]');
+    expect(imgElement).toBeTruthy();
+  });
+
+  it('should render block-img-2 image', () => {
+    const compiled = fixture.nativeElement;
+    const imgElement = compiled.querySelector('.block-img img[src="assets/about_us/block-img-2.webp"]');
+    expect(imgElement).toBeTruthy();
+  });
+
+  it('should render banner image', () => {
+    const compiled = fixture.nativeElement;
+    const imgElement = compiled.querySelector('.bg.desktop');
+    expect(imgElement).toBeTruthy();
+    expect(imgElement.style.backgroundImage).toContain('assets/banners/about_us.jpg');
+  });
+
+  // it('should render video poster image', () => {
+  //   const compiled = fixture.nativeElement;
+  //   const videoElement = compiled.querySelector('.wp-video video');
+  //   expect(videoElement).toBeTruthy();
+  //   // const posterUrl = videoElement.getAttribute('poster');
+  //   expect(videoElement).toContain('assets/about_us/ma-pizza-dostavka-piczy-u-lvovi.webm'); 
+  // });
+
 });

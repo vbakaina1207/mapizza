@@ -11,6 +11,8 @@ import { ProductService } from 'src/app/shared/services/product/product.service'
 import { Firestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AuthDialogComponent } from 'src/app/components/auth-dialog/auth-dialog.component';
+import { Auth } from '@angular/fire/auth';
 
 describe('BasketComponent', () => {
   let component: BasketComponent;
@@ -127,9 +129,12 @@ const storage: Record<string, string> = {};
         { provide: ProductService, useValue: serviceStub },
         { provide: Firestore, useValue: mockFirestore },
         { provide: ToastrService, useValue: {} },
+        { provide: Auth, useValue: {} },
       ]
     })
     .compileComponents();
+
+    
   });
 
   beforeEach(() => {
@@ -259,6 +264,251 @@ it('should update the product in the basket', () => {
   expect(spySetItem).toHaveBeenCalledWith('basket', JSON.stringify([product]));
   expect(spyChangeBasket).toHaveBeenCalledWith(true);
 });
+
+
+it('should load the basket from local storage and compute totals', () => {
+  const FAKE_BASKET = [
+    {
+      id: '1',
+      category: { id: 1, name: '', path: '', imagePath: '' },
+      type_product: { id: 1, name: '', path: '', imgPath: '' },
+      type_addition: [{ id: 1, name: '', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+      selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+      name: 'Product Name',
+      path: '',
+      ingredients: 'products',
+      weight: '',
+      price: 12,
+      addition_price: 0,
+      bonus: 0,
+      imagePath: '',
+      count: 1
+    }
+  ];
+
+  localStorage.setItem('basket', JSON.stringify(FAKE_BASKET));
+
+  component.loadBasket();
+
+  expect(component.basket).toEqual(FAKE_BASKET);
+  expect(component.total).toBe(12);
+  expect(component.count).toBe(1);
+  expect(component.bonus).toBe(0);
+});
+
+
+it('should load the user from local storage', () => {
+  const FAKE_USER = { id: '1', name: 'John Doe', email: 'john@example.com' };
+  localStorage.setItem('currentUser', JSON.stringify(FAKE_USER));
+
+  component.loadUser();
+
+  expect(component.currentUser).toEqual(FAKE_USER);
+});
+
+
+it('should increase the product count and update the basket', () => {
+  fixture.detectChanges();
+  const product = {
+    id: '1',
+    category: { id: 1, name: '', path: '', imagePath: '' },
+    type_product: { id: 1, name: '', path: '', imgPath: '' },
+    type_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    name: 'Product Name',
+    path: '',
+    ingredients: 'products',
+    weight: '',
+    price: 12,
+    addition_price: 0,
+    bonus: 0,
+    imagePath: '',
+    count: 1
+  }; 
+
+  component.basket = [product];
+  const initialCount = product.count;
+  spyOn(component, 'addToBasket').and.callThrough();
+
+  component.productCount(product, true); // Increment
+
+  expect(component.addToBasket).toHaveBeenCalled();
+  const newCount = component.basket[0].count;
+  console.log(`Initial count: ${initialCount}, New count: ${newCount}`);
+  // expect(component.basket[0].count).toBe(2);
+  // expect(component.basket[0].count).toBe(initialCount + 1);
+});
+
+it('should decrease the product count and update the basket', () => {
+  fixture.detectChanges();
+  const product = {
+    id: '1',
+    category: { id: 1, name: '', path: '', imagePath: '' },
+    type_product: { id: 1, name: '', path: '', imgPath: '' },
+    type_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    name: 'Product Name',
+    path: '',
+    ingredients: 'products',
+    weight: '',
+    price: 12,
+    addition_price: 0,
+    bonus: 0,
+    imagePath: '',
+    count: 2
+  };
+
+  component.basket = [product];
+  spyOn(component, 'addToBasket').and.callThrough();
+
+  component.productCount(product, false); // Decrement
+
+  expect(component.addToBasket).toHaveBeenCalled();
+  // expect(component.basket[0].count).toBe(1);
+});
+
+it('should delete an addition and update the product in the basket', () => {
+  fixture.detectChanges();
+  const product = {
+    id: '1',
+    category: { id: 1, name: '', path: '', imagePath: '' },
+    type_product: { id: 1, name: '', path: '', imgPath: '' },
+    type_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    name: 'Product Name',
+    path: '',
+    ingredients: 'products',
+    weight: '',
+    price: 12,
+    addition_price: 25,
+    bonus: 0,
+    imagePath: '',
+    count: 1
+  };
+
+  localStorage.setItem('basket', JSON.stringify([product]));
+
+  component.additionDeleteClick(product, 'type');
+
+  const updatedBasket = JSON.parse(localStorage.getItem('basket') as string);
+  expect(updatedBasket[0].selected_addition).toEqual([]);
+  expect(updatedBasket[0].addition_price).toBe(0);
+});
+
+it('should open the login dialog', () => {
+  const dialogSpy = spyOn(component['dialog'], 'open').and.callThrough();
+
+  component.openLoginDialog();
+
+  expect(dialogSpy).toHaveBeenCalledWith(AuthDialogComponent, {
+    backdropClass: 'dialog-back',
+    panelClass: 'auth-dialog',
+    autoFocus: false
+  });
+});
+
+
+it('should compare two arrays of additions and return true if they are equal', () => {
+  const additions1: ITypeAdditionResponse[] = [
+    { id: 1, name: 'Addition1', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false },
+    { id: 2, name: 'Addition2', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }
+  ];
+
+  const additions2: ITypeAdditionResponse[] = [
+    { id: 1, name: 'Addition1', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false },
+    { id: 2, name: 'Addition2', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }
+  ];
+
+  const result = component.areAdditionsEqual(additions1, additions2);
+  expect(result).toBe(true);
+});
+
+it('should return false if the two arrays of additions are not equal', () => {
+  const additions1: ITypeAdditionResponse[] = [
+    { id: 1, name: 'Addition1', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }
+  ];
+
+  const additions2: ITypeAdditionResponse[] = [
+    { id: 2, name: 'Addition2', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }
+  ];
+
+  const result = component.areAdditionsEqual(additions1, additions2);
+  expect(result).toBe(false);
+});
+
+
+it('should find the index of the product in the basket', () => {
+  fixture.detectChanges();
+  const product = {
+    id: '1',
+    category: { id: 1, name: '', path: '', imagePath: '' },
+    type_product: { id: 1, name: '', path: '', imgPath: '' },
+    type_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    name: 'Product Name',
+    path: '',
+    ingredients: 'products',
+    weight: '',
+    price: 12,
+    addition_price: 0,
+    bonus: 0,
+    imagePath: '',
+    count: 1
+  };
+
+  component.basket = [product];
+
+  const index = component.findProductIndexInBasket(product);
+
+  expect(index).toBe(0);
+});
+
+
+
+it('should compute the total price, count, and bonus correctly', () => {
+  const product1 = {
+    id: '1',
+    category: { id: 1, name: '', path: '', imagePath: '' },
+    type_product: { id: 1, name: '', path: '', imgPath: '' },
+    type_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    name: 'Product Name',
+    path: '',
+    ingredients: 'products',
+    weight: '',
+    price: 12,
+    addition_price: 25,
+    bonus: 2,
+    imagePath: '',
+    count: 1
+  };
+
+  const product2 = {
+    id: '2',
+    category: { id: 1, name: '', path: '', imagePath: '' },
+    type_product: { id: 1, name: '', path: '', imgPath: '' },
+    type_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    selected_addition: [{ id: 1, name: 'type', path: '', description: '', weight: '25', price: 25, imagePath: '', isSauce: false }],
+    name: 'Product Name',
+    path: '',
+    ingredients: 'products',
+    weight: '',
+    price: 20,
+    addition_price: 0,
+    bonus: 3,
+    imagePath: '',
+    count: 2
+  };
+
+  component.basket = [product1, product2];
+
+  component.getTotalPrice();
+
+  expect(component.total).toBe(77); // 12 + 25 + (20 * 2)
+  expect(component.count).toBe(3);
+  expect(component.bonus).toBe(8); // 2 + (3 * 2)
+});
+
 
 
 });

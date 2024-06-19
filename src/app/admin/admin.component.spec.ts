@@ -37,4 +37,17 @@ describe('AdminComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should navigate to home page and clear local storage on logout', () => {
+    const routerSpy = spyOn(component.router, 'navigate').and.stub();
+    spyOn(localStorage, 'removeItem').and.stub();
+    const isUserLoginSpy = spyOn(component.accountService.isUserLogin$, 'next').and.callThrough();
+
+    component.logout();
+
+    expect(routerSpy).toHaveBeenCalledWith(['/']);
+    expect(localStorage.removeItem).toHaveBeenCalledWith('currentUser');
+    expect(isUserLoginSpy).toHaveBeenCalledWith(true);
+  });
+
 });

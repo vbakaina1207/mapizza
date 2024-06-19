@@ -3,10 +3,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DiscountComponent } from './discount.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { DiscountService } from 'src/app/shared/services/discount/discount.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { IDiscountResponse } from 'src/app/shared/interfaces/discount/discount.interface';
+import { Timestamp } from '@angular/fire/firestore';
 
 
 describe('DiscountComponent', () => {
@@ -19,7 +21,7 @@ describe('DiscountComponent', () => {
   const discountServiceStub = {
     getOneFirebase: (id: string) => of({
       id: id,     
-      date: null,
+      date: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z')),
       name: 'test discount',
       title: '',
       description: '',
@@ -27,7 +29,7 @@ describe('DiscountComponent', () => {
     }),
     getAllFirebase: () => of([{
       id: 1,     
-      date: null,
+      date: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z')),
       name: 'test discount',
       title: '',
       description: '',
@@ -96,4 +98,24 @@ describe('DiscountComponent', () => {
     expect(component.userDiscounts).toEqual([]);
   }); 
 
+  
+
+
+  // it('should call getOneFirebase with correct ID and set userDiscount', () => {
+  //   const discountId = '1';
+  //   const discountData = [{ 
+  //     id: discountId, 
+  //     date: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z')),
+  //     name: 'test discount',
+  //     title: '',
+  //     description: '',
+  //     imagePath: '' }];
+  //   spyOn(discountService, 'getOneFirebase').and.returnValue(of(discountData));
+  
+  //   component.getDiscounts();
+  
+  //   expect(discountService.getOneFirebase).toBeTruthy();
+  //   // expect(component.userDiscounts).toEqual(discountData);
+  // });
+  
 });
