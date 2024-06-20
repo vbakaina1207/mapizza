@@ -76,7 +76,6 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
       let index = this.favorite?.findIndex(prod => prod.id === PRODUCT_ID);    
       if (index > -1) 
       this.isFavorite = true;
-    console.log(this.isFavorite, this.favorite, "loadFav");
   }
 
   loadProduct(): void {
@@ -153,7 +152,7 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
       basket.push(product);
     }
     localStorage.setItem('basket', JSON.stringify(basket));
-    this.toastr.showSuccess('', 'Піццу ' + product.name + ' успішно додано до кишику');
+    this.toastr.showSuccess('', 'Піццу ' + product.name + ' успішно додано до кошику');
     product.count = 1;
     this.orderService.changeBasket.next(true);
     this.additionDeleteAllClick();
@@ -247,7 +246,6 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
     this.accountService.changeFavorite.next(true);
     this.currentUser.favorite = this.favorite;
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-    console.log(this.isFavorite, this.favorite, "loadFav");
     this.updateFavorite();
   }
 

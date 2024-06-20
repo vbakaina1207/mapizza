@@ -126,6 +126,8 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 
     & .popup-container {
     overflow: hidden;
+    max-height: calc(100vh - 120px);
+    height: 100vh;
     }
     
 
@@ -138,9 +140,6 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 
 }
 
-.auth-addition-dialog .mat-mdc-dialog-surface .popup-container{
-  overflow: auto;
-}
 
 .mat-mdc-dialog-content  > .btn-close {
     position: absolute;
@@ -878,6 +877,7 @@ a:hover {
 @media screen and (max-width: 1400px) {
 .popup-container {
     max-width: 980px;
+    max-height: calc(100% - 30px);
 }
 
   .ing_body {

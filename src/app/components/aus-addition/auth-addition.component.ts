@@ -175,13 +175,12 @@ export class AuthAdditionComponent implements OnInit {
             idAdd = true;
             index = basket.findIndex(prod => prod.id === product.id && sameArrays(prod.selected_addition, product.selected_addition));
             addition_price += addition_price; 
-            console.log('2', index, 'index');
           }
         }
       })
       if (idAdd) {
         basket[index].count += product.count;
-        console.log(basket[index].count, 'count');
+  
       }
       else {
         console.log(product.count, 'product count');    
@@ -193,7 +192,7 @@ export class AuthAdditionComponent implements OnInit {
     }
     this.isOrder = true;
     localStorage.setItem('basket', JSON.stringify(basket));
-    this.toastr.showSuccess('',   product.name + ' успішно додано до кишику');
+    this.toastr.showSuccess('',   product.name + ' успішно додано до кошику');
     product.count = 1;
     this.orderService.changeBasket.next(true);    
     this.additionDeleteAllClick();
@@ -228,7 +227,6 @@ export class AuthAdditionComponent implements OnInit {
       this.accountService.changeFavorite.next(true);
       this.currentUser.favorite = this.favorite;
       localStorage.setItem('currentUser', JSON.stringify(this.currentUser)); 
-      console.log(this.isFavorite, this.favorite, "favorite");
   }
 
 

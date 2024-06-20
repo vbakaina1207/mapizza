@@ -54,7 +54,7 @@ import { left } from '@popperjs/core';
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
     ToastrModule.forRoot({
-      positionClass: 'toast-bottom-center',
+      positionClass: 'toast-center-center',
       preventDuplicates: true,
       timeOut: 5000,
     }),

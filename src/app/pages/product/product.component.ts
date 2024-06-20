@@ -53,25 +53,24 @@ export class ProductComponent implements OnInit, OnDestroy {
   ) {
    
     this.eventSubscription = this.router.events.subscribe(event => {
-      if(event instanceof NavigationEnd ) {          
-        this.loadFaviriteProducts();
+      if(event instanceof NavigationEnd ) {                  
         this.loadUser();   
         this.loadProducts();
         this.getTypeProducts();  
+        this.loadFaviriteProducts();
       }
     })
   }
 
   ngOnInit(): void {
+    this.loadUser();  
     this.loadProducts();
     this.getTypeProducts();  
-    this.loadFaviriteProducts();
-    this.loadUser();       
+    this.loadFaviriteProducts();         
   }
 
   ngAfterContentInit(): void {
-    // this.loadProducts();
-    // this.getTypeProducts();   
+  
   }
 
   getTypeProducts(): void {
@@ -139,7 +138,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   loadUser(): void {
     if (localStorage.length > 0 && localStorage.getItem('currentUser')) {
       this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
-      this.favorite = this.currentUser.favorite;
+      this.favorite = this.currentUser.favorite || [];;
     }
   }
 
@@ -172,7 +171,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     
     }
     
-    this.toastr.showSuccess('',  product.name + ' успішно додано до кишику');
+    this.toastr.showSuccess('',  product.name + ' успішно додано до кошику');
     if (e && e.target) {
     e.target.innerText = '';
     this.isOrder = true;

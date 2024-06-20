@@ -1,19 +1,5 @@
 
- 
-
-  // it('should get product by id', () => {
-  //   component.getProductById('1');
-  //   expect(component.userProducts[0].id).toBe('1');
-  // });
-
-//   it('should update product', () => {
-//     const product = { id: '1', name: 'Updated Product' };
-//     component.updateProduct(product);
-//     expect(component.userProducts[0].name).toBe('Updated Product');
-//   });
-
-
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProductService } from './../../shared/services/product/product.service';
 import { Subject, of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';

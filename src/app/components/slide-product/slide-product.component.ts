@@ -189,8 +189,6 @@ export class SlideProductComponent implements OnInit, OnDestroy, AfterContentIni
     this.accountService.changeFavorite.next(true);
     this.currentUser.favorite = this.favorite;
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-    console.log(this.isFavorite, this.favorite, "loadSlide");
-    
   }
 
   isProductFavorite(product: IProductResponse): boolean {

@@ -121,10 +121,10 @@ export class ContactFormComponent implements OnInit {
         control.markAsTouched({ onlySelf: true });
       }
     });
-    if (this.massageForm.valid) {
+    if (this.massageForm.valid) {      
         this.massageService.createFirebase(this.massageForm.value).then(() => {
         this.toastr.success('Massage successfully created');      
-        this.massageForm.reset();
+        this.resetForm();
         this.isUploaded = false;
         this.uploadPercent = 0;
     })
@@ -133,4 +133,17 @@ export class ContactFormComponent implements OnInit {
       });
     }
   }
+
+  resetForm(): void {
+    this.massageForm.reset();
+    this.isValid = false;
+  
+    Object.keys(this.massageForm.controls).forEach(field => {
+      const controlElement = document.querySelector(`[formControlName="${field}"]`);
+      if (controlElement) {
+        controlElement.classList.remove('not-valid-tip', 'input-empty');
+      }
+    });
+  }
+  
 }
