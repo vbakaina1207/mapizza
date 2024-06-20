@@ -64,7 +64,7 @@ describe('DiscountInfoComponent', () => {
   
 
   it('loading discount', () => {
-    const PRODUCT_ID = '1';
+    const DISCOUNT_ID = '1';
     const data = [
       {
         id: 1,     
@@ -75,12 +75,15 @@ describe('DiscountInfoComponent', () => {
       imagePath: ''
       }
     ]    
-    if (PRODUCT_ID){
-      discountService?.getOneFirebase(PRODUCT_ID).subscribe(result => {
+    if (DISCOUNT_ID){
+      discountService?.getOneFirebase(DISCOUNT_ID).subscribe(result => {
         expect(result).toEqual(data);
       });
     }
     expect(component).toBeTruthy();
   });
 
+
+
+ 
 });

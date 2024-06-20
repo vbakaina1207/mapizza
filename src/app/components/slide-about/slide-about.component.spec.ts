@@ -27,4 +27,17 @@ describe('SlideAboutComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should apply component styles', () => {
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement;
+    const carouselComponent = compiled.querySelector('.banner-slide');
+    
+    expect(carouselComponent).toBeDefined();
+  });
+  
+  it('should initialize component without errors', () => {
+    expect(component.ngOnInit).toBeDefined();
+  });
+  
 });

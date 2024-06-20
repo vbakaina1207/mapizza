@@ -22,7 +22,7 @@ export class PasswordComponent implements OnInit {
     private router: Router,
     private auth: Auth,
     private toast: ToastrService,
-    private toastr: ToastService,
+    public toastr: ToastService,
     public dialog: MatDialog,
   ) { }
 

@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, fakeAsync, inject, tick } from '@angular/core/testing';
+import { TestBed,  fakeAsync, inject, tick } from '@angular/core/testing';
 import { AccountService } from './account.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpErrorResponse } from '@angular/common/http';

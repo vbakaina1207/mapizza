@@ -82,7 +82,7 @@ describe('Service: Image', () => {
     const mockFile = new File(['test content'], 'test.txt', { type: 'text/plain' });
     const folder = 'test-folder';
     const name = 'test-image.jpg';
-    jasmine.createSpy().and.throwError(new Error('Upload failed')) // Mocking put method to throw error
+    jasmine.createSpy().and.throwError(new Error('Upload failed')) ;
     spyOn(console, 'error');
 
     await service.uploadFile(folder, name, mockFile);

@@ -40,11 +40,11 @@ import { INewsRequest, INewsResponse } from '../../interfaces/news/news.interfac
       }),
     };
   
-      const getAllFirebaseStub = jasmine.createSpyObj('PageService', ['getAllFirebase']);
-      const getOneFirebaseStub = jasmine.createSpyObj('PageService', ['getOneFirebase']);
-      const createFirebaseStub = jasmine.createSpyObj('PageService', ['createFirebase']);
-      const updateFirebaseStub = jasmine.createSpyObj('PageService', ['updateFirebase']);
-      const deleteFirebaseStub = jasmine.createSpyObj('PageService', ['deleteFirebase']);
+      const getAllFirebaseStub = jasmine.createSpyObj('NewsService', ['getAllFirebase']);
+      const getOneFirebaseStub = jasmine.createSpyObj('NewsService', ['getOneFirebase']);
+      const createFirebaseStub = jasmine.createSpyObj('NewsService', ['createFirebase']);
+      const updateFirebaseStub = jasmine.createSpyObj('NewsService', ['updateFirebase']);
+      const deleteFirebaseStub = jasmine.createSpyObj('NewsService', ['deleteFirebase']);
 
   beforeEach(async() => {
     await TestBed.configureTestingModule({      

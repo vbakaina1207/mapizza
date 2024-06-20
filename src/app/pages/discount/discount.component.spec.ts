@@ -101,21 +101,5 @@ describe('DiscountComponent', () => {
   
 
 
-  // it('should call getOneFirebase with correct ID and set userDiscount', () => {
-  //   const discountId = '1';
-  //   const discountData = [{ 
-  //     id: discountId, 
-  //     date: Timestamp.fromDate(new Date('2024-12-12T00:00:00Z')),
-  //     name: 'test discount',
-  //     title: '',
-  //     description: '',
-  //     imagePath: '' }];
-  //   spyOn(discountService, 'getOneFirebase').and.returnValue(of(discountData));
-  
-  //   component.getDiscounts();
-  
-  //   expect(discountService.getOneFirebase).toBeTruthy();
-  //   // expect(component.userDiscounts).toEqual(discountData);
-  // });
   
 });

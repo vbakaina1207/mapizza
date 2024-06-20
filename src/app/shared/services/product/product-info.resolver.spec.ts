@@ -32,20 +32,5 @@ describe('ProductInfoResolver', () => {
     expect(ProductInfoResolver).toBeTruthy();
   });
 
-  // it('should resolve product data', (done) => {
-  //   route.paramMap.get = jasmine.createSpy('get').and.returnValue('123');
-  //   const result = ProductInfoResolver(route, state);
-
-  //   (result as Observable<IProductResponse>).subscribe({
-  //     next: data => {
-  //       expect(productServiceMock.getOneFirebase).toHaveBeenCalledWith('123');
-  //       expect(data).toEqual({} as IProductResponse);
-  //       done();
-  //     },
-  //     error: err => {
-  //       fail(err);
-  //       done();
-  //     }
-  //   });
-  // });
+  
 });

@@ -31,20 +31,4 @@ describe('NewsInfoResolver', () => {
     expect(NewsInfoResolver).toBeTruthy();
   });
 
-  // it('should resolve news data', (done) => {
-  //   route.paramMap.get = jasmine.createSpy('get').and.returnValue('123');
-  //   const result = NewsInfoResolver(route, state);
-
-  //   (result as Observable<INewsResponse>).subscribe({
-  //     next: data => {
-  //       expect(newsServiceMock.getOneFirebase).toHaveBeenCalledWith('123');
-  //       expect(data).toEqual({} as INewsResponse);
-  //       done();
-  //     },
-  //     error: err => {
-  //       fail(err);
-  //       done();
-  //     }
-  //   });
-  // });
 });

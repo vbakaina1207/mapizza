@@ -7,5 +7,6 @@ export const environment = {
     authDomain: 'mapizza-b9f39.firebaseapp.com',
     messagingSenderId: '992628535340',
   },
-  production: true
+  production: true,
+  BACKEND_URL: 'http://localhost:3000'
 };

@@ -80,4 +80,25 @@ describe('CabinetComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have initial isOpen as false', () => {
+    expect(component.isOpen).toBeFalse();
+  });
+
+  it('should have initial title as "Особисті дані"', () => {
+    expect(component.title).toBe('Особисті дані');
+  });
+
+  it('should toggle isOpen state when openMenu is called', () => {
+    const initialState = component.isOpen;
+    component.openMenu();
+    expect(component.isOpen).toBe(!initialState);
+  });
+
+  it('should update title when closeMenu is called', () => {
+    const mockEvent = { target: { value: 'New Title' } };
+    component.closeMenu(mockEvent);
+    expect(component.title).toBe('New Title');
+  });
+  
 });

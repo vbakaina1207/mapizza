@@ -80,7 +80,7 @@ describe('Service: Product', () => {
   }));
 
 
-  it('can test HttpClient.get', () => {
+  it('can test getAllFirebase', () => {
     const expectedData = [
       {
         id: '1',
