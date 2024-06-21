@@ -127,16 +127,7 @@ valueByControl(control: string): string {
           this.isUploaded = false;
           this.isValid = false;         
         })            
-      } else {
-        this.dialog.open(AlertDialogComponent, {
-              backdropClass: 'dialog-back',
-              panelClass: 'alert-dialog',
-              autoFocus: false,
-              data: {
-                message: 'Ви не авторизувались',                
-              }
-            });
-    }
+      } 
   }
 
   openLoginDialog(): void {

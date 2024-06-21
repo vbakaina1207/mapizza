@@ -129,7 +129,10 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
     max-height: calc(100vh - 120px);
     height: 100vh;
     }
-    
+
+    & .size-2{
+      height: auto;
+      }
 
     & .mat-dialog-container {
     padding: 0;
@@ -140,6 +143,9 @@ $custom-theme: mat.define-light-theme($custom-theme-primary, $custom-theme-accen
 
 }
 
+.app-alert-dialog{
+  height: auto;
+}
 
 .mat-mdc-dialog-content  > .btn-close {
     position: absolute;

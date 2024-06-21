@@ -33,6 +33,7 @@ export class MapComponent implements OnInit{
   searchMarker: google.maps.Marker | undefined;
   map!: google.maps.Map;
   geocoder!: google.maps.Geocoder;
+  isError: boolean = true
 //.AdvancedMarkerElement
 
 
@@ -326,11 +327,14 @@ export class MapComponent implements OnInit{
     let message = "";
     if (isInGreenZone) {
       message = 'Адреса в зеленій зоні доставки';
+      this.isError = false;
     } else if (isInYellowZone) {
       message = 'Адреса в жовтій зоні доставки';
+      this.isError = false;
     } else {
       message = 'Адреса не в зоні доставки';
-    }
+      this.isError = true;
+    } 
     this.showErrorDialog(message);
     this.accountService.setZoneStatus(isInGreenZone, isInYellowZone);      
   }
@@ -344,8 +348,9 @@ export class MapComponent implements OnInit{
       message: message
     }
     });
-
-    this.toastr.showError('', message);
+    if( this.isError)
+      this.toastr.showError('', message);
+    else this.toastr.showSuccess('', message);
   }
   // getCurrentLocation() {
   //   this.loading = true;

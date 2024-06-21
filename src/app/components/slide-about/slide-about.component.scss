@@ -145,7 +145,7 @@
 
     
     .swiper-wrapper .carousel-indicators{
-        bottom: -88px;;
+        bottom: -34px;;
         padding: 20px;
     }
 
@@ -155,7 +155,8 @@
     }
 
 
-
+}
+@media (max-width: 565px) {
 
     .swiper-container {
         overflow: visible;

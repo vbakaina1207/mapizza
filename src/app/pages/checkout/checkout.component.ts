@@ -555,7 +555,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     } else {
       console.log(delivery_method, "delivery")
       this.orderForm.patchValue({ 'action': '' });
-      // this.sum_delivery = (this.total >= 500) ? 100 : 0;    
+       
       this.sum_delivery = ((this.total >= 500 && this.isInYellowZone) || (this.total >= 300 && this.isInGreenZone)) ? 0 : ((this.total < 500 && this.isInYellowZone) ? 150 : (this.total < 300 && this.isInGreenZone) ? 100 : 0);  
       this.isCourier = true;
     }

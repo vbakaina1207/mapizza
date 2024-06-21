@@ -105,7 +105,7 @@
                     <div class="col-12">                                               
                           <select formControlName="addres" name="addres" class="input" tabindex="-1"  (change)="onAddressChange($event)">
                             <option [value]="defaultAddress" disabled selected>
-                              Виберіть адресу доставки ( default: {{ defaultAddress }} )
+                              Виберіть адресу доставки
                             </option>
                             <option *ngFor="let addr of address" [value]="formatAddress(addr)"> 
                               {{ addr.city }} {{ addr.street }}, {{addr.house}}, {{ addr.flat }}
