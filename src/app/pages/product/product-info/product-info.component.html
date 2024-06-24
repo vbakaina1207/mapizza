@@ -74,8 +74,7 @@
           </h1>
           <div class="description">
             {{ currentProduct ? currentProduct.ingredients : undefined }}                    
-          </div>
-          <!-- <div class="btn btn-secondary product_plus_modificator" *ngIf="additionProduct.length" (click)="openAdditionDialog()"> -->
+          </div>          
             <div class="btn btn-secondary product_plus_modificator" *ngIf="currentProduct?.type_addition?.length" (click)="openAdditionDialog()">
             <span>Додати / змінити складники</span>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -121,6 +120,7 @@
                     <span>{{ addition ? addition.weight : undefined }}  г</span>
                     <span>{{ addition ? addition.price : undefined }}  грн</span>
                   </div>
+                  <div class="ingredient_action"></div>                  
                 </div>
               </div>
             </div>

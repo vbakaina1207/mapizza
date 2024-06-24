@@ -317,7 +317,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
       
       localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
       if (this.currentUser) {
-        this.currentUser.orders.push(order);
+        this.currentUser?.orders?.push(order);
         this.orderService.createFirebase(order).then(() => {
           const userRef = doc(this.afs, 'users', this.currentUser.uid);
           updateDoc(userRef, {

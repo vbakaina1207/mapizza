@@ -31,6 +31,7 @@ export class AuthAdditionComponent implements OnInit {
   public isOrder: boolean = false;
   public currentUser!: any;
   public favorite: Array<IProductResponse> = [];
+  public activeIngredients: { [key: string]: boolean } = {};
 
   constructor(
     private router: Router,
@@ -90,56 +91,71 @@ export class AuthAdditionComponent implements OnInit {
       this.isFavorite = true;  
   }
 
+  
+
   additionClick(additionName: any): void {
     this.activeAddition = additionName;
-    const elem = document.querySelectorAll('.addition');
-    const elemIngr = document.querySelectorAll('.addition .ingredient_action');
-    console.log(elem);
-    for (let j = 0; j < elem.length; j++) { 
-      if (this.additionProducts[j]?.name == additionName) {
-        elem[j].classList.toggle('active');
-        elemIngr[j].classList.toggle('active-ingradient');
-        if (elem[j].classList.contains('active')) {
-          this.additionProduct.push(this.additionProducts[j]);
-          this.additionPrice += Number(this.additionProducts[j].price);
+    this.activeIngredients[additionName] = !this.activeIngredients[additionName];
+    const selectedProduct = this.additionProducts.find(product => product.name === additionName);
+    if (selectedProduct) {
+        const index = this.additionProduct.findIndex(product => product.name === additionName);
+        if (this.activeIngredients[additionName]) {
+            if (index === -1) {
+                this.additionProduct.push(selectedProduct);
+                this.additionPrice += Number(selectedProduct.price);
+            }
         } else {
-          let ind = this.additionProduct.indexOf(this.additionProducts[j]);
-          this.additionPrice = this.additionPrice - Number(this.additionProducts[j].price);
-          if (ind >= 0) this.additionProduct.splice(ind, 1);
+            if (index !== -1) {
+                this.additionProduct.splice(index, 1);
+                this.additionPrice -= Number(selectedProduct.price);
+            }
         }
-        if (this.additionProduct.length > 0) {
-          this.isAddition = true;
-        } else {
-          this.isAddition = false;
-        }
-      }
     }
+    this.isAddition = this.additionProduct.length > 0;
+    this.currentProduct.addition_price = Math.round(this.additionPrice);
   }
-
+  
   additionDeleteClick(additionName: any): void {
-    let elem = document.querySelectorAll('.addition');
+    let removed = false; 
     for (let i = 0; i < this.additionProduct.length; i++) {
-      if (this.additionProduct[i].name == additionName) {
-        let ind = this.additionProduct.indexOf(this.additionProduct[i]);
-        this.additionPrice = this.additionPrice - Number(this.additionProduct[i].price);
-        if (ind >= 0) this.additionProduct.splice(ind, 1);
-        elem[i]?.classList.remove('active');
-      }
-    }
-    if (this.additionProduct.length > 0) {
-          this.isAddition = true;
-        } else {
-          this.isAddition = false;
+        if (this.additionProduct[i].name === additionName) {
+            let ind = this.additionProduct.indexOf(this.additionProduct[i]);
+            this.additionPrice -= Number(this.additionProduct[i].price);
+            if (ind >= 0) {
+                this.additionProduct.splice(ind, 1);
+                removed = true;
+            }
         }
+    }
+    if (removed) {
+        this.isAddition = this.additionProduct.length > 0;
+        this.activeIngredients[additionName] = !this.activeIngredients[additionName];        
+        const elements = document.querySelectorAll('.ingredient');
+        elements.forEach((elem: Element) => {
+            const titleElement = elem.querySelector('.ingredient_title');
+            const titleText = titleElement?.textContent?.trim();
+            if (titleText === additionName) {
+                elem.classList.remove('active');
+                elem.querySelector('.ingredient_action')?.classList.remove('active-ingradient');
+            }
+        });
+    }
   }
 
-  additionDeleteAllClick(): void{
-    this.additionProduct.splice(0, this.additionProduct.length);
+  
+
+  additionDeleteAllClick(): void {
+    this.additionProduct = [];
     this.additionPrice = 0;
     this.isAddition = false;
-    document.querySelectorAll('.addition').forEach((el) =>
-      el.classList.remove("active"));
-  }
+    this.activeIngredients = {};
+    document.querySelectorAll('.addition').forEach((el) => {
+        el.classList.remove("active");
+        el.querySelector('.ingredient_action')?.classList.remove('active-ingradient');
+    });
+    // this.display_addition_price = this.additionPrice.toFixed(2);
+    this.currentProduct.addition_price = this.additionPrice;
+}
 
   productCount(product: IProductResponse, value: boolean): void {
     if(value){

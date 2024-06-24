@@ -11,15 +11,21 @@ import { OrderService } from 'src/app/shared/services/order/order.service';
 export class CabinetComponent implements OnInit {
 
     public isOpen: boolean = false;
-    public title: string = 'Особисті дані';
+    public title: string = '' ;
 
   constructor(
     private router: Router,
     private accountService: AccountService,
     private orderService: OrderService
-  ) { }
+  ) { 
+    
+  }
 
   ngOnInit() {
+    
+    if (this.router.url == '/cabinet/favorite') this.title = 'Улюблені';
+    if (this.router.url == '/cabinet/personal') this.title = 'Особисті дані';
+    if (this.router.url == '/cabinet/history') this.title = 'Історія замовлень';
   }
 
   openMenu():void {

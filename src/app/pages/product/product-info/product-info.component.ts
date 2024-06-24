@@ -165,9 +165,11 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
   additionClick(additionName: any): void {    
     this.activeAddition = additionName;
     let elem = document.querySelectorAll('.ingredient');
+    let elemIng = document.querySelectorAll('.ingredient_action');
     for (let i = 0; i < elem.length; i++) {
       if (this.currentProduct.type_addition[i].name == additionName) {
         elem[i]?.classList.toggle('active');
+        elemIng[i]?.classList.toggle('active-ingradient');
         if (elem[i].classList.contains('active')) {
           this.additionProduct.push(this.currentProduct.type_addition[i]);
           this.additionPrice +=  Number(this.currentProduct.type_addition[i].price);
@@ -188,12 +190,14 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
 
   additionDeleteClick(additionName: any): void {
     let elem = document.querySelectorAll('.ingredient');
+    let elemIng = document.querySelectorAll('.ingredient_action');
     for (let i = 0; i < this.additionProduct.length; i++) {
       if (this.additionProduct[i].name == additionName) {
         let ind = this.additionProduct.indexOf(this.additionProduct[i]);
         this.additionPrice = this.additionPrice - Number(this.additionProduct[i].price);
         if (ind >= 0) this.additionProduct.splice(ind, 1);
         elem[i]?.classList.remove('active');
+        elemIng[i]?.classList.remove('active-ingradient');
       }
     }
     if (this.additionProduct.length > 0) {
@@ -209,6 +213,8 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
     this.isAddition = false;
     document.querySelectorAll('.ingredient').forEach((el) =>
       el.classList.remove("active"));
+    document.querySelectorAll('.ingredient_action').forEach((el) =>
+      el.classList.remove("active-ingradient"));
   }
 
   openAdditionDialog(): void {
@@ -222,12 +228,11 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
         };  
         if (this.favorite?.length == 0) this.isFavorite = false;
         else {
-          const ind = this.favorite.findIndex(prod => prod.id === this.currentProduct.id);
+          const ind = this.favorite?.findIndex(prod => prod.id === this.currentProduct.id);
         if (ind > -1) {
           this.isFavorite = true;         
         } else this.isFavorite = false; 
-        }        
-        console.log(this.isFavorite);       
+        }                      
         console.log(result);
       })    
   }
