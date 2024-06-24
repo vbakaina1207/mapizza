@@ -18,11 +18,11 @@
 }
 
 .p-carousel-next .pi-chevron-right {
-    background-image: url('/assets/banners/right-arrow.svg')  !important;
+    background-image: url('../../../assets/banners/right-arrow.svg')  !important;
 }
 
 .p-carousel .p-carousel-content .p-carousel-prev .pi-chevron-left{
-    background-image: url('/assets/banners/right-arrow.svg')  !important;
+    background-image: url('../../../assets/banners/right-arrow.svg')  !important;
     transform: rotate(180deg);
 }
 .p-carousel .p-carousel-content .p-carousel-prev-icon, .p-carousel .p-carousel-content .p-carousel-next-icon {
@@ -34,7 +34,7 @@
 }
 
 .p-carousel .p-carousel-content .p-carousel-prev:enabled:hover .pi-chevron-left, .p-carousel-next:enabled:hover .pi-chevron-right{
-	background-image: url('/assets/banners/prev-hover.svg') !important;  
+	background-image: url('../../../assets/banners/prev-hover.svg') !important;  
     box-shadow: none;    
 }
 

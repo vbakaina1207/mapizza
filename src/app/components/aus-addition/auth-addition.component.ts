@@ -93,10 +93,12 @@ export class AuthAdditionComponent implements OnInit {
   additionClick(additionName: any): void {
     this.activeAddition = additionName;
     const elem = document.querySelectorAll('.addition');
+    const elemIngr = document.querySelectorAll('.addition .ingredient_action');
     console.log(elem);
     for (let j = 0; j < elem.length; j++) { 
       if (this.additionProducts[j]?.name == additionName) {
         elem[j].classList.toggle('active');
+        elemIngr[j].classList.toggle('active-ingradient');
         if (elem[j].classList.contains('active')) {
           this.additionProduct.push(this.additionProducts[j]);
           this.additionPrice += Number(this.additionProducts[j].price);

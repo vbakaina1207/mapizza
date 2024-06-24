@@ -110,6 +110,11 @@ button{
 }
 
 
+.route-active button{
+    background-color: $clr-secondary;
+    color: $clr-white;
+}
+
 @media screen and (max-width: 1730px) {
     .categories-menu {
         margin-bottom: 30px;
@@ -126,10 +131,6 @@ button{
         margin: -10px auto 20px auto;
     }
 
-    .route-active button{
-        background-color: $clr-secondary;
-        color: $clr-white;
-    }
 }
 
 @media screen and (max-width: 1400px) {

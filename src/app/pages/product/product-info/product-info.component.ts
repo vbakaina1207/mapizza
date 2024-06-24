@@ -220,7 +220,7 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
         if (localStorage?.length > 0 && localStorage.getItem('favorite')) {
           this.favorite = JSON.parse(localStorage.getItem('favorite') as string);
         };  
-        if (this.favorite.length == 0) this.isFavorite = false;
+        if (this.favorite?.length == 0) this.isFavorite = false;
         else {
           const ind = this.favorite.findIndex(prod => prod.id === this.currentProduct.id);
         if (ind > -1) {

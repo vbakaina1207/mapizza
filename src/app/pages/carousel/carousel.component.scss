@@ -75,7 +75,7 @@ ngb-carousel .picsum-img-wrapper > img {
 
 
 .carousel-control-next-icon {
-	background-image: url('/assets/banners/right-arrow.svg');
+	background-image: url('../../../assets/banners/right-arrow.svg');
 	border-radius: 50%;	
 	height: 14px;
 	width: 16px;
@@ -92,7 +92,7 @@ ngb-carousel .picsum-img-wrapper > img {
 }
 
 .carousel-control-prev-icon{
-	background-image: url('/assets/banners/prev-arrow.svg');	
+	background-image: url('../../../assets/banners/prev-arrow.svg');	
  	border-radius: 50%;
 	height: 14px;
 	width: 16px;
@@ -102,7 +102,7 @@ ngb-carousel .picsum-img-wrapper > img {
 
 
 .carousel-control-prev-icon:hover, .carousel-control-next-icon:hover{
-	background-image: url('/assets/banners/left-arrow.svg');    
+	background-image: url('../../../assets/banners/left-arrow.svg');    
 }
 
 

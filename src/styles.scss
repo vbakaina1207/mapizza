@@ -356,8 +356,13 @@ ul, ol {
 
 .ingredient_action:after {
     background-image: url(./assets/icons/icon-ingredient-check.svg);
+    
 }
 
+.active-ingradient:after, .active-ingradient:before {
+    background-image: url(./assets/icons/icon-ingredient-check.svg);
+    opacity: 1;
+}
 
 .ingredient.active {
     border-color: $clr-primary;

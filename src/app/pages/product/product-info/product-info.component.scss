@@ -6,32 +6,7 @@
     @include section;
 }
 
-// .breadcrumbs {
-//     margin: 20px 0;
 
-//     & li {
-//         display: inline-block;
-//         font-size: 12px;
-//         font-weight: 400;
-//         line-height: 1.6em;
-//     }
-
-//     & span {
-//     color: $clr-black;
-//     transition: $transition;
-//     }
-
-//     & li:after {
-//         content: '';
-//         display: inline-block;
-//         width: 4px;
-//         height: 4px;
-//         border-radius: 50%;
-//         background: $clr-primary;
-//         margin: 2px 15px;
-//         transition: $transition;
-//     }
-// }
 
 .swiper-entry {
     position: relative;
@@ -431,179 +406,6 @@ img[data-i-src], [data-bg] {
     opacity: 0;
 }
 
-// .ingredient_title {
-//     text-align: center;
-//     font-size: 16px;
-//     line-height: 1.2em;
-//     margin-bottom: 10px;
-//     color: &clr-black;
-// }
-
-// .ingredient_bottom {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     margin-top: auto;
-//     color: $clr-grey;
-//     font-size: 14px;
-//     line-height: 1.2em;
-// }
-
-// .ingredient_bottom > * + *::before {
-//     content: '|';
-//     margin: 3px;
-//     font-size: 14px;
-// }
-
-// .ingredient_action {
-//     position: absolute;
-//     z-index: 1;
-//     right: 8px;
-//     top: 8px;
-//     width: 16px;
-//     height: 16px;
-//     transition: $transition;
-// }
-
-// .ingredient_action:before, .ingredient_action:after {
-//     content: '';
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//     width: 12px;
-//     height: 12px;
-//     background-image: url(../../../../assets/icons/icon-ingredient-check.svg);
-//     background-repeat: no-repeat;
-//     background-size: contain;
-//     background-position: center center;
-//     transition: 0.25s;
-//     opacity: 0;
-// }
-
-// .ingredient_action:after {
-//     background-image: url(../../../../assets/icons/icon-ingredient-check.svg);
-// }
-
-
-// .ingredient.active {
-//     border-color: $clr-primary;
-// }
-
-// .ing_control {
-//     display: inline-flex;
-//     align-items: center;
-//     margin-right: 10px;
-
-//     & .btn-close {
-//         width: 16px;
-//         height: 16px;
-//     }
-// }
-
-// .btn-close {
-//     position: relative;
-//     cursor: pointer;
-//     width: 24px;
-//     height: 24px;
-// }
-
-// .ing_control-title {
-//     font-size: 14px;
-//     font-weight: 400;
-//     color: $clr-black;
-// }
-
-// .btn-close::before, .btn-close::after {
-//     content: '';
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%) rotate(-45deg);
-//     width: 80%;
-//     height: 2px;
-//     background: $clr-black;
-//     transition: $transition;
-// }
-
-// .ing_control .btn-close::before, .ing_control .btn-close::after {
-//     background: $clr-secondary;
-// }
-
-// .btn-close:after {
-//     transform: translate(-50%, -50%) rotate(45deg);
-// }
-
-// .ing_control::after {
-//     content: ',';
-//     font-size: 14px;
-// }
-
-// .ing_output-clean-all {
-//     display: none;
-//     align-items: center;
-//     cursor: pointer;
-//     border: none;
-//     background-color: $clr-white;
-
-//     & b {
-//     font-size: 14px;
-//     font-weight: 400;
-//     line-height: 1.4em;
-//     color: $clr-secondary;
-//     transition: $transition;
-//     }
-
-//     & i {
-//     position: relative;
-//     margin-left: 5px;
-//     display: block;
-//     width: 16px;
-//     height: 16px;
-//     border-radius: 100%;
-//     border: 1px solid $clr-secondary;
-//     transition: $transition;
-//     }
-// }
-
-// .ing_output.active .ing_output-clean-all {
-//     display: inline-flex;
-// }
-
-// .ing_output-clean-all i::before, .ing_output-clean-all i::after {
-//     content: '';
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%) rotate(45deg);
-//     width: 8px;
-//     height: 1px;
-//     background: $clr-secondary;
-//     transition: $transition;
-// }
-
-// .ing_output-clean-all i::after {
-//     transform: translate(-50%, -50%) rotate(-45deg);
-// }
-// .ing_output-clean-all i::before, .ing_output-clean-all i::after {
-//     content: '';
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%) rotate(45deg);
-//     width: 8px;
-//     height: 1px;
-//     background: $clr-secondary;
-//     transition: $transition;
-// }
-
-// .btn-close:after {
-//     transform: translate(-50%,-50%) rotate(45deg);
-// }
-
-// .ing_output-clean-all i:after {
-//     transform: translate(-50%,-50%) rotate(-45deg);
-// }
 
 .product_detail-controls {
     margin-bottom: 25px;
@@ -638,14 +440,7 @@ img[data-i-src], [data-bg] {
     @include btn-primary;
 }
 
-// .primary::before {
-//     content: '\2714';
-//     font-size: 18px;
-// }
 
-// .hide{
-//     display: none;
-// }
 
 
 
@@ -657,13 +452,7 @@ img[data-i-src], [data-bg] {
 
 
 @media screen and (max-width: 1400px){
-    // .breadcrumbs {
-    //     margin: 10px 0;
-
-    //     & li:after {
-    //         margin: 2px 10px;
-    //     }
-    // }
+   
 
     .swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet, .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
         margin: 0 15px;
@@ -747,30 +536,7 @@ img[data-i-src], [data-bg] {
         font-size: 14px;
     }
 
-    // .ingredient {
-    //     padding: 10px 5px;
-    // }
-
-    // .ingredient_img {
-    //     margin: 0 auto 5px;
-    //     width: 40px;
-    //     height: 40px;
-
-    //     & img {
-    //         max-width: 40px;
-    //         max-height: 40px;
-    //     }
-    // }
-
-    // .ingredient_title {
-    //     font-size: 14px;
-    //     margin-bottom: 5px;
-    // }
-
-    // .ingredient_bottom {
-    //     font-size: 12px;
-    // }
-
+   
     .ing_control {
         margin-right: 10px;
 
@@ -816,27 +582,8 @@ img[data-i-src], [data-bg] {
 
 
 @media screen and (min-width: 1200px){
-    // .btn-secondary:not(.disabled):hover {
-    //     background: $clr-secondary;
-    //     color: $clr-white;
-    // }
-
-    // .ingredient.active:hover {
-    //     border-color: $clr-secondary;
-    // }
-
-    // .ingredient:hover {
-    //     border-color: $clr-primary;
-    // }
-
-    // .btn-close:hover:before, .btn-close:hover:after {
-    //     background: $clr-secondary;
-    // }
-
-    // .ing_control .btn-close:hover::before, .ing_control .btn-close:hover::after {
-    //     background: $clr-primary;
-    // }
-
+  
+    
     
 }
 
@@ -853,9 +600,7 @@ img[data-i-src], [data-bg] {
 
 
 @media screen and (max-width: 991px) {
-    // .breadcrumbs {
-    //     display: none;
-    // }
+    
     .product_detail-swiper {
         margin: 15px 0 10px;
     }
@@ -875,40 +620,10 @@ img[data-i-src], [data-bg] {
         padding: 10px 20px;
     }
 
-    // .ingredient {
-    //     width: calc((100% / 4) - 5px);
-    // }
+    
     .product_detail-controls .product_price-wrap span, .product_detail-controls span {
         font-size: 0;
         margin: 0;
     }
 }    
 
-// @media screen and (max-width: 575px){
-//     .ing_body-additional {
-//         padding: 10px 12px 15px;
-//     }
-
-//     .ingredient_img {
-//         margin: 0 auto 5px;
-//         height: 36px;
-//         width: 36px;
-
-//         & img {
-//             max-height: 36px;
-//             max-width: 36px;
-//         }
-//     }
-
-//     .ingredient_title {
-//         font-size: 12px;
-//     }
-
-//     .ingredient_bottom {
-//         font-size: 10px;
-//     }
-
-//     .ingredient {
-//         width: calc((100% / 3) - 5px);
-//     }
-// }

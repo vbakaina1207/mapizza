@@ -34,7 +34,6 @@ export class MapComponent implements OnInit{
   map!: google.maps.Map;
   geocoder!: google.maps.Geocoder;
   isError: boolean = true
-//.AdvancedMarkerElement
 
 
   yellowZones: google.maps.Polygon[] = [];

@@ -12,6 +12,10 @@
     -webkit-text-size-adjust: none;
 }
 
+.bg-about-us{
+    background-image: url('../.././../assets/banners/about_us.jpg'); 
+    transform: translate3d(0px, -13px, 0px);
+}
 
 .benefits-wrapper {
     position: relative;
