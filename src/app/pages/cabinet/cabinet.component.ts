@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/shared/services/account/account.service';
 import { OrderService } from 'src/app/shared/services/order/order.service';
 
@@ -8,10 +9,11 @@ import { OrderService } from 'src/app/shared/services/order/order.service';
   templateUrl: './cabinet.component.html',
   styleUrls: ['./cabinet.component.scss']
 })
-export class CabinetComponent implements OnInit {
+export class CabinetComponent implements OnInit, OnDestroy {
 
     public isOpen: boolean = false;
     public title: string = '' ;
+    private routerSubscription!: Subscription;
 
   constructor(
     private router: Router,
@@ -22,10 +24,33 @@ export class CabinetComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setTitleBasedOnUrl(this.router.url);    
+    this.routerSubscription = this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.setTitleBasedOnUrl(event.urlAfterRedirects);
+      }
+    });
     
-    if (this.router.url == '/cabinet/favorite') this.title = 'Улюблені';
-    if (this.router.url == '/cabinet/personal') this.title = 'Особисті дані';
-    if (this.router.url == '/cabinet/history') this.title = 'Історія замовлень';
+  }
+
+
+  ngOnDestroy() {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+  }
+
+
+  private setTitleBasedOnUrl(url: string) {
+    if (url.includes('/cabinet/favorite')) {
+      this.title = 'Улюблені';
+    } else if (url.includes('/cabinet/personal')) {
+      this.title = 'Особисті дані';
+    } else if (url.includes('/cabinet/history')) {
+      this.title = 'Історія замовлень';
+    } else if (url.includes('/cabinet/password')) {
+      this.title = 'Зміна паролю';
+    }
   }
 
   openMenu():void {

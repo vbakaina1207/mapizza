@@ -17,8 +17,7 @@ export class AuthGuardService{
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot):  boolean  {
-      this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
-    console.log('user', this.currentUser);
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);   
       if(this.currentUser && (this.currentUser.role === ROLE.ADMIN || this.currentUser.role === ROLE.USER)){
         return true;
       }
